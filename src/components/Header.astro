@@ -1,0 +1,219 @@
+---
+import Logo from "./Logo.astro";
+import { getDiensten, dienstUrl, schoonPad } from "../lib/diensten";
+
+const diensten = await getDiensten();
+const pad = schoonPad(Astro.url.pathname);
+const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href || pad.startsWith(`${href}/`));
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__logo" aria-label="AdeptXS, naar de homepage">
+      <Logo />
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hoofdmenu">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span>Menu</span>
+    </button>
+
+    <nav id="hoofdmenu" class="site-nav" aria-label="Hoofdmenu">
+      <ul class="site-nav__list">
+        <li class="site-nav__item site-nav__item--diensten">
+          <a href="/diensten" aria-current={isActief("/diensten") ? "page" : undefined}>Diensten</a>
+          <ul class="site-nav__sub">
+            {
+              diensten.map((d) => (
+                <li>
+                  <a href={dienstUrl(d.id)} aria-current={pad === dienstUrl(d.id) ? "page" : undefined}>
+                    {d.data.titel}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </li>
+        <li><a href="/tarieven" aria-current={isActief("/tarieven") ? "page" : undefined}>Tarieven</a></li>
+        <li><a href="/over" aria-current={isActief("/over") ? "page" : undefined}>Over mij</a></li>
+        <li class="site-nav__cta"><a class="btn btn--primary" href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = document.getElementById("hoofdmenu");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      nav.classList.toggle("is-open", !open);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(248 246 241 / 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4.5rem;
+    flex-wrap: wrap;
+  }
+  .site-header__logo {
+    text-decoration: none;
+  }
+
+  .nav-toggle {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .nav-toggle__bars,
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    display: block;
+    width: 1.1rem;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    position: relative;
+  }
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    content: "";
+    position: absolute;
+  }
+  .nav-toggle__bars::before {
+    top: -6px;
+  }
+  .nav-toggle__bars::after {
+    top: 6px;
+  }
+
+  .site-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .site-nav a:not(.btn) {
+    display: block;
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .site-nav a:not(.btn):hover {
+    background: var(--primary-tint);
+    color: var(--primary-hover);
+  }
+  .site-nav a[aria-current="page"] {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .site-nav__cta {
+    margin-left: 0.5rem;
+  }
+  .site-nav__cta .btn {
+    min-height: 2.75rem;
+    padding-block: 0.5rem;
+  }
+
+  /* Submenu desktop */
+  .site-nav__item--diensten {
+    position: relative;
+  }
+  .site-nav__sub {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 17rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+  .site-nav__item--diensten:hover .site-nav__sub,
+  .site-nav__item--diensten:focus-within .site-nav__sub {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  @media (max-width: 55.99rem) {
+    :global(.js) .nav-toggle {
+      display: inline-flex;
+    }
+    .site-nav {
+      width: 100%;
+    }
+    :global(.js) .site-nav {
+      display: none;
+    }
+    :global(.js) .site-nav.is-open {
+      display: block;
+    }
+    .site-nav__list {
+      flex-direction: column;
+      align-items: stretch;
+      padding-bottom: 1rem;
+    }
+    .site-nav__sub {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: 0;
+      padding: 0 0 0 1rem;
+      min-width: 0;
+      background: transparent;
+    }
+    .site-nav__cta {
+      margin: 0.5rem 0 0;
+    }
+    .site-nav__cta .btn {
+      width: 100%;
+    }
+  }
+</style>

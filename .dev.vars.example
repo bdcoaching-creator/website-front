@@ -1,0 +1,5 @@
+# Geheimen voor de formulierfunctie (Cloudflare Pages > Settings > Environment variables).
+BREVO_API_KEY=
+MAIL_TO=info@adeptxs.nl
+MAIL_FROM=website@adeptxs.nl
+TURNSTILE_SECRET_KEY=

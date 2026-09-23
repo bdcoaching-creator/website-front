@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DienstKaart from "../../components/DienstKaart.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { getDiensten, dienstUrl } from "../../lib/diensten";
+
+const diensten = await getDiensten();
+const keuzehulp = [
+  { situatie: "Ik heb een medewerker met een arbeidsbeperking en zoek begeleiding op de werkvloer.", dienst: "jobcoaching" },
+  { situatie: "Een medewerker is ziek en ik wil de terugkeer naar werk goed begeleiden.", dienst: "re-integratie" },
+  { situatie: "Ik twijfel of terugkeer in de eigen functie nog haalbaar is.", dienst: "arbeidsdeskundig-onderzoek" },
+  { situatie: "Ik ben ondernemer of zzp'er en wil zelf weer grip op werk en balans.", dienst: "coaching-voor-ondernemers" },
+];
+const titelVan = (id: string) => diensten.find((d) => d.id === id)?.data.titel ?? id;
+---
+
+<BaseLayout
+  title="Diensten"
+  description="Jobcoaching, re-integratie, arbeidsdeskundig onderzoek en coaching voor ondernemers. Voor MKB-werkgevers, medewerkers en zzp'ers."
+>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Diensten</span>
+        <h1>Vier diensten, één aanspreekpunt</h1>
+        <p>Of het nu gaat om een medewerker die uitvalt, iemand met een arbeidsbeperking of jijzelf als ondernemer: je werkt met één persoon die de wet, de werkvloer en de mens kent.</p>
+      </div>
+      <div class="grid grid--4">
+        {diensten.map((d) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>Welke dienst past bij mij?</h2>
+        <p>Kies de situatie die het meest op de jouwe lijkt. Twijfel je? Plan dan een gratis kennismaking.</p>
+      </div>
+      <ul class="keuzehulp">
+        {
+          keuzehulp.map((k) => (
+            <li>
+              <a href={dienstUrl(k.dienst)}>
+                <span class="keuzehulp__situatie">{k.situatie}</span>
+                <span class="keuzehulp__dienst">{titelVan(k.dienst)} <span aria-hidden="true">→</span></span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Twijfel je welke aanpak past?"
+    tekst="In een gratis gesprek van 30 minuten zoeken we samen uit wat je nodig hebt."
+    knop="Plan een gratis kennismaking"
+    href="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .keuzehulp {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 52rem;
+  }
+  .keuzehulp a {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .keuzehulp a:hover {
+    border-color: var(--primary);
+  }
+  .keuzehulp__situatie {
+    flex: 1 1 20rem;
+  }
+  .keuzehulp__dienst {
+    font-weight: 600;
+    color: var(--primary);
+  }
+</style>

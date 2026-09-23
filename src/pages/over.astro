@@ -1,0 +1,99 @@
+---
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaBand from "../components/CtaBand.astro";
+import site from "../data/site.json";
+
+const pagina = await getEntry("paginas", "over");
+if (!pagina) throw new Error("src/content/paginas/over.md ontbreekt");
+const { Content } = await render(pagina);
+---
+
+<BaseLayout title={pagina.data.titel} description={pagina.data.omschrijving}>
+  <section class="section">
+    <div class="container over">
+      <div class="over__main">
+        <span class="eyebrow">Over mij</span>
+        <h1>{site.eigenaar}</h1>
+        <p class="over__intro">{pagina.data.intro}</p>
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+
+      <aside class="over__aside">
+        {
+          site.portret ? (
+            <img class="over__foto" src={site.portret} alt={`Portret van ${site.eigenaar}`} width="480" height="600" loading="lazy" />
+          ) : (
+            <div class="over__foto over__foto--leeg">
+              <span>Plek voor je portretfoto (upload via het CMS)</span>
+            </div>
+          )
+        }
+        <div class="card">
+          <h2 class="over__aside-title">Registraties en certificering</h2>
+          <ul class="checklist">
+            <li>Geregistreerd arbeidsdeskundige bij de SRA, registernummer {site.sraRegisternummer}</li>
+            <li>Lid van de Nederlandse Vereniging voor Arbeidsdeskundigen (NVvA)</li>
+            <li>Erkend jobcoach</li>
+            <li>Gecertificeerd coach</li>
+          </ul>
+          <p class="over__verify">
+            Mijn registratie kun je controleren in het <a href={site.sraRegisterUrl} rel="noopener">register van de SRA</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Kennismaken?"
+    tekst="Een gratis gesprek van 30 minuten via Zoom. Vrijblijvend en zonder verkooppraatje."
+    knop="Plan een kennismaking"
+    href="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .over {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 60rem) {
+    .over {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+  .over__intro {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+  }
+  .over__aside {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .over__foto {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    background: var(--surface-alt);
+    object-fit: cover;
+    width: 100%;
+  }
+  .over__foto--leeg {
+    border: 1px dashed var(--line);
+    display: grid;
+    place-items: center;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .over__aside-title {
+    font-size: 1.25rem;
+  }
+  .over__verify {
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+</style>

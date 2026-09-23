@@ -1,0 +1,37 @@
+---
+interface Props {
+  titel: string;
+  tekst: string;
+  knop: string;
+  href: string;
+}
+const { titel, tekst, knop, href } = Astro.props;
+---
+
+<section class="section section--primary">
+  <div class="container cta-band">
+    <div>
+      <h2>{titel}</h2>
+      <p>{tekst}</p>
+    </div>
+    <a class="btn btn--light" href={href}>{knop}</a>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  @media (min-width: 48rem) {
+    .cta-band {
+      grid-template-columns: 1fr auto;
+    }
+  }
+  .cta-band p {
+    color: rgb(255 255 255 / 0.85);
+    max-width: 40rem;
+    margin: 0;
+  }
+</style>

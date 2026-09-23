@@ -1,0 +1,16 @@
+---
+import { dienstUrl } from "../lib/diensten";
+
+interface Props {
+  id: string;
+  titel: string;
+  tekst: string;
+}
+const { id, titel, tekst } = Astro.props;
+---
+
+<a class="card card--link" href={dienstUrl(id)}>
+  <h3>{titel}</h3>
+  <p>{tekst}</p>
+  <span class="card__more">Meer over {titel.toLowerCase()} <span aria-hidden="true">→</span></span>
+</a>

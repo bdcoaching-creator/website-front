@@ -1,0 +1,31 @@
+{
+  "hero": {
+    "label": "Voor MKB-werkgevers met 2 tot 50 medewerkers",
+    "titel": "Eén vast aanspreekpunt bij verzuim, re-integratie en werk dat past",
+    "intro": "Als ondernemer in het MKB heb je geen HR-afdeling die verzuim of een medewerker met een beperking voor je oppakt. Ik wel. Als geregistreerd arbeidsdeskundige en jobcoach help ik je om medewerkers duurzaam aan het werk te houden, en om te voldoen aan wat de wet van je vraagt.",
+    "ctaPrimair": "Plan een gratis adviesgesprek",
+    "ctaSecundair": "Bekijk de diensten"
+  },
+  "herkenning": {
+    "titel": "Herken je dit?",
+    "punten": [
+      "Een medewerker is langdurig ziek en je weet niet precies wat de Wet verbetering poortwachter van je vraagt.",
+      "Je twijfelt of terugkeer in de eigen functie nog realistisch is, of dat een ander spoor nodig is.",
+      "Je wilt iemand met een arbeidsbeperking in dienst nemen of houden, maar zoekt begeleiding op de werkvloer.",
+      "Je draagt als ondernemer alles zelf en merkt dat de balans tussen werk en privé zoek raakt."
+    ]
+  },
+  "werkwijze": {
+    "titel": "Zo werk ik",
+    "stappen": [
+      { "titel": "Kennismaking", "tekst": "Een gratis gesprek van 30 minuten via Zoom. Je vertelt wat er speelt, ik vertel wat ik kan betekenen." },
+      { "titel": "Voorstel op maat", "tekst": "Je ontvangt een helder voorstel met aanpak, planning en kosten. Geen verrassingen achteraf." },
+      { "titel": "Aan de slag", "tekst": "Online waar het kan, op locatie waar het moet. Je houdt één vast aanspreekpunt." },
+      { "titel": "Afronding", "tekst": "Een concreet resultaat: een rapport, een plan of een medewerker die weer passend aan het werk is." }
+    ]
+  },
+  "privacy": {
+    "titel": "Vertrouwelijk, zonder omwegen",
+    "tekst": "Werk, inkomen en gezondheid zijn gevoelige onderwerpen. Ik werk volgens de beroepscode voor arbeidsdeskundigen, deel niets zonder grondslag en gebruik op deze website geen tracking-cookies."
+  }
+}

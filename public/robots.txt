@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /bedankt
+
+Sitemap: https://www.adeptxs.nl/sitemap-index.xml

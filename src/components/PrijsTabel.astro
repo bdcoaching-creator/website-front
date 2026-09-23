@@ -1,0 +1,68 @@
+---
+import tarievenData from "../data/tarieven.json";
+import { formatPrijs, type Tarief } from "../lib/prijs";
+
+interface Props {
+  dienst?: string;
+  toonAlgemeen?: boolean;
+}
+const { dienst, toonAlgemeen = true } = Astro.props;
+const alle = tarievenData.tarieven as Tarief[];
+const rijen = dienst
+  ? alle.filter((t) => t.dienst === dienst || (toonAlgemeen && t.dienst === "algemeen"))
+  : alle;
+---
+
+<div class="prijs-tabel card">
+  <dl>
+    {
+      rijen.map((t) => (
+        <div class="prijs-tabel__rij">
+          <dt>
+            {t.omschrijving}
+            {t.toelichting && <span class="prijs-tabel__toelichting">{t.toelichting}</span>}
+          </dt>
+          <dd>{formatPrijs(t)}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="prijs-tabel__voetnoot">{tarievenData.toelichting}</p>
+</div>
+
+<style>
+  .prijs-tabel dl {
+    margin: 0;
+  }
+  .prijs-tabel__rij {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .prijs-tabel__rij:first-child {
+    padding-top: 0;
+  }
+  .prijs-tabel dt {
+    font-weight: 600;
+    flex: 1 1 16rem;
+  }
+  .prijs-tabel__toelichting {
+    display: block;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .prijs-tabel dd {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .prijs-tabel__voetnoot {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+</style>

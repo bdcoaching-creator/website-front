@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DienstKaart from "../components/DienstKaart.astro";
+import Stappen from "../components/Stappen.astro";
+import CtaBand from "../components/CtaBand.astro";
+import home from "../data/home.json";
+import site from "../data/site.json";
+import { getDiensten, zonderAfbreken } from "../lib/diensten";
+
+const diensten = await getDiensten();
+const beschrijving =
+  "Arbeidsdeskundige en jobcoach voor MKB-werkgevers in Zuid-Holland: re-integratie, arbeidsdeskundig onderzoek, jobcoaching en coaching voor ondernemers.";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.bedrijfsnaam,
+  description: beschrijving,
+  url: Astro.site?.toString(),
+  email: site.email,
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Zuid-Holland" },
+    { "@type": "Country", name: "Nederland" },
+  ],
+};
+---
+
+<BaseLayout title={site.bedrijfsnaam} description={beschrijving}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="eyebrow">{home.hero.label}</span>
+        <h1>{zonderAfbreken(home.hero.titel)}</h1>
+        <p class="hero__intro">{home.hero.intro}</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/contact">{home.hero.ctaPrimair}</a>
+          <a class="btn btn--ghost" href="/diensten">{home.hero.ctaSecundair}</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-label="Registraties">
+        <p class="hero__panel-title">Deskundig en geregistreerd</p>
+        <ul class="checklist">
+          <li>Geregistreerd arbeidsdeskundige (SRA)</li>
+          <li>Lid van de NVvA</li>
+          <li>Erkend jobcoach</li>
+          <li>Gecertificeerd coach</li>
+        </ul>
+        <p class="hero__panel-foot">Online via {site.videobellen} in heel Nederland. Op locatie in {site.werkgebied}.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>{home.herkenning.titel}</h2>
+      </div>
+      <ul class="checklist herkenning">
+        {home.herkenning.punten.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Diensten</span>
+        <h2>Waarmee ik je help</h2>
+        <p>Vier diensten, één aanspreekpunt. Van begeleiding op de werkvloer tot een onafhankelijk rapport.</p>
+      </div>
+      <div class="grid grid--4">
+        {diensten.map((d) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Werkwijze</span>
+        <h2>{home.werkwijze.titel}</h2>
+      </div>
+      <Stappen stappen={home.werkwijze.stappen} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid grid--2 vertrouwen">
+      <div>
+        <span class="eyebrow">Privacy</span>
+        <h2>{home.privacy.titel}</h2>
+        <p>{home.privacy.tekst}</p>
+        <a href="/privacyverklaring">Lees hoe ik met je gegevens omga</a>
+      </div>
+      <div class="card">
+        <h3>Over {site.bedrijfsnaam}</h3>
+        <p>
+          Achter {site.bedrijfsnaam} staat één persoon: geregistreerd arbeidsdeskundige, erkend jobcoach en gecertificeerd coach.
+          Je hebt van kennismaking tot afronding met mij te maken.
+        </p>
+        <a class="btn btn--ghost" href="/over">Meer over mij</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Speelt er verzuim of een vraag over passend werk?"
+    tekst="Plan een gratis adviesgesprek van 30 minuten via Zoom. Je weet daarna wat je volgende stap is, ook als die niet bij mij ligt."
+    knop={home.hero.ctaPrimair}
+    href="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    background:
+      radial-gradient(circle at 85% 10%, var(--primary-tint), transparent 55%),
+      var(--bg);
+  }
+  .hero__inner {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 60rem) {
+    .hero__inner {
+      grid-template-columns: 1.5fr 1fr;
+      gap: 4rem;
+    }
+  }
+  .hero__intro {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 38rem;
+    margin-bottom: 2rem;
+  }
+  .hero__panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow);
+  }
+  .hero__panel-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .hero__panel-foot {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .herkenning {
+    max-width: 48rem;
+    font-size: 1.1rem;
+  }
+  .vertrouwen {
+    align-items: center;
+  }
+</style>

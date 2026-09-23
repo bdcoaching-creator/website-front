@@ -1,0 +1,309 @@
+---
+import { getDiensten } from "../lib/diensten";
+import site from "../data/site.json";
+
+interface Props {
+  /** id van de dienst die vooraf geselecteerd is (bijv. "re-integratie"). */
+  dienst?: string;
+  titel: string;
+  intro: string;
+  knop?: string;
+  werkgebiedNotitie?: string;
+}
+
+const { dienst, titel, intro, knop = "Verstuur aanvraag", werkgebiedNotitie = "" } = Astro.props;
+const diensten = await getDiensten();
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const AD_ID = "arbeidsdeskundig-onderzoek";
+const adNotitie =
+  werkgebiedNotitie || diensten.find((d) => d.id === AD_ID)?.data.werkgebiedNotitie || "";
+---
+
+<div class="intake card" id="aanvraag">
+  <h2>{titel}</h2>
+  <p class="intake__intro">{intro}</p>
+
+  <form class="intake__form" method="post" action="/api/intake" data-intake>
+    <fieldset class="intake__fieldset">
+      <legend>Ik ben</legend>
+      <div class="intake__radios">
+        <label><input type="radio" name="rol" value="werkgever" required checked={dienst !== "coaching-voor-ondernemers"} /> Werkgever</label>
+        <label><input type="radio" name="rol" value="medewerker" /> Medewerker</label>
+        <label><input type="radio" name="rol" value="ondernemer" checked={dienst === "coaching-voor-ondernemers"} /> Ondernemer of zzp'er</label>
+      </div>
+    </fieldset>
+
+    <div class="intake__row">
+      <div class="field">
+        <label for="f-naam">Naam <span class="req" aria-hidden="true">*</span></label>
+        <input id="f-naam" name="naam" type="text" autocomplete="name" required maxlength="100" />
+      </div>
+      <div class="field">
+        <label for="f-email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="150" />
+      </div>
+    </div>
+
+    <div class="intake__row">
+      <div class="field">
+        <label for="f-telefoon">Telefoonnummer <span class="opt">(optioneel)</span></label>
+        <input id="f-telefoon" name="telefoon" type="tel" autocomplete="tel" maxlength="30" />
+      </div>
+      <div class="field">
+        <label for="f-dienst">Waar gaat je vraag over? <span class="req" aria-hidden="true">*</span></label>
+        <select id="f-dienst" name="dienst" required>
+          <option value="" disabled selected={!dienst}>Kies een dienst</option>
+          {diensten.map((d) => <option value={d.id} selected={d.id === dienst}>{d.data.titel}</option>)}
+          <option value="anders">Iets anders / weet ik nog niet</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="intake__row" data-toon-bij-rol="werkgever">
+      <div class="field">
+        <label for="f-organisatie">Organisatie <span class="opt">(optioneel)</span></label>
+        <input id="f-organisatie" name="organisatie" type="text" autocomplete="organization" maxlength="120" />
+      </div>
+      <div class="field">
+        <label for="f-medewerkers">Aantal medewerkers <span class="opt">(optioneel)</span></label>
+        <select id="f-medewerkers" name="medewerkers">
+          <option value="">Maak een keuze</option>
+          <option>1–9</option>
+          <option>10–24</option>
+          <option>25–50</option>
+          <option>Meer dan 50</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field" data-toon-bij-dienst={AD_ID}>
+      <label for="f-postcode">Postcode of plaats van de werkplek <span class="opt">(optioneel)</span></label>
+      <input id="f-postcode" name="postcode" type="text" maxlength="40" inputmode="text" aria-describedby="f-postcode-hint" />
+      <p class="hint" id="f-postcode-hint">{adNotitie}</p>
+      <p class="note note--warning intake__regio" data-regio-melding hidden role="status">
+        Deze werkplek ligt buiten mijn vaste werkgebied. Neem gerust contact op, dan kijken we samen of een onderzoek mogelijk is.
+      </p>
+    </div>
+
+    <div class="field">
+      <label for="f-bericht">Je vraag in het kort <span class="opt">(optioneel)</span></label>
+      <textarea id="f-bericht" name="bericht" rows="4" maxlength="500" aria-describedby="f-bericht-hint"></textarea>
+      <p class="hint" id="f-bericht-hint">
+        <strong>Deel hier geen medische informatie.</strong> Dat bespreken we veilig in het intakegesprek. Maximaal 500 tekens.
+      </p>
+    </div>
+
+    <div class="intake__hp" aria-hidden="true">
+      <label for="f-website">Laat dit veld leeg</label>
+      <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-language="nl" data-theme="light"></div>}
+
+    <p class="intake__privacy">
+      Ik gebruik je gegevens alleen om je aanvraag te beantwoorden. Lees de <a href="/privacyverklaring">privacyverklaring</a>.
+    </p>
+
+    <div class="intake__status" role="alert" aria-live="assertive" data-status></div>
+
+    <button class="btn btn--primary" type="submit">{knop}</button>
+    <p class="intake__reactie">Je ontvangt {site.reactietijd} een reactie.</p>
+  </form>
+</div>
+
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import { valtBinnenWerkgebied } from "../lib/werkgebied";
+
+  for (const form of document.querySelectorAll<HTMLFormElement>("form[data-intake]")) {
+    form.noValidate = true; // eigen foutmeldingen; zonder JavaScript valideert de browser zelf
+    const status = form.querySelector<HTMLElement>("[data-status]")!;
+    const dienst = form.querySelector<HTMLSelectElement>('[name="dienst"]')!;
+    const postcode = form.querySelector<HTMLInputElement>('[name="postcode"]');
+    const regioMelding = form.querySelector<HTMLElement>("[data-regio-melding]");
+
+    const updateZichtbaarheid = () => {
+      const rol = (form.querySelector<HTMLInputElement>('[name="rol"]:checked')?.value) ?? "";
+      form.querySelectorAll<HTMLElement>("[data-toon-bij-rol]").forEach((el) => {
+        el.hidden = el.dataset.toonBijRol !== rol;
+      });
+      form.querySelectorAll<HTMLElement>("[data-toon-bij-dienst]").forEach((el) => {
+        el.hidden = el.dataset.toonBijDienst !== dienst.value;
+      });
+    };
+    form.addEventListener("change", updateZichtbaarheid);
+    updateZichtbaarheid();
+
+    postcode?.addEventListener("input", () => {
+      if (regioMelding) regioMelding.hidden = valtBinnenWerkgebied(postcode.value) !== false;
+    });
+
+    const toonFout = (tekst: string) => {
+      status.textContent = tekst;
+      status.classList.add("is-error");
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.textContent = "";
+      status.classList.remove("is-error");
+
+      const verplicht = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[required]")];
+      const ongeldig = verplicht.find((el) => !el.checkValidity());
+      if (ongeldig) {
+        toonFout("Vul je naam, een geldig e-mailadres en de dienst in.");
+        ongeldig.focus();
+        return;
+      }
+
+      const knop = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      knop.disabled = true;
+      knop.textContent = "Bezig met versturen…";
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          window.location.href = "/bedankt";
+          return;
+        }
+        toonFout(data.fout ?? "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adeptxs.nl.");
+      } catch {
+        toonFout("Er ging iets mis bij het versturen. Controleer je internetverbinding of mail naar info@adeptxs.nl.");
+      }
+      knop.disabled = false;
+      knop.textContent = "Verstuur aanvraag";
+      (window as any).turnstile?.reset?.();
+    });
+  }
+</script>
+
+<style>
+  .intake h2 {
+    font-size: 1.6rem;
+  }
+  .intake__intro {
+    color: var(--ink-soft);
+  }
+  .intake__form {
+    display: grid;
+    gap: 1.1rem;
+    margin-top: 1.5rem;
+  }
+  .intake__row {
+    display: grid;
+    gap: 1.1rem;
+  }
+  @media (min-width: 40rem) {
+    .intake__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .intake__row[hidden],
+  .field[hidden] {
+    display: none;
+  }
+  .intake__fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .intake__fieldset legend {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .intake__radios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+  .intake__radios label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    cursor: pointer;
+  }
+  .intake__radios input {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--primary);
+  }
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .field label {
+    font-weight: 600;
+  }
+  .req {
+    color: var(--accent);
+  }
+  .opt {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid #b9b0a1;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.85rem;
+    min-height: 3rem;
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--primary);
+  }
+  .hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .intake__regio {
+    margin-top: 0.5rem;
+  }
+  .intake__regio[hidden] {
+    display: none;
+  }
+  .intake__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .intake__privacy,
+  .intake__reactie {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .intake__status:empty {
+    display: none;
+  }
+  .intake__status.is-error {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    background: #fbe9e7;
+    border: 1px solid #e3a59b;
+    color: #7a2317;
+    font-weight: 500;
+  }
+  .intake .btn {
+    justify-self: start;
+  }
+</style>

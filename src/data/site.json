@@ -1,0 +1,22 @@
+{
+  "bedrijfsnaam": "AdeptXS",
+  "tagline": "Verzuim, re-integratie en werk dat past — voor het MKB",
+  "eigenaar": "[INVULLEN: je voor- en achternaam]",
+  "functie": "Geregistreerd arbeidsdeskundige, jobcoach en coach",
+  "portret": "",
+  "email": "info@adeptxs.nl",
+  "telefoon": "[INVULLEN: telefoonnummer]",
+  "adres": {
+    "straat": "[INVULLEN: straat en huisnummer]",
+    "postcode": "[INVULLEN: postcode]",
+    "plaats": "[INVULLEN: plaats]"
+  },
+  "kvk": "[INVULLEN: KvK-nummer]",
+  "btw": "[INVULLEN: btw-identificatienummer]",
+  "sraRegisternummer": "[INVULLEN: SRA-registernummer]",
+  "sraRegisterUrl": "https://www.sra.nl",
+  "linkedin": "",
+  "reactietijd": "binnen twee werkdagen",
+  "werkgebied": "Zuid-Holland en omgeving",
+  "videobellen": "Zoom"
+}

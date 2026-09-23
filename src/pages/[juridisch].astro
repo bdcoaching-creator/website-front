@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const paginas = await getCollection("juridisch");
+  return paginas.map((entry) => ({ params: { juridisch: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.titel} description={entry.data.omschrijving}>
+  <section class="section">
+    <div class="container prose">
+      <h1>{entry.data.titel}</h1>
+      <p class="bijgewerkt">Laatst bijgewerkt: {entry.data.bijgewerkt}</p>
+      <Content />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bijgewerkt {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+</style>

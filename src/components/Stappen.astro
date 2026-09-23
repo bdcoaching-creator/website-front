@@ -1,0 +1,17 @@
+---
+interface Props {
+  stappen: { titel: string; tekst: string }[];
+}
+const { stappen } = Astro.props;
+---
+
+<ol class="steps">
+  {
+    stappen.map((s) => (
+      <li>
+        <h3>{s.titel}</h3>
+        <p>{s.tekst}</p>
+      </li>
+    ))
+  }
+</ol>

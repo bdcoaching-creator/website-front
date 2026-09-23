@@ -1,0 +1,211 @@
+# Configuratie voor Pages CMS (https://pagescms.org).
+# Hiermee bewerk je teksten, prijzen en foto's via een webinterface, zonder code.
+# Elke opslag = een commit op GitHub = automatisch nieuwe versie van de site via Cloudflare Pages.
+
+media:
+  input: public/images
+  output: /images
+  categories: [image]
+
+content:
+  # ---------- Bedrijfsgegevens ----------
+  - name: site
+    label: Bedrijfsgegevens
+    description: Naam, contactgegevens, KvK en registraties. Deze gegevens staan onder andere in de footer.
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - { name: bedrijfsnaam, label: Bedrijfsnaam, type: string, required: true }
+      - { name: tagline, label: Tagline, type: string, required: true }
+      - { name: eigenaar, label: Jouw naam, type: string, required: true }
+      - { name: functie, label: Functieomschrijving, type: string }
+      - { name: portret, label: Portretfoto, type: image, description: "Staande foto, bij voorkeur 4:5 (bijv. 800 x 1000 pixels)." }
+      - { name: email, label: E-mailadres, type: string, required: true }
+      - { name: telefoon, label: Telefoonnummer, type: string }
+      - name: adres
+        label: Vestigingsadres
+        type: object
+        fields:
+          - { name: straat, label: Straat en huisnummer, type: string }
+          - { name: postcode, label: Postcode, type: string }
+          - { name: plaats, label: Plaats, type: string }
+      - { name: kvk, label: KvK-nummer, type: string }
+      - { name: btw, label: Btw-identificatienummer, type: string }
+      - { name: sraRegisternummer, label: SRA-registernummer, type: string }
+      - { name: sraRegisterUrl, label: Link naar SRA-register, type: string }
+      - { name: linkedin, label: LinkedIn-profiel (URL), type: string }
+      - { name: reactietijd, label: Reactietijd, type: string, description: "Bijv. 'binnen twee werkdagen'." }
+      - { name: werkgebied, label: Werkgebied op locatie, type: string }
+      - { name: videobellen, label: Videobeltool, type: string }
+
+  # ---------- Tarieven ----------
+  - name: tarieven
+    label: Tarieven
+    description: "Eén plek voor alle prijzen. Laat 'Prijs' leeg voor 'Op aanvraag', vul 0 in voor 'Gratis'."
+    type: file
+    path: src/data/tarieven.json
+    format: json
+    fields:
+      - { name: toelichting, label: Toelichting onder de tabel, type: text }
+      - name: tarieven
+        label: Tarieven
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.omschrijving}" } }
+        fields:
+          - name: dienst
+            label: Dienst
+            type: select
+            options:
+              values:
+                - { value: algemeen, label: Algemeen (op alle dienstpagina's) }
+                - { value: jobcoaching, label: Jobcoaching }
+                - { value: re-integratie, label: Re-integratie }
+                - { value: arbeidsdeskundig-onderzoek, label: Arbeidsdeskundig onderzoek }
+                - { value: coaching-voor-ondernemers, label: Coaching voor ondernemers }
+          - { name: omschrijving, label: Omschrijving, type: string, required: true }
+          - { name: prijs, label: Prijs in euro's, type: number, description: "Leeg = Op aanvraag, 0 = Gratis." }
+          - { name: vanaf, label: "Toon als 'vanaf'-prijs", type: boolean }
+          - { name: eenheid, label: Eenheid, type: string, description: "Bijv. 'per uur', 'per traject'." }
+          - name: btw
+            label: Btw
+            type: select
+            options:
+              values:
+                - { value: excl, label: Exclusief btw (zakelijk) }
+                - { value: incl, label: Inclusief btw (particulier) }
+          - { name: toelichting, label: Korte toelichting, type: string }
+
+  # ---------- Diensten ----------
+  - name: diensten
+    label: Diensten
+    description: De vier dienstpagina's. Maak geen nieuwe diensten aan zonder de website-bouwer te raadplegen.
+    type: collection
+    path: src/content/diensten
+    format: yaml-frontmatter
+    operations: { create: false, delete: false, rename: false }
+    view:
+      fields: [titel, volgorde]
+      primary: titel
+      sort: [volgorde]
+    fields:
+      - { name: titel, label: Naam van de dienst, type: string, required: true }
+      - { name: volgorde, label: Volgorde, type: number, required: true }
+      - { name: kaartTekst, label: Korte tekst op de overzichtskaart, type: text, required: true }
+      - name: seo
+        label: Zoekmachines (Google)
+        type: object
+        fields:
+          - { name: titel, label: Paginatitel, type: string, description: "Maximaal ca. 60 tekens." }
+          - { name: omschrijving, label: Omschrijving, type: text, description: "Maximaal ca. 155 tekens." }
+      - name: hero
+        label: Bovenste blok
+        type: object
+        fields:
+          - { name: label, label: Label boven de titel, type: string }
+          - { name: titel, label: Titel, type: string }
+          - { name: intro, label: Introductie, type: text }
+      - name: cta
+        label: Knop en formulier
+        type: object
+        fields:
+          - { name: knop, label: Tekst op de knop, type: string }
+          - { name: formulierTitel, label: Titel boven het formulier, type: string }
+          - { name: formulierIntro, label: Tekst boven het formulier, type: text }
+      - { name: herkenning, label: "Herken je dit? (situaties)", type: string, list: true }
+      - name: voorWie
+        label: Voor wie
+        type: object
+        list: true
+        fields:
+          - { name: titel, label: Titel, type: string }
+          - { name: tekst, label: Tekst, type: text }
+      - { name: wieBetaalt, label: "Wie betaalt?", type: text }
+      - { name: oplevering, label: "Wat levert het op?", type: string, list: true }
+      - name: stappen
+        label: Stappen in de werkwijze
+        type: object
+        list: true
+        fields:
+          - { name: titel, label: Titel, type: string }
+          - { name: tekst, label: Tekst, type: text }
+      - { name: locatie, label: Online of op locatie, type: text }
+      - { name: kwalificatie, label: Deskundigheid, type: text }
+      - { name: werkgebiedNotitie, label: Notitie over werkgebied (bij formulier), type: text }
+      - { name: vraagPostcode, label: Vraag naar postcode van de werkplek, type: boolean }
+      - name: faq
+        label: Veelgestelde vragen
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.vraag}" } }
+        fields:
+          - { name: vraag, label: Vraag, type: string }
+          - { name: antwoord, label: Antwoord, type: text }
+      - { name: body, label: "Tekst 'In het kort'", type: rich-text }
+
+  # ---------- Homepage ----------
+  - name: home
+    label: Homepage
+    type: file
+    path: src/data/home.json
+    format: json
+    fields:
+      - name: hero
+        label: Bovenste blok
+        type: object
+        fields:
+          - { name: label, label: Label boven de titel, type: string }
+          - { name: titel, label: Titel, type: string }
+          - { name: intro, label: Introductie, type: text }
+          - { name: ctaPrimair, label: Tekst hoofdknop, type: string }
+          - { name: ctaSecundair, label: Tekst tweede knop, type: string }
+      - name: herkenning
+        label: Herken je dit?
+        type: object
+        fields:
+          - { name: titel, label: Titel, type: string }
+          - { name: punten, label: Situaties, type: string, list: true }
+      - name: werkwijze
+        label: Werkwijze
+        type: object
+        fields:
+          - { name: titel, label: Titel, type: string }
+          - name: stappen
+            label: Stappen
+            type: object
+            list: true
+            fields:
+              - { name: titel, label: Titel, type: string }
+              - { name: tekst, label: Tekst, type: text }
+      - name: privacy
+        label: Blok vertrouwelijkheid
+        type: object
+        fields:
+          - { name: titel, label: Titel, type: string }
+          - { name: tekst, label: Tekst, type: text }
+
+  # ---------- Over mij ----------
+  - name: paginas
+    label: Over mij
+    type: collection
+    path: src/content/paginas
+    format: yaml-frontmatter
+    operations: { create: false, delete: false, rename: false }
+    fields:
+      - { name: titel, label: Titel, type: string }
+      - { name: omschrijving, label: Omschrijving voor Google, type: text }
+      - { name: intro, label: Introductie, type: text }
+      - { name: body, label: Tekst, type: rich-text }
+
+  # ---------- Juridische pagina's ----------
+  - name: juridisch
+    label: Juridische pagina's
+    description: Privacyverklaring, cookieverklaring, algemene voorwaarden en klachtenregeling.
+    type: collection
+    path: src/content/juridisch
+    format: yaml-frontmatter
+    operations: { create: false, delete: false, rename: false }
+    fields:
+      - { name: titel, label: Titel, type: string }
+      - { name: omschrijving, label: Omschrijving voor Google, type: string }
+      - { name: bijgewerkt, label: Laatst bijgewerkt, type: string }
+      - { name: body, label: Tekst, type: rich-text }

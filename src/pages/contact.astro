@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IntakeForm from "../components/IntakeForm.astro";
+import site from "../data/site.json";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Neem contact op met AdeptXS voor een gratis kennismakingsgesprek over re-integratie, arbeidsdeskundig onderzoek, jobcoaching of coaching."
+>
+  <section class="section">
+    <div class="container contact">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1>Laten we kennismaken</h1>
+        <p class="contact__intro">
+          Vertel kort waar je vraag over gaat. Ik neem {site.reactietijd} contact met je op. Het eerste gesprek van 30 minuten is gratis en vrijblijvend.
+        </p>
+        <div class="card contact__gegevens">
+          <h2>Direct contact</h2>
+          <p>
+            <a href={`mailto:${site.email}`}>{site.email}</a><br />
+            {site.telefoon}
+          </p>
+          <p class="contact__klein">
+            Online via {site.videobellen} in heel Nederland.<br />
+            Op locatie in {site.werkgebied}.
+          </p>
+        </div>
+        <div class="note note--warning contact__medisch">
+          <p>
+            <strong>Werkgever?</strong> Deel geen medische gegevens van je medewerker. Als werkgever mag je die ook niet verwerken. Beschrijf alleen de situatie en je vraag.
+          </p>
+        </div>
+      </div>
+      <IntakeForm titel="Stuur je aanvraag" intro="Velden met een * zijn verplicht." />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Vul de dienst in vanuit de link, bijvoorbeeld /contact?dienst=re-integratie
+  const dienst = new URLSearchParams(window.location.search).get("dienst");
+  const select = document.querySelector<HTMLSelectElement>('select[name="dienst"]');
+  if (dienst && select && [...select.options].some((o) => o.value === dienst)) {
+    select.value = dienst;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 60rem) {
+    .contact {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+    }
+  }
+  .contact__intro {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+  }
+  .contact__gegevens {
+    margin-top: 1.5rem;
+  }
+  .contact__gegevens h2 {
+    font-size: 1.25rem;
+  }
+  .contact__klein {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .contact__medisch {
+    margin-top: 1.5rem;
+  }
+</style>

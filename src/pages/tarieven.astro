@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PrijsTabel from "../components/PrijsTabel.astro";
+import CtaBand from "../components/CtaBand.astro";
+---
+
+<BaseLayout
+  title="Tarieven"
+  description="Heldere tarieven voor jobcoaching, re-integratie, arbeidsdeskundig onderzoek en coaching voor ondernemers. Vooraf altijd een offerte op maat."
+>
+  <section class="section">
+    <div class="container tarieven">
+      <div class="section-head">
+        <span class="eyebrow">Tarieven</span>
+        <h1>Helder vooraf, zonder verrassingen</h1>
+        <p>Elke situatie is anders. Daarom ontvang je voor een traject of onderzoek altijd eerst een voorstel met aanpak, planning en kosten. Hieronder vind je de uitgangspunten.</p>
+      </div>
+      <PrijsTabel />
+      <div class="note tarieven__note">
+        <p><strong>Tip voor werkgevers:</strong> veel verzuimverzekeringen vergoeden re-integratiebegeleiding of een arbeidsdeskundig onderzoek geheel of gedeeltelijk. Controleer je polis voordat we starten.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Een offerte op maat?"
+    tekst="Vertel kort wat er speelt. Je ontvangt een voorstel dat past bij je situatie."
+    knop="Vraag een voorstel aan"
+    href="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .tarieven {
+    max-width: 52rem;
+  }
+  .tarieven__note {
+    margin-top: 1.5rem;
+  }
+</style>

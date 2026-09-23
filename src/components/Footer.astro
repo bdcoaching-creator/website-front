@@ -1,0 +1,118 @@
+---
+import Logo from "./Logo.astro";
+import site from "../data/site.json";
+import { getDiensten, dienstUrl } from "../lib/diensten";
+
+const diensten = await getDiensten();
+const jaar = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <Logo light />
+        <p class="site-footer__tagline">{site.tagline}</p>
+        <ul class="site-footer__badges" aria-label="Registraties">
+          <li>Geregistreerd arbeidsdeskundige (SRA)</li>
+          <li>Lid NVvA</li>
+          <li>Erkend jobcoach</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Diensten</h2>
+        <ul class="site-footer__links">
+          {diensten.map((d) => <li><a href={dienstUrl(d.id)}>{d.data.titel}</a></li>)}
+          <li><a href="/tarieven">Tarieven</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Contact</h2>
+        <address class="site-footer__address">
+          {site.bedrijfsnaam}<br />
+          {site.adres.straat}<br />
+          {site.adres.postcode} {site.adres.plaats}<br />
+          <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          {site.telefoon}
+        </address>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Gegevens</h2>
+        <ul class="site-footer__links">
+          <li>KvK: {site.kvk}</li>
+          <li>Btw: {site.btw}</li>
+          <li><a href="/privacyverklaring">Privacyverklaring</a></li>
+          <li><a href="/cookieverklaring">Cookieverklaring</a></li>
+          <li><a href="/algemene-voorwaarden">Algemene voorwaarden</a></li>
+          <li><a href="/klachtenregeling">Klachtenregeling</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="site-footer__bottom">
+      © {jaar} {site.bedrijfsnaam}. Deze website gebruikt geen tracking-cookies.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #10262c;
+    color: rgb(255 255 255 / 0.85);
+    padding-block: 3.5rem 2rem;
+    font-size: 0.975rem;
+  }
+  .site-footer a {
+    color: #fff;
+  }
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 48rem) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+  }
+  .site-footer__tagline {
+    margin-top: 1rem;
+    max-width: 22rem;
+  }
+  .site-footer__title {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f0b48d;
+    margin-bottom: 0.75rem;
+  }
+  .site-footer__links,
+  .site-footer__badges {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .site-footer__badges li {
+    font-size: 0.9rem;
+  }
+  .site-footer__badges li::before {
+    content: "✓ ";
+    color: #f0b48d;
+  }
+  .site-footer__address {
+    font-style: normal;
+  }
+  .site-footer__bottom {
+    margin: 2.5rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.7);
+  }
+</style>

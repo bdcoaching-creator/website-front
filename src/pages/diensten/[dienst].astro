@@ -1,0 +1,165 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Stappen from "../../components/Stappen.astro";
+import Faq from "../../components/Faq.astro";
+import PrijsTabel from "../../components/PrijsTabel.astro";
+import IntakeForm from "../../components/IntakeForm.astro";
+import { getDiensten, zonderAfbreken } from "../../lib/diensten";
+
+export async function getStaticPaths() {
+  const diensten = await getDiensten();
+  return diensten.map((entry) => ({ params: { dienst: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: d.faq.map((f) => ({
+    "@type": "Question",
+    name: f.vraag,
+    acceptedAnswer: { "@type": "Answer", text: f.antwoord },
+  })),
+};
+---
+
+<BaseLayout title={d.seo.titel} description={d.seo.omschrijving}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <section class="dienst-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Kruimelpad">
+        <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/diensten">Diensten</a>
+        <span aria-hidden="true">/</span> <span aria-current="page">{d.titel}</span>
+      </nav>
+      <span class="eyebrow">{d.hero.label}</span>
+      <h1>{zonderAfbreken(d.hero.titel)}</h1>
+      <p class="dienst-hero__intro">{d.hero.intro}</p>
+      <a class="btn btn--primary" href="#aanvraag">{d.cta.knop}</a>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div>
+        <h2>Herken je dit?</h2>
+        <ul class="checklist">
+          {d.herkenning.map((h) => <li>{h}</li>)}
+        </ul>
+      </div>
+      <div class="prose">
+        <h2>In het kort</h2>
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Voor wie en wie betaalt?</h2>
+      </div>
+      <div class="grid grid--2">
+        {
+          d.voorWie.map((v) => (
+            <div class="card">
+              <h3>{v.titel}</h3>
+              <p>{v.tekst}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="note betaalt">
+        <p><strong>Wie betaalt?</strong> {d.wieBetaalt}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div>
+        <h2>Wat levert het op?</h2>
+        <ul class="checklist">
+          {d.oplevering.map((o) => <li>{o}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>Deskundigheid</h2>
+        <p>{d.kwalificatie}</p>
+        <h3>Online of op locatie</h3>
+        <p>{d.locatie}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Zo werkt het</h2>
+      </div>
+      <Stappen stappen={d.stappen} />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div>
+        <h2>Tarief</h2>
+        <PrijsTabel dienst={entry.id} />
+      </div>
+      <div>
+        <h2>Veelgestelde vragen</h2>
+        <Faq items={d.faq} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container aanvraag">
+      <IntakeForm
+        dienst={entry.id}
+        titel={d.cta.formulierTitel}
+        intro={d.cta.formulierIntro}
+        knop={d.cta.knop}
+        werkgebiedNotitie={d.werkgebiedNotitie}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dienst-hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    background:
+      radial-gradient(circle at 90% 0%, var(--primary-tint), transparent 50%),
+      var(--bg);
+  }
+  .dienst-hero h1 {
+    max-width: 48rem;
+  }
+  .dienst-hero__intro {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 44rem;
+    margin-bottom: 2rem;
+  }
+  .breadcrumb {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb a {
+    color: var(--ink-soft);
+  }
+  .betaalt {
+    margin-top: 1.5rem;
+    max-width: 60rem;
+  }
+  .aanvraag {
+    max-width: 52rem;
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+interface Props {
+  light?: boolean;
+}
+const { light = false } = Astro.props;
+---
+
+<span class:list={["logo", { "logo--light": light }]}>
+  <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
+    <rect width="64" height="64" rx="14" fill="currentColor"></rect>
+    <path d="M16 46 L30 18 L44 46" fill="none" stroke="var(--logo-contrast)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M36 30 H50" stroke="#e39a6b" stroke-width="6" stroke-linecap="round"></path>
+  </svg>
+  <span class="logo__text">Adept<span class="logo__xs">XS</span></span>
+</span>
+
+<style>
+  .logo {
+    --logo-contrast: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--primary);
+  }
+  .logo--light {
+    --logo-contrast: var(--primary);
+    color: #fff;
+  }
+  .logo__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .logo__text {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .logo--light .logo__text {
+    color: #fff;
+  }
+  .logo__xs {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .logo--light .logo__xs {
+    color: #f0b48d;
+  }
+</style>
