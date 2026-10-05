@@ -9,6 +9,7 @@
     "check:livegang": "node scripts/check-content.mjs --strict",
     "build": "node scripts/check-content.mjs && astro build",
     "preview": "astro preview",
+    "voorbeeld": "npm run build && node scripts/maak-voorbeeld.mjs voorbeeld",
     "test": "node --test tests/unit/*.test.ts && playwright test"
   },
   "dependencies": {
