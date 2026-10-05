@@ -1,0 +1,296 @@
+---
+/**
+ * "Weer op het spoor": decoratieve canvas-animatie voor de hero.
+ * Evenwijdige lijnen (de strepen uit het logo) stromen naar rechts en bundelen samen.
+ * Eén lijn is onderbroken (uitval); een lichtpuntje loopt vast bij de breuk.
+ * Daarna groeit de lijn weer aan elkaar (terugkeer) en loopt het puntje door.
+ * Scrollen maakt de lijnen rustiger; de muis duwt ze zacht opzij.
+ * Alle lijnen komen rechts samen in de A van het logo.
+ * Bij 'prefers-reduced-motion' wordt alleen de eindstand getekend.
+ */
+import { LOGO_LETTERS } from "../lib/logo";
+---
+
+<div class="sporen" aria-hidden="true">
+  <canvas class="sporen__canvas"></canvas>
+  <svg class="sporen__a" viewBox="-2 -2 35.3 38.1">
+    <defs>
+      <linearGradient id="sporen-a-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f3e4d2" />
+        <stop offset="1" stop-color="#a8b098" />
+      </linearGradient>
+    </defs>
+    <path fill="url(#sporen-a-grad)" fill-rule="evenodd" d={LOGO_LETTERS[0]}></path>
+  </svg>
+</div>
+
+<script>
+  type Lijn = { basis: number; amp: number; freq: number; snelheid: number; fase: number; kleur: string; dikte: number };
+
+  const KLEUREN = ["243 228 210", "168 176 152", "122 148 116"];
+  const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const clamp = (x: number, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const smooth = (a: number, b: number, x: number) => {
+    const t = clamp((x - a) / (b - a));
+    return t * t * (3 - 2 * t);
+  };
+
+  for (const wrap of document.querySelectorAll<HTMLElement>(".sporen")) {
+    const canvas = wrap.querySelector("canvas")!;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) continue;
+
+    const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let w = 0;
+    let h = 0;
+    let mobiel = false;
+    let lijnen: Lijn[] = [];
+    const muis = { x: -9999, y: -9999, actief: false };
+    let scrollRust = 0;
+    let start = performance.now();
+    let zichtbaar = true;
+    let frame = 0;
+
+    const N = 11;
+    const ACCENT = 5;
+    // Punt waar alle sporen samenkomen (links onder de A). Op mobiel lopen ze door tot de rand.
+    const FOCUS = { x: 0.8, y: 0.6 };
+    const eindX = () => (mobiel ? w : w * FOCUS.x);
+
+    function opbouw() {
+      const r = wrap.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = r.width;
+      h = r.height;
+      mobiel = w < 760;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const boven = mobiel ? 0.12 : 0.16;
+      const onder = mobiel ? 0.9 : 0.86;
+      lijnen = Array.from({ length: N }, (_, i) => ({
+        basis: i === ACCENT && !mobiel ? 0.68 : boven + (i / (N - 1)) * (onder - boven),
+        amp: (mobiel ? 8 : 16) + (i % 3) * 6,
+        freq: 0.0045 + (i % 4) * 0.0009,
+        snelheid: 0.35 + (i % 5) * 0.08,
+        fase: i * 1.7,
+        kleur: KLEUREN[i % KLEUREN.length],
+        dikte: i % 2 ? 1.5 : 2.5,
+      }));
+    }
+
+    /** y-positie van lijn i op x, inclusief golf, bundeling naar rechts en muis. */
+    function yOp(l: Lijn, i: number, x: number, t: number, rust: number) {
+      const golf = Math.sin(x * l.freq + t * l.snelheid + l.fase) * l.amp * (1 - rust * 0.85);
+      let y = l.basis * h + golf;
+      // Bundelen: aan de rechterkant komen alle sporen samen.
+      const bundel = mobiel ? smooth(0.45, 1.05, x / w) * 0.85 : smooth(0.42, FOCUS.x, x / w);
+      const doelY = (mobiel ? h * 0.5 : h * FOCUS.y) + (i - ACCENT) * (mobiel ? 3 : 2.2);
+      y = y + (doelY - y) * bundel;
+      if (muis.actief) {
+        const dx = x - muis.x;
+        const dy = y - muis.y;
+        const d = Math.hypot(dx, dy);
+        const R = 150;
+        if (d < R) y += Math.sign(dy || 1) * Math.pow(1 - d / R, 2) * 34;
+      }
+      return y;
+    }
+
+    function tekenLijn(i: number, l: Lijn, t: number, rust: number, van: number, tot: number, dy = 0) {
+      ctx!.beginPath();
+      const stap = 8;
+      for (let x = van; x <= tot + stap; x += stap) {
+        const xx = Math.min(x, tot);
+        const y = yOp(l, i, xx, t, rust) + dy * Math.sin(Math.PI * clamp((xx - van) / Math.max(1, tot - van)) * 0.5);
+        if (x === van) ctx!.moveTo(xx, y);
+        else ctx!.lineTo(xx, y);
+      }
+      ctx!.stroke();
+    }
+
+    function teken(nu: number) {
+      const t = (nu - start) / 1000;
+      ctx!.clearRect(0, 0, w, h);
+      const rust = rustig ? 0.6 : scrollRust;
+
+      // Verhaal van de accentlijn: 0 = uitval, 1 = weer verbonden.
+      const herstel = rustig ? 1 : ease(clamp((t - 1.4) / 2.6));
+
+      lijnen.forEach((l, i) => {
+        if (i === ACCENT) return;
+        ctx!.strokeStyle = `rgb(${l.kleur} / ${mobiel ? 0.22 : 0.18 + (i % 3) * 0.06})`;
+        ctx!.lineWidth = l.dikte;
+        ctx!.lineCap = "round";
+        tekenLijn(i, l, t, rust, 0, eindX());
+      });
+
+      // Accentlijn met breuk.
+      const l = lijnen[ACCENT];
+      const breukVan = w * (mobiel ? 0.34 : 0.58);
+      const breukBreedte = w * (mobiel ? 0.2 : 0.1) * (1 - herstel);
+      const breukTot = breukVan + breukBreedte;
+      const zak = (mobiel ? 26 : 46) * (1 - herstel);
+
+      // Op desktop loopt de tekst links: daar is de accentlijn nog vaag en wordt hij naar rechts toe helder.
+      const verloop = ctx!.createLinearGradient(mobiel ? 0 : w * 0.42, 0, mobiel ? w * 0.15 : w * 0.62, 0);
+      verloop.addColorStop(0, "rgb(243 228 210 / 0.12)");
+      verloop.addColorStop(1, "rgb(243 228 210 / 0.95)");
+      ctx!.strokeStyle = verloop;
+      ctx!.lineWidth = 3.5;
+      ctx!.lineCap = "round";
+      tekenLijn(ACCENT, l, t, rust, 0, breukVan);
+      // Rechterdeel hangt eerst lager (uitgevallen) en veert terug.
+      ctx!.beginPath();
+      const stap = 8;
+      const eind = eindX();
+      for (let x = breukTot; x <= eind + stap; x += stap) {
+        const xx = Math.min(x, eind);
+        const terug = zak * (1 - smooth(breukTot, breukTot + w * 0.25, xx));
+        const y = yOp(l, ACCENT, xx, t, rust) + terug;
+        if (x === breukTot) ctx!.moveTo(xx, y);
+        else ctx!.lineTo(xx, y);
+      }
+      ctx!.stroke();
+
+      // Labels bij de breuk.
+      ctx!.font = `500 ${mobiel ? 12 : 13}px "Inter Variable", system-ui, sans-serif`;
+      ctx!.textAlign = "center";
+      const labelY = yOp(l, ACCENT, breukVan, t, rust);
+      const alfaUitval = clamp(1 - herstel * 2.2);
+      if (alfaUitval > 0.01) {
+        ctx!.fillStyle = `rgb(243 228 210 / ${0.75 * alfaUitval})`;
+        ctx!.fillText("uitval", breukVan + breukBreedte / 2, labelY + zak + 30);
+      }
+      const alfaTerug = clamp((herstel - 0.7) / 0.3) * clamp(1 - (t - 7) / 2.5);
+      if (alfaTerug > 0.01 && !rustig) {
+        const lx = breukVan + (mobiel ? 0 : w * 0.06);
+        ctx!.fillStyle = `rgb(243 228 210 / ${0.8 * alfaTerug})`;
+        ctx!.fillText("weer aan het werk", lx, yOp(l, ACCENT, lx, t, rust) + 30);
+      }
+
+      // Lichtpuntje dat over de accentlijn reist (werk dat weer stroomt).
+      if (!rustig) {
+        const periode = 5.5;
+        const fase = ((t % periode) / periode) * (eindX() + 40) - 40;
+        const vast = herstel < 0.98 && fase > breukVan - 6;
+        const px = vast ? breukVan - 6 : fase;
+        if (px > 0 && px < eindX()) {
+          const py = yOp(l, ACCENT, px, t, rust);
+          const zicht = mobiel ? 1 : smooth(w * 0.4, w * 0.6, px);
+          const g = ctx!.createRadialGradient(px, py, 0, px, py, 22);
+          g.addColorStop(0, `rgb(255 253 249 / ${0.95 * zicht})`);
+          g.addColorStop(0.35, `rgb(243 228 210 / ${0.45 * zicht})`);
+          g.addColorStop(1, "rgb(243 228 210 / 0)");
+          ctx!.fillStyle = g;
+          ctx!.beginPath();
+          ctx!.arc(px, py, 22, 0, Math.PI * 2);
+          ctx!.fill();
+        }
+      }
+    }
+
+    function lus(nu: number) {
+      teken(nu);
+      if (zichtbaar && !document.hidden) frame = requestAnimationFrame(lus);
+      else frame = 0;
+    }
+    const startLus = () => {
+      if (!rustig && !frame) frame = requestAnimationFrame(lus);
+    };
+
+    opbouw();
+    if (rustig) teken(start + 10_000);
+    else startLus();
+
+    new ResizeObserver(() => {
+      opbouw();
+      if (rustig) teken(start + 10_000);
+    }).observe(wrap);
+
+    new IntersectionObserver(([e]) => {
+      zichtbaar = e.isIntersecting;
+      if (zichtbaar) startLus();
+    }).observe(wrap);
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) startLus();
+    });
+
+    if (!rustig) {
+      window.addEventListener(
+        "scroll",
+        () => {
+          const r = wrap.getBoundingClientRect();
+          scrollRust = clamp(-r.top / (r.height * 0.8));
+        },
+        { passive: true },
+      );
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const host = wrap.parentElement ?? wrap;
+        host.addEventListener("pointermove", (e) => {
+          const r = wrap.getBoundingClientRect();
+          muis.x = e.clientX - r.left;
+          muis.y = e.clientY - r.top;
+          muis.actief = true;
+        });
+        host.addEventListener("pointerleave", () => {
+          muis.actief = false;
+        });
+      }
+    }
+  }
+</script>
+
+<style>
+  .sporen {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .sporen__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  /* De A van het logo: hier komen alle sporen samen. Verschijnt zodra de lijn hersteld is. */
+  .sporen__a {
+    position: absolute;
+    left: 80%;
+    top: 60%;
+    width: clamp(9rem, 15vw, 14rem);
+    transform: translate(-12%, -88%);
+    filter: drop-shadow(0 0 40px rgb(243 228 210 / 0.25));
+    animation: sporen-a 1.4s var(--ease) 3.4s both, sporen-zweef 6s ease-in-out 4.8s infinite alternate;
+  }
+  @keyframes sporen-a {
+    from {
+      opacity: 0;
+      transform: translate(-12%, -70%) scale(0.85);
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-12%, -88%);
+      clip-path: inset(-50% -50% -50% -50%);
+    }
+  }
+  @keyframes sporen-zweef {
+    to {
+      transform: translate(-12%, -92%);
+    }
+  }
+  @media (max-width: 47.99rem) {
+    .sporen__a {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sporen__a {
+      animation: none;
+    }
+  }
+</style>

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /bedankt
 
-Sitemap: https://www.adeptxs.nl/sitemap-index.xml
+Sitemap: https://www.adaptxs.nl/sitemap-index.xml

@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import DienstKaart from "../../components/DienstKaart.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import PaginaHero from "../../components/PaginaHero.astro";
 import { getDiensten, dienstUrl } from "../../lib/diensten";
 
 const diensten = await getDiensten();
@@ -18,15 +19,17 @@ const titelVan = (id: string) => diensten.find((d) => d.id === id)?.data.titel ?
   title="Diensten"
   description="Jobcoaching, re-integratie, arbeidsdeskundig onderzoek en coaching voor ondernemers. Voor MKB-werkgevers, medewerkers en zzp'ers."
 >
+  <PaginaHero
+    label="Diensten"
+    titel="Vier diensten, één aanspreekpunt"
+    intro="Of het nu gaat om een medewerker die uitvalt, iemand met een arbeidsbeperking of jijzelf als ondernemer: je werkt met één persoon die de wet, de werkvloer en de mens kent."
+    kruimel={[{ label: "Home", href: "/" }, { label: "Diensten" }]}
+  />
+
   <section class="section">
     <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Diensten</span>
-        <h1>Vier diensten, één aanspreekpunt</h1>
-        <p>Of het nu gaat om een medewerker die uitvalt, iemand met een arbeidsbeperking of jijzelf als ondernemer: je werkt met één persoon die de wet, de werkvloer en de mens kent.</p>
-      </div>
-      <div class="grid grid--4">
-        {diensten.map((d) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} />)}
+      <div class="grid grid--4" data-reveal-group>
+        {diensten.map((d, i) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} nr={i + 1} />)}
       </div>
     </div>
   </section>
@@ -37,10 +40,10 @@ const titelVan = (id: string) => diensten.find((d) => d.id === id)?.data.titel ?
         <h2>Welke dienst past bij mij?</h2>
         <p>Kies de situatie die het meest op de jouwe lijkt. Twijfel je? Plan dan een gratis kennismaking.</p>
       </div>
-      <ul class="keuzehulp">
+      <ul class="keuzehulp" data-reveal-group>
         {
           keuzehulp.map((k) => (
-            <li>
+            <li data-reveal>
               <a href={dienstUrl(k.dienst)}>
                 <span class="keuzehulp__situatie">{k.situatie}</span>
                 <span class="keuzehulp__dienst">{titelVan(k.dienst)} <span aria-hidden="true">→</span></span>
@@ -82,14 +85,18 @@ const titelVan = (id: string) => diensten.find((d) => d.id === id)?.data.titel ?
     color: var(--ink);
     text-decoration: none;
   }
+  .keuzehulp a {
+    transition: border-color 0.25s ease, transform 0.4s var(--ease);
+  }
   .keuzehulp a:hover {
-    border-color: var(--primary);
+    border-color: var(--green);
+    transform: translateX(6px);
   }
   .keuzehulp__situatie {
     flex: 1 1 20rem;
   }
   .keuzehulp__dienst {
     font-weight: 600;
-    color: var(--primary);
+    color: var(--green);
   }
 </style>

@@ -26,7 +26,7 @@ const canonical = new URL(schoonPad(Astro.url.pathname), Astro.site);
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#0e4a57" />
+    <meta name="theme-color" content="#0c6d45" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:site_name" content={site.bedrijfsnaam} />
@@ -43,5 +43,8 @@ const canonical = new URL(schoonPad(Astro.url.pathname), Astro.site);
       <slot />
     </main>
     <Footer />
+    <script>
+      import "../scripts/interactie";
+    </script>
   </body>
 </html>

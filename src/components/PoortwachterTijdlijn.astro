@@ -1,0 +1,522 @@
+---
+import data from "../data/poortwachter.json";
+import { dienstUrl } from "../lib/diensten";
+
+interface Props {
+  /** Compacte versie (bijv. op de homepage) zonder de volledige lijst eronder. */
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const momenten = [...data.momenten].sort((a, b) => a.week - b.week);
+const MAX = 104;
+---
+
+<div class="pw" data-pw data-momenten={JSON.stringify(momenten)}>
+  <div class="pw__interactief" hidden>
+    <div class="pw__kop">
+      <div>
+        <p class="pw__label" id="pw-label">Week van het verzuim</p>
+        <p class="pw__week" aria-hidden="true"><span data-pw-week>1</span><small> / {MAX}</small></p>
+      </div>
+      <div class="pw__knoppen">
+        <button class="pw__stap" type="button" data-pw-vorige aria-label="Vorige stap"><span aria-hidden="true">←</span></button>
+        <button class="btn btn--outline-light pw__play" type="button" data-pw-play aria-pressed="false">
+          <span data-pw-play-tekst>Speel af</span>
+        </button>
+        <button class="pw__stap" type="button" data-pw-volgende-knop aria-label="Volgende stap"><span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <div class="pw__baan">
+      <div class="pw__spoor" aria-hidden="true">
+        <div class="pw__vulling" data-pw-vulling></div>
+        <div class="pw__handvat" data-pw-handvat></div>
+        <div class="pw__jaar" style="left:50%"><span>1 jaar</span></div>
+      </div>
+      <div class="pw__markers">
+        {
+          momenten.map((m, i) => (
+            <button
+              type="button"
+              class="pw__marker"
+              style={`left:${((m.week - 1) / (MAX - 1)) * 100}%`}
+              data-pw-marker={i}
+              aria-label={`Week ${m.week}: ${m.titel}`}
+            >
+              <span class="pw__marker-dot" />
+              <span class="pw__marker-week" aria-hidden="true">{m.week}</span>
+            </button>
+          ))
+        }
+      </div>
+      <input
+        class="pw__slider"
+        type="range"
+        min="1"
+        max={MAX}
+        value="1"
+        step="1"
+        aria-labelledby="pw-label"
+        data-pw-slider
+      />
+    </div>
+
+    <div class="pw__paneel" aria-live="polite" data-pw-paneel>
+      <div class="pw__nu">
+        <p class="pw__wie" data-pw-wie></p>
+        <h3 class="pw__titel" data-pw-titel></h3>
+        <p data-pw-tekst></p>
+      </div>
+      <div class="pw__hulp">
+        <p class="pw__hulp-label">Hoe ik help</p>
+        <p data-pw-hulp></p>
+        <a class="pw__link" data-pw-link href="/diensten/re-integratie">Bekijk de dienst <span aria-hidden="true">→</span></a>
+        <p class="pw__volgende" data-pw-volgende></p>
+      </div>
+    </div>
+  </div>
+
+  {
+    !compact && (
+      <ol class="pw__lijst">
+        {momenten.map((m) => (
+          <li>
+            <span class="pw__lijst-week">Week {m.week}</span>
+            <div>
+              <h3>{m.titel}</h3>
+              <p>{m.tekst}</p>
+              <p class="pw__lijst-hulp">
+                <strong>Hoe ik help:</strong> {m.hulp} <a href={dienstUrl(m.dienst)}>Meer informatie</a>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  <p class="pw__disclaimer">{data.disclaimer}</p>
+</div>
+
+<script>
+  type Moment = { week: number; titel: string; wie: string; tekst: string; hulp: string; dienst: string };
+  const MAX = 104;
+  const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-pw]")) {
+    const momenten: Moment[] = JSON.parse(root.dataset.momenten ?? "[]");
+    const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    q<HTMLElement>(".pw__interactief").hidden = false;
+
+    const slider = q<HTMLInputElement>("[data-pw-slider]");
+    const weekEl = q("[data-pw-week]");
+    const vulling = q("[data-pw-vulling]");
+    const handvat = q("[data-pw-handvat]");
+    const paneel = q("[data-pw-paneel]");
+    const markers = [...root.querySelectorAll<HTMLButtonElement>("[data-pw-marker]")];
+    const playKnop = q<HTMLButtonElement>("[data-pw-play]");
+    const playTekst = q("[data-pw-play-tekst]");
+    let huidigIndex = -1;
+
+    const actueel = (week: number) => {
+      let idx = 0;
+      momenten.forEach((m, i) => {
+        if (m.week <= week) idx = i;
+      });
+      return idx;
+    };
+
+    function toon(week: number) {
+      const idx = actueel(week);
+      const m = momenten[idx];
+      const volgende = momenten[idx + 1];
+      weekEl.textContent = String(week);
+      slider.value = String(week);
+      slider.setAttribute("aria-valuetext", `Week ${week}: ${m.titel}`);
+      vulling.style.transform = `scaleX(${(week - 1) / (MAX - 1)})`;
+      handvat.style.left = `${((week - 1) / (MAX - 1)) * 100}%`;
+      markers.forEach((knop, i) => {
+        knop.classList.toggle("is-voorbij", momenten[i].week <= week);
+        knop.classList.toggle("is-actief", i === idx);
+      });
+
+      if (idx !== huidigIndex) {
+        huidigIndex = idx;
+        paneel.classList.remove("is-nieuw");
+        void paneel.offsetWidth; // herstart animatie
+        paneel.classList.add("is-nieuw");
+        q("[data-pw-wie]").textContent = m.wie;
+        q("[data-pw-titel]").textContent = m.titel;
+        q("[data-pw-tekst]").textContent = m.tekst;
+        q("[data-pw-hulp]").textContent = m.hulp;
+        q<HTMLAnchorElement>("[data-pw-link]").href = `/diensten/${m.dienst}`;
+      }
+      q("[data-pw-volgende]").textContent = volgende
+        ? `Volgende stap: ${volgende.titel} (over ${volgende.week - week} ${volgende.week - week === 1 ? "week" : "weken"}).`
+        : "Einde van de wachttijd.";
+    }
+
+    slider.addEventListener("input", () => {
+      stop();
+      toon(Number(slider.value));
+    });
+    markers.forEach((knop, i) =>
+      knop.addEventListener("click", () => {
+        stop();
+        toon(momenten[i].week);
+      }),
+    );
+
+    // Afspelen: loopt door de 104 weken en pauzeert kort bij elk moment.
+    let timer = 0;
+    function stop() {
+      window.clearTimeout(timer);
+      timer = 0;
+      playKnop.setAttribute("aria-pressed", "false");
+      playTekst.textContent = "Speel af";
+    }
+    function stap() {
+      const w = Number(slider.value);
+      if (w >= MAX) return stop();
+      const nieuw = w + 1;
+      toon(nieuw);
+      const isMoment = momenten.some((m) => m.week === nieuw);
+      timer = window.setTimeout(stap, isMoment ? 1400 : 70);
+    }
+    playKnop.addEventListener("click", () => {
+      if (timer) return stop();
+      if (Number(slider.value) >= MAX) toon(1);
+      playKnop.setAttribute("aria-pressed", "true");
+      playTekst.textContent = "Pauze";
+      timer = window.setTimeout(stap, 300);
+    });
+
+    q<HTMLButtonElement>("[data-pw-vorige]").addEventListener("click", () => {
+      stop();
+      const idx = actueel(Number(slider.value));
+      const huidig = momenten[idx];
+      const doel = huidig.week < Number(slider.value) ? huidig : momenten[Math.max(0, idx - 1)];
+      toon(doel.week);
+    });
+    q<HTMLButtonElement>("[data-pw-volgende-knop]").addEventListener("click", () => {
+      stop();
+      const volgende = momenten[actueel(Number(slider.value)) + 1];
+      if (volgende) toon(volgende.week);
+    });
+
+    toon(1);
+
+    // Eén keer kort voorproeven als de tijdlijn in beeld komt.
+    if (!rustig && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (!e.isIntersecting) return;
+          io.disconnect();
+          let w = 1;
+          const demo = () => {
+            if (timer || Number(slider.value) !== w) return; // gebruiker heeft het overgenomen
+            w += 1;
+            toon(w);
+            if (w < 8) window.setTimeout(demo, 110);
+          };
+          window.setTimeout(demo, 500);
+        },
+        { threshold: 0.5 },
+      );
+      io.observe(root);
+    }
+  }
+</script>
+
+<style>
+  .pw {
+    color: var(--cream);
+  }
+  .pw__interactief {
+    background: var(--green-deep);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    box-shadow: 0 30px 60px rgb(6 61 36 / 0.35);
+  }
+  .pw__interactief[hidden] {
+    display: none;
+  }
+  .pw__kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .pw__knoppen {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .pw__stap {
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 50%;
+    border: 2px solid rgb(243 228 210 / 0.6);
+    background: transparent;
+    color: var(--cream);
+    font: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.35s var(--ease);
+  }
+  .pw__stap:hover {
+    background: rgb(243 228 210 / 0.12);
+    transform: scale(1.06);
+  }
+  .pw__label {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+  }
+  .pw__week {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 9vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .pw__week small {
+    font-size: 0.35em;
+    color: var(--sage-light);
+    font-weight: 500;
+  }
+
+  .pw__baan {
+    position: relative;
+    margin: 2.5rem 0.75rem 2rem;
+    height: 4.5rem;
+  }
+  .pw__spoor {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.25rem;
+    height: 10px;
+    border-radius: 999px;
+    background: repeating-linear-gradient(-60deg, rgb(243 228 210 / 0.22) 0 2px, transparent 2px 8px);
+  }
+  .pw__vulling {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--sage), var(--cream));
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.18s linear;
+  }
+  .pw__handvat {
+    position: absolute;
+    top: 50%;
+    width: 1.9rem;
+    height: 1.9rem;
+    margin: -0.95rem 0 0 -0.95rem;
+    border-radius: 50%;
+    background: var(--cream);
+    box-shadow: 0 0 0 6px rgb(243 228 210 / 0.18), 0 6px 16px rgb(0 0 0 / 0.3);
+    transition: left 0.18s linear;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .pw__jaar {
+    position: absolute;
+    top: -1.6rem;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--sage-light);
+  }
+  .pw__jaar::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 2.4rem;
+    margin: 0.2rem auto 0;
+    background: rgb(243 228 210 / 0.3);
+  }
+  .pw__markers {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .pw__marker {
+    pointer-events: auto;
+    position: absolute;
+    top: 0.45rem;
+    transform: translateX(-50%);
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem;
+    border: 0;
+    background: none;
+    color: var(--cream);
+    font: inherit;
+    cursor: pointer;
+  }
+  .pw__marker-dot {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    background: var(--green-deep);
+    border: 3px solid var(--sage);
+    transition: transform 0.35s var(--ease), background-color 0.25s, border-color 0.25s;
+  }
+  .pw__marker:hover .pw__marker-dot {
+    transform: scale(1.25);
+  }
+  .pw__marker.is-voorbij .pw__marker-dot {
+    background: var(--cream);
+    border-color: var(--cream);
+  }
+  .pw__marker.is-actief .pw__marker-dot {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 6px rgb(243 228 210 / 0.2);
+  }
+  .pw__marker-week {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--sage-light);
+  }
+  @media (max-width: 40rem) {
+    /* Te dicht op elkaar om aan te tikken: op mobiel bedien je met de schuif en de stapknoppen. */
+    .pw__marker {
+      pointer-events: none;
+    }
+    .pw__marker-week {
+      display: none;
+    }
+    .pw__marker-dot {
+      width: 1rem;
+      height: 1rem;
+      border-width: 2px;
+    }
+  }
+  .pw__slider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.6rem;
+    width: 100%;
+    height: 2rem;
+    margin: 0;
+    opacity: 0;
+    cursor: grab;
+    z-index: 1;
+  }
+  .pw__slider:focus-visible {
+    opacity: 1;
+    accent-color: var(--cream);
+  }
+
+  .pw__paneel {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgb(243 228 210 / 0.15);
+  }
+  @media (min-width: 52rem) {
+    .pw__paneel {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+  .pw__paneel.is-nieuw .pw__nu,
+  .pw__paneel.is-nieuw .pw__hulp {
+    animation: pw-in 0.6s var(--ease) both;
+  }
+  .pw__paneel.is-nieuw .pw__hulp {
+    animation-delay: 0.08s;
+  }
+  @keyframes pw-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  .pw__wie {
+    margin: 0 0 0.35rem;
+    font-size: 0.875rem;
+    color: var(--sage-light);
+  }
+  .pw__titel {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--cream);
+  }
+  .pw__hulp {
+    background: rgb(243 228 210 / 0.08);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+  }
+  .pw__hulp-label {
+    margin: 0 0 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+  }
+  .pw__link {
+    color: var(--cream);
+    font-weight: 600;
+  }
+  .pw__volgende {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: rgb(243 228 210 / 0.75);
+  }
+
+  .pw__lijst {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    color: var(--ink);
+  }
+  .pw__lijst li {
+    display: grid;
+    gap: 0.5rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+  }
+  @media (min-width: 40rem) {
+    .pw__lijst li {
+      grid-template-columns: 7rem 1fr;
+    }
+  }
+  .pw__lijst-week {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--green);
+  }
+  .pw__lijst h3 {
+    font-size: 1.15rem;
+  }
+  .pw__lijst p {
+    margin-bottom: 0.5rem;
+    color: var(--ink-soft);
+  }
+  .pw__lijst-hulp {
+    font-size: 0.95rem;
+  }
+  .pw__disclaimer {
+    margin: 1.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+  }
+  :global(.section--dark) .pw__disclaimer {
+    color: rgb(243 228 210 / 0.8);
+  }
+</style>

@@ -5,11 +5,13 @@ interface Props {
   id: string;
   titel: string;
   tekst: string;
+  nr?: number;
 }
-const { id, titel, tekst } = Astro.props;
+const { id, titel, tekst, nr } = Astro.props;
 ---
 
-<a class="card card--link" href={dienstUrl(id)}>
+<a class="card card--link" href={dienstUrl(id)} data-reveal>
+  {nr !== undefined && <span class="card__nr" aria-hidden="true">{String(nr).padStart(2, "0")}</span>}
   <h3>{titel}</h3>
   <p>{tekst}</p>
   <span class="card__more">Meer over {titel.toLowerCase()} <span aria-hidden="true">→</span></span>

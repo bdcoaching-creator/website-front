@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Logo from "../components/Logo.astro";
+import SporenHero from "../components/SporenHero.astro";
+import Marquee from "../components/Marquee.astro";
 import DienstKaart from "../components/DienstKaart.astro";
 import Stappen from "../components/Stappen.astro";
+import PoortwachterTijdlijn from "../components/PoortwachterTijdlijn.astro";
+import VerzuimCalculator from "../components/VerzuimCalculator.astro";
 import CtaBand from "../components/CtaBand.astro";
 import home from "../data/home.json";
 import site from "../data/site.json";
@@ -27,79 +32,117 @@ const jsonLd = {
 <BaseLayout title={site.bedrijfsnaam} description={beschrijving}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
+  <!-- Hero: "Weer op het spoor" -->
   <section class="hero">
+    <div class="hero__visual"><SporenHero /></div>
     <div class="container hero__inner">
-      <div class="hero__text">
-        <span class="eyebrow">{home.hero.label}</span>
-        <h1>{zonderAfbreken(home.hero.titel)}</h1>
-        <p class="hero__intro">{home.hero.intro}</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/contact">{home.hero.ctaPrimair}</a>
-          <a class="btn btn--ghost" href="/diensten">{home.hero.ctaSecundair}</a>
-        </div>
+      <div class="hero__logo">
+        <Logo variant="gradient-light" animate title={`${site.bedrijfsnaam}`} />
       </div>
-      <aside class="hero__panel" aria-label="Registraties">
-        <p class="hero__panel-title">Deskundig en geregistreerd</p>
-        <ul class="checklist">
-          <li>Geregistreerd arbeidsdeskundige (SRA)</li>
-          <li>Lid van de NVvA</li>
-          <li>Erkend jobcoach</li>
-          <li>Gecertificeerd coach</li>
-        </ul>
-        <p class="hero__panel-foot">Online via {site.videobellen} in heel Nederland. Op locatie in {site.werkgebied}.</p>
-      </aside>
+      <span class="eyebrow hero__fade" style="--d:0.9s">{home.hero.label}</span>
+      <h1 class="hero__fade" style="--d:1.05s">{zonderAfbreken(home.hero.titel)}</h1>
+      <p class="hero__intro hero__fade" style="--d:1.2s">{home.hero.intro}</p>
+      <div class="btn-row hero__fade" style="--d:1.35s">
+        <a class="btn btn--light" href="/contact">{home.hero.ctaPrimair} <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--outline-light" href="/diensten">{home.hero.ctaSecundair}</a>
+      </div>
+      <ul class="hero__badges hero__fade" style="--d:1.5s" aria-label="Registraties">
+        <li>Geregistreerd arbeidsdeskundige (SRA)</li>
+        <li>Lid NVvA</li>
+        <li>Erkend jobcoach</li>
+        <li>Gecertificeerd coach</li>
+      </ul>
     </div>
+    <a class="hero__scroll" href="#herkenning" aria-label="Scroll naar de inhoud"><span></span></a>
   </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head">
-        <h2>{home.herkenning.titel}</h2>
+  <Marquee
+    items={["Re-integratie", "Jobcoaching", "Arbeidsdeskundig onderzoek", "Coaching voor ondernemers", "Passend werk", "Wet verbetering poortwachter"]}
+  />
+
+  <section class="section section--alt" id="herkenning">
+    <div class="container herkenning">
+      <div data-reveal="left">
+        <span class="eyebrow">{home.herkenning.titel}</span>
+        <h2>Verzuim raakt je bedrijf direct. Je hoeft het niet alleen op te lossen.</h2>
       </div>
-      <ul class="checklist herkenning">
-        {home.herkenning.punten.map((p) => <li>{p}</li>)}
+      <ul class="checklist herkenning__lijst" data-reveal-group>
+        {home.herkenning.punten.map((p) => <li data-reveal>{p}</li>)}
       </ul>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <span class="eyebrow">Diensten</span>
         <h2>Waarmee ik je help</h2>
         <p>Vier diensten, één aanspreekpunt. Van begeleiding op de werkvloer tot een onafhankelijk rapport.</p>
       </div>
-      <div class="grid grid--4">
-        {diensten.map((d) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} />)}
+      <div class="grid grid--4" data-reveal-group>
+        {diensten.map((d, i) => <DienstKaart id={d.id} titel={d.data.titel} tekst={d.data.kaartTekst} nr={i + 1} />)}
       </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Tool: Poortwachter-tijdlijn</span>
+        <h2>Waar sta je in het verzuimtraject?</h2>
+        <p>Schuif door de 104 weken van de Wet verbetering poortwachter, of druk op afspelen.</p>
+      </div>
+      <div data-reveal="scale">
+        <PoortwachterTijdlijn compact />
+      </div>
+      <p class="tijdlijn-link" data-reveal>
+        <a href="/tools/poortwachter-tijdlijn">Bekijk alle stappen op een rij <span aria-hidden="true">→</span></a>
+      </p>
     </div>
   </section>
 
   <section class="section section--alt">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <span class="eyebrow">Werkwijze</span>
         <h2>{home.werkwijze.titel}</h2>
       </div>
-      <Stappen stappen={home.werkwijze.stappen} />
+      <div data-reveal>
+        <Stappen stappen={home.werkwijze.stappen} />
+      </div>
     </div>
   </section>
 
   <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Tool: verzuimkosten-calculator</span>
+        <h2>Wat kost verzuim je eigenlijk?</h2>
+        <p>Vul het salaris en de duur in en zie direct een indicatie. Alles rekent in je eigen browser.</p>
+      </div>
+      <div data-reveal>
+        <VerzuimCalculator />
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="stripe-divider"></div></div>
+
+  <section class="section">
     <div class="container grid grid--2 vertrouwen">
-      <div>
+      <div data-reveal="left">
         <span class="eyebrow">Privacy</span>
         <h2>{home.privacy.titel}</h2>
         <p>{home.privacy.tekst}</p>
         <a href="/privacyverklaring">Lees hoe ik met je gegevens omga</a>
       </div>
-      <div class="card">
+      <div class="card over-kaart" data-reveal>
         <h3>Over {site.bedrijfsnaam}</h3>
         <p>
           Achter {site.bedrijfsnaam} staat één persoon: geregistreerd arbeidsdeskundige, erkend jobcoach en gecertificeerd coach.
           Je hebt van kennismaking tot afronding met mij te maken.
         </p>
-        <a class="btn btn--ghost" href="/over">Meer over mij</a>
+        <a class="btn btn--ghost" href="/over">Meer over mij <span class="btn__arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -114,53 +157,141 @@ const jsonLd = {
 
 <style>
   .hero {
-    padding-block: clamp(3rem, 8vw, 6rem);
+    position: relative;
+    overflow: hidden;
+    min-height: min(92vh, 56rem);
+    display: grid;
+    align-items: center;
     background:
-      radial-gradient(circle at 85% 10%, var(--primary-tint), transparent 55%),
-      var(--bg);
+      radial-gradient(ellipse at 80% 50%, rgb(12 109 69 / 0.9), transparent 65%),
+      linear-gradient(160deg, var(--green-deep), #042a19);
+    color: var(--cream);
+    padding-block: clamp(3rem, 8vw, 5rem) clamp(4rem, 9vw, 6rem);
+  }
+  .hero__visual {
+    position: absolute;
+    inset: 0;
   }
   .hero__inner {
-    display: grid;
-    gap: 2.5rem;
-    align-items: center;
+    position: relative;
+    z-index: 1;
   }
-  @media (min-width: 60rem) {
-    .hero__inner {
-      grid-template-columns: 1.5fr 1fr;
-      gap: 4rem;
-    }
+  .hero__logo {
+    width: min(34rem, 88%);
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+    filter: drop-shadow(0 10px 30px rgb(0 0 0 / 0.25));
+  }
+  .hero h1 {
+    color: var(--cream);
+    max-width: 40rem;
+    font-size: clamp(2.2rem, 5.2vw, 4rem);
   }
   .hero__intro {
-    font-size: 1.2rem;
-    color: var(--ink-soft);
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: rgb(243 228 210 / 0.88);
     max-width: 38rem;
     margin-bottom: 2rem;
   }
-  .hero__panel {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    box-shadow: var(--shadow);
+  .hero__badges {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  .hero__panel-title {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+  .hero__badges li {
+    padding: 0.4rem 0.85rem;
+    border: 1px solid rgb(243 228 210 / 0.3);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--cream);
+    background: rgb(6 61 36 / 0.55);
+    backdrop-filter: blur(4px);
   }
-  .hero__panel-foot {
-    margin: 1.25rem 0 0;
-    padding-top: 1rem;
-    border-top: 1px solid var(--line);
-    color: var(--ink-soft);
-    font-size: 0.95rem;
+  .hero__fade {
+    animation: hero-fade 0.9s var(--ease) both;
+    animation-delay: var(--d, 0s);
   }
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    width: 1.6rem;
+    height: 2.6rem;
+    margin-left: -0.8rem;
+    border: 2px solid rgb(243 228 210 / 0.5);
+    border-radius: 999px;
+    z-index: 1;
+  }
+  .hero__scroll span {
+    position: absolute;
+    left: 50%;
+    top: 0.45rem;
+    width: 4px;
+    height: 0.6rem;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: var(--cream);
+    animation: scroll-hint 1.8s var(--ease) infinite;
+  }
+  @keyframes scroll-hint {
+    60% {
+      transform: translateY(0.8rem);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Op mobiel: lijnen als band onder de tekst, zodat de tekst goed leesbaar blijft. */
+  @media (max-width: 47.99rem) {
+    .hero {
+      min-height: 0;
+      padding-bottom: 0;
+      align-items: start;
+    }
+    .hero__visual {
+      position: relative;
+      inset: auto;
+      order: 2;
+      height: 15rem;
+      margin-top: 1rem;
+    }
+    .hero__scroll {
+      display: none;
+    }
+  }
+
   .herkenning {
-    max-width: 48rem;
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 60rem) {
+    .herkenning {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+  .herkenning__lijst {
     font-size: 1.1rem;
+  }
+  .tijdlijn-link {
+    margin: 1.5rem 0 0;
+    font-weight: 600;
   }
   .vertrouwen {
     align-items: center;
+  }
+  .over-kaart .btn {
+    margin-top: 0.5rem;
   }
 </style>

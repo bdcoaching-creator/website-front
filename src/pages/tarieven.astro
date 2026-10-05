@@ -2,21 +2,24 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PrijsTabel from "../components/PrijsTabel.astro";
 import CtaBand from "../components/CtaBand.astro";
+import PaginaHero from "../components/PaginaHero.astro";
 ---
 
 <BaseLayout
   title="Tarieven"
   description="Heldere tarieven voor jobcoaching, re-integratie, arbeidsdeskundig onderzoek en coaching voor ondernemers. Vooraf altijd een offerte op maat."
 >
+  <PaginaHero
+    label="Tarieven"
+    titel="Helder vooraf, zonder verrassingen"
+    intro="Elke situatie is anders. Daarom ontvang je voor een traject of onderzoek altijd eerst een voorstel met aanpak, planning en kosten. Hieronder vind je de uitgangspunten."
+    kruimel={[{ label: "Home", href: "/" }, { label: "Tarieven" }]}
+  />
+
   <section class="section">
     <div class="container tarieven">
-      <div class="section-head">
-        <span class="eyebrow">Tarieven</span>
-        <h1>Helder vooraf, zonder verrassingen</h1>
-        <p>Elke situatie is anders. Daarom ontvang je voor een traject of onderzoek altijd eerst een voorstel met aanpak, planning en kosten. Hieronder vind je de uitgangspunten.</p>
-      </div>
-      <PrijsTabel />
-      <div class="note tarieven__note">
+      <div data-reveal><PrijsTabel /></div>
+      <div class="note tarieven__note" data-reveal>
         <p><strong>Tip voor werkgevers:</strong> veel verzuimverzekeringen vergoeden re-integratiebegeleiding of een arbeidsdeskundig onderzoek geheel of gedeeltelijk. Controleer je polis voordat we starten.</p>
       </div>
     </div>

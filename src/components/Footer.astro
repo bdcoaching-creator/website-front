@@ -9,9 +9,12 @@ const jaar = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container">
+    <div class="site-footer__logo" data-reveal>
+      <Logo variant="gradient-light" />
+    </div>
+
     <div class="site-footer__grid">
       <div>
-        <Logo light />
         <p class="site-footer__tagline">{site.tagline}</p>
         <ul class="site-footer__badges" aria-label="Registraties">
           <li>Geregistreerd arbeidsdeskundige (SRA)</li>
@@ -29,9 +32,13 @@ const jaar = new Date().getFullYear();
       </div>
 
       <div>
-        <h2 class="site-footer__title">Contact</h2>
+        <h2 class="site-footer__title">Tools</h2>
+        <ul class="site-footer__links">
+          <li><a href="/tools/poortwachter-tijdlijn">Poortwachter-tijdlijn</a></li>
+          <li><a href="/tools/verzuimkosten-calculator">Verzuimkosten-calculator</a></li>
+        </ul>
+        <h2 class="site-footer__title site-footer__title--spaced">Contact</h2>
         <address class="site-footer__address">
-          {site.bedrijfsnaam}<br />
           {site.adres.straat}<br />
           {site.adres.postcode} {site.adres.plaats}<br />
           <a href={`mailto:${site.email}`}>{site.email}</a><br />
@@ -60,13 +67,17 @@ const jaar = new Date().getFullYear();
 
 <style>
   .site-footer {
-    background: #10262c;
-    color: rgb(255 255 255 / 0.85);
-    padding-block: 3.5rem 2rem;
+    background: var(--ink);
+    color: rgb(243 228 210 / 0.85);
+    padding-block: 4rem 2rem;
     font-size: 0.975rem;
   }
   .site-footer a {
-    color: #fff;
+    color: var(--cream);
+  }
+  .site-footer__logo {
+    max-width: 44rem;
+    margin-bottom: 3.5rem;
   }
   .site-footer__grid {
     display: grid;
@@ -78,17 +89,22 @@ const jaar = new Date().getFullYear();
     }
   }
   .site-footer__tagline {
-    margin-top: 1rem;
     max-width: 22rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--cream);
   }
   .site-footer__title {
     font-family: var(--font-body);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #f0b48d;
+    color: var(--sage-light);
     margin-bottom: 0.75rem;
+  }
+  .site-footer__title--spaced {
+    margin-top: 1.75rem;
   }
   .site-footer__links,
   .site-footer__badges {
@@ -103,16 +119,16 @@ const jaar = new Date().getFullYear();
   }
   .site-footer__badges li::before {
     content: "✓ ";
-    color: #f0b48d;
+    color: var(--sage-light);
   }
   .site-footer__address {
     font-style: normal;
   }
   .site-footer__bottom {
-    margin: 2.5rem 0 0;
+    margin: 3rem 0 0;
     padding-top: 1.5rem;
-    border-top: 1px solid rgb(255 255 255 / 0.15);
+    border-top: 1px solid rgb(243 228 210 / 0.15);
     font-size: 0.875rem;
-    color: rgb(255 255 255 / 0.7);
+    color: rgb(243 228 210 / 0.7);
   }
 </style>

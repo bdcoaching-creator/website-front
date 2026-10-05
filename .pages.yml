@@ -183,6 +183,37 @@ content:
           - { name: titel, label: Titel, type: string }
           - { name: tekst, label: Tekst, type: text }
 
+  # ---------- Poortwachter-tijdlijn ----------
+  - name: poortwachter
+    label: Poortwachter-tijdlijn
+    description: De momenten in de interactieve tijdlijn (tool voor werkgevers).
+    type: file
+    path: src/data/poortwachter.json
+    format: json
+    fields:
+      - { name: titel, label: Titel, type: string }
+      - { name: intro, label: Introductie, type: text }
+      - { name: disclaimer, label: Disclaimer, type: text }
+      - name: momenten
+        label: Momenten
+        type: object
+        list: { collapsible: { collapsed: true, summary: "Week {fields.week}: {fields.titel}" } }
+        fields:
+          - { name: week, label: Week (1-104), type: number, required: true, options: { min: 1, max: 104 } }
+          - { name: titel, label: Titel, type: string, required: true }
+          - { name: wie, label: Wie is aan zet, type: string }
+          - { name: tekst, label: Wat moet er gebeuren, type: text }
+          - { name: hulp, label: Hoe ik help, type: text }
+          - name: dienst
+            label: Link naar dienst
+            type: select
+            options:
+              values:
+                - { value: jobcoaching, label: Jobcoaching }
+                - { value: re-integratie, label: Re-integratie }
+                - { value: arbeidsdeskundig-onderzoek, label: Arbeidsdeskundig onderzoek }
+                - { value: coaching-voor-ondernemers, label: Coaching voor ondernemers }
+
   # ---------- Over mij ----------
   - name: paginas
     label: Over mij

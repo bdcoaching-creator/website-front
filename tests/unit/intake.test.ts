@@ -3,8 +3,9 @@ import assert from "node:assert/strict";
 import { verwerkAanvraag, valideer, maakMail } from "../../src/server/intake.ts";
 import { formatPrijs } from "../../src/lib/prijs.ts";
 import { valtBinnenWerkgebied } from "../../src/lib/werkgebied.ts";
+import { berekenVerzuimkosten } from "../../src/lib/verzuimkosten.ts";
 
-const env = { BREVO_API_KEY: "test", MAIL_TO: "info@adeptxs.nl", MAIL_FROM: "website@adeptxs.nl" };
+const env = { BREVO_API_KEY: "test", MAIL_TO: "info@adaptxs.nl", MAIL_FROM: "website@adaptxs.nl" };
 
 function formulier(velden: Record<string, string>) {
   const fd = new FormData();
@@ -14,7 +15,7 @@ function formulier(velden: Record<string, string>) {
 const geldig = { rol: "werkgever", naam: "Jan Jansen", email: "jan@example.nl", dienst: "re-integratie", organisatie: "Bakkerij", medewerkers: "10–24", bericht: "Medewerker is ziek." };
 
 function verzoek(velden: Record<string, string>, json = true) {
-  return new Request("https://www.adeptxs.nl/api/intake", {
+  return new Request("https://www.adaptxs.nl/api/intake", {
     method: "POST",
     body: formulier(velden),
     headers: json ? { Accept: "application/json" } : {},
@@ -64,7 +65,7 @@ test("verwerkAanvraag: verstuurt mail via Brevo met reply-to", async () => {
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, "https://api.brevo.com/v3/smtp/email");
   const body = JSON.parse(String(calls[0].init.body));
-  assert.equal(body.to[0].email, "info@adeptxs.nl");
+  assert.equal(body.to[0].email, "info@adaptxs.nl");
   assert.equal(body.replyTo.email, "jan@example.nl");
 });
 
@@ -117,4 +118,16 @@ test("valtBinnenWerkgebied", () => {
   assert.equal(valtBinnenWerkgebied("3011"), true); // Rotterdam
   assert.equal(valtBinnenWerkgebied("9711 AA"), false); // Groningen
   assert.equal(valtBinnenWerkgebied("Leiden"), null);
+});
+
+test("berekenVerzuimkosten: jaar 1 en jaar 2 apart", () => {
+  const basis = { maandsalaris: 5200, jaar1: 100, jaar2: 70, opslag: 0, overigPerWeek: 0 };
+  const weekloon = (5200 * 12) / 52; // 1200
+  assert.equal(berekenVerzuimkosten({ ...basis, weken: 52 }).totaal, weekloon * 52);
+  const r = berekenVerzuimkosten({ ...basis, weken: 104, overigPerWeek: 100 });
+  assert.equal(r.loonJaar1, 1200 * 52);
+  assert.equal(r.loonJaar2, 1200 * 52 * 0.7);
+  assert.equal(r.overig, 10400);
+  assert.equal(berekenVerzuimkosten({ ...basis, weken: 500 }).loonJaar2, 1200 * 52 * 0.7, "maximaal 104 weken");
+  assert.equal(berekenVerzuimkosten({ ...basis, maandsalaris: Number.NaN, weken: 10 }).totaal, 0);
 });

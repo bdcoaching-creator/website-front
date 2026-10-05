@@ -1,0 +1,324 @@
+---
+/**
+ * Indicatieve calculator voor de kosten van verzuim.
+ * Rekent volledig in de browser: er wordt niets verstuurd of opgeslagen.
+ */
+---
+
+<div class="calc" data-calc>
+  <form class="calc__invoer" data-calc-form>
+    <div class="calc__veld">
+      <label for="c-salaris">Bruto maandsalaris</label>
+      <div class="calc__euro">
+        <span aria-hidden="true">€</span>
+        <input id="c-salaris" name="maandsalaris" type="number" inputmode="decimal" min="0" step="50" value="3500" />
+      </div>
+    </div>
+
+    <div class="calc__veld">
+      <label for="c-weken">Duur van het verzuim: <output data-calc-weken-label for="c-weken">26 weken</output></label>
+      <input id="c-weken" name="weken" type="range" min="1" max="104" value="26" />
+      <div class="calc__schaal" aria-hidden="true"><span>1 week</span><span>1 jaar</span><span>2 jaar</span></div>
+    </div>
+
+    <details class="calc__meer">
+      <summary>Aannames aanpassen</summary>
+      <div class="calc__rij">
+        <div class="calc__veld">
+          <label for="c-jaar1">Doorbetaling jaar 1 (%)</label>
+          <input id="c-jaar1" name="jaar1" type="number" min="70" max="100" step="5" value="100" />
+        </div>
+        <div class="calc__veld">
+          <label for="c-jaar2">Doorbetaling jaar 2 (%)</label>
+          <input id="c-jaar2" name="jaar2" type="number" min="70" max="100" step="5" value="70" />
+        </div>
+        <div class="calc__veld">
+          <label for="c-opslag">Werkgeverslasten en vakantiegeld (%)</label>
+          <input id="c-opslag" name="opslag" type="number" min="0" max="60" step="1" value="30" />
+        </div>
+        <div class="calc__veld">
+          <label for="c-overig">Overige kosten per week (€)</label>
+          <input id="c-overig" name="overigPerWeek" type="number" min="0" step="25" value="0" />
+          <p class="calc__hint">Bijvoorbeeld vervanging of productieverlies.</p>
+        </div>
+      </div>
+    </details>
+  </form>
+
+  <div class="calc__uitkomst" aria-live="polite">
+    <p class="calc__label">Geschatte kosten van dit verzuim</p>
+    <p class="calc__totaal" data-calc-totaal>€ 0</p>
+    <p class="calc__perweek" data-calc-perweek></p>
+
+    <div class="calc__balk" aria-hidden="true">
+      <span class="calc__deel calc__deel--1" data-calc-balk="loonJaar1"></span>
+      <span class="calc__deel calc__deel--2" data-calc-balk="loonJaar2"></span>
+      <span class="calc__deel calc__deel--3" data-calc-balk="overig"></span>
+    </div>
+    <dl class="calc__opbouw">
+      <div><dt><i class="calc__dot calc__dot--1"></i>Loondoorbetaling jaar 1</dt><dd data-calc-deel="loonJaar1">€ 0</dd></div>
+      <div><dt><i class="calc__dot calc__dot--2"></i>Loondoorbetaling jaar 2</dt><dd data-calc-deel="loonJaar2">€ 0</dd></div>
+      <div><dt><i class="calc__dot calc__dot--3"></i>Overige kosten</dt><dd data-calc-deel="overig">€ 0</dd></div>
+    </dl>
+    <a class="btn btn--light" href="/contact?dienst=re-integratie">Bespreek hoe je dit beperkt <span class="btn__arrow" aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<p class="calc__disclaimer">
+  Dit is een indicatie op basis van je eigen invoer, geen financieel of juridisch advies. Wettelijk betaal je bij ziekte
+  minimaal 70% van het loon door (tot een maximum), vaak is dat via de cao in het eerste jaar 100%. Je invoer blijft in je
+  browser en wordt nergens opgeslagen.
+</p>
+
+<script>
+  import { berekenVerzuimkosten, type VerzuimInvoer } from "../lib/verzuimkosten";
+
+  const euro = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-calc]")) {
+    const form = root.querySelector<HTMLFormElement>("[data-calc-form]")!;
+    const totaalEl = root.querySelector<HTMLElement>("[data-calc-totaal]")!;
+    const perWeekEl = root.querySelector<HTMLElement>("[data-calc-perweek]")!;
+    const wekenLabel = root.querySelector<HTMLElement>("[data-calc-weken-label]")!;
+    let getoond = 0;
+    let anim = 0;
+
+    // Getal telt soepel op of af naar de nieuwe waarde.
+    function telNaar(doel: number) {
+      cancelAnimationFrame(anim);
+      if (rustig) {
+        getoond = doel;
+        totaalEl.textContent = euro.format(doel);
+        return;
+      }
+      const van = getoond;
+      const t0 = performance.now();
+      const duur = 450;
+      const tik = (nu: number) => {
+        const p = Math.min(1, (nu - t0) / duur);
+        const e = 1 - Math.pow(1 - p, 3);
+        getoond = van + (doel - van) * e;
+        totaalEl.textContent = euro.format(getoond);
+        if (p < 1) anim = requestAnimationFrame(tik);
+      };
+      anim = requestAnimationFrame(tik);
+    }
+
+    function update() {
+      const fd = new FormData(form);
+      const invoer = Object.fromEntries(
+        ["maandsalaris", "weken", "jaar1", "jaar2", "opslag", "overigPerWeek"].map((k) => [k, Number(fd.get(k))]),
+      ) as VerzuimInvoer;
+      const u = berekenVerzuimkosten(invoer);
+      wekenLabel.textContent = `${invoer.weken} ${invoer.weken === 1 ? "week" : "weken"}`;
+      telNaar(u.totaal);
+      perWeekEl.textContent = `Gemiddeld ${euro.format(u.perWeek)} per week`;
+      for (const k of ["loonJaar1", "loonJaar2", "overig"] as const) {
+        root.querySelector<HTMLElement>(`[data-calc-deel="${k}"]`)!.textContent = euro.format(u[k]);
+        root.querySelector<HTMLElement>(`[data-calc-balk="${k}"]`)!.style.flexGrow = String(u.totaal ? u[k] / u.totaal : 0);
+      }
+    }
+
+    form.addEventListener("submit", (e) => e.preventDefault());
+    form.addEventListener("input", update);
+    update();
+  }
+</script>
+
+<style>
+  .calc {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 56rem) {
+    .calc {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+  }
+  .calc__invoer {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .calc__veld {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .calc__veld label {
+    font-weight: 600;
+  }
+  .calc__veld output {
+    color: var(--green);
+  }
+  .calc__veld input[type="number"] {
+    width: 100%;
+    font: inherit;
+    border: 1px solid #c7b9a5;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.85rem;
+    min-height: 3rem;
+    background: #fff;
+    color: var(--ink);
+  }
+  .calc__euro {
+    position: relative;
+  }
+  .calc__euro span {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .calc__euro input {
+    padding-left: 2rem !important;
+    font-size: 1.25rem !important;
+    font-weight: 600;
+  }
+  .calc__veld input[type="range"] {
+    width: 100%;
+    accent-color: var(--green);
+    height: 2rem;
+  }
+  .calc__schaal {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .calc__meer summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--green);
+  }
+  .calc__rij {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  @media (min-width: 30rem) {
+    .calc__rij {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .calc__hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .calc__uitkomst {
+    position: relative;
+    overflow: hidden;
+    background: var(--green);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+  }
+  .calc__uitkomst::after {
+    content: "";
+    position: absolute;
+    right: -4rem;
+    bottom: -4rem;
+    width: 14rem;
+    height: 14rem;
+    color: var(--cream);
+    background: var(--stripes);
+    opacity: 0.08;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .calc__label {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .calc__totaal {
+    margin: 0.25rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.75rem, 7vw, 4.25rem);
+    font-weight: 700;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+  }
+  .calc__perweek {
+    color: rgb(243 228 210 / 0.85);
+  }
+  .calc__balk {
+    display: flex;
+    height: 14px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgb(243 228 210 / 0.15);
+    margin: 0.75rem 0 1rem;
+  }
+  .calc__deel {
+    flex-basis: 0;
+    flex-grow: 0;
+    transition: flex-grow 0.5s var(--ease);
+  }
+  .calc__deel--1,
+  .calc__dot--1 {
+    background: var(--cream);
+  }
+  .calc__deel--2,
+  .calc__dot--2 {
+    background: var(--sage-light);
+  }
+  .calc__deel--3,
+  .calc__dot--3 {
+    background: var(--ink);
+  }
+  .calc__opbouw {
+    margin: 0 0 1.5rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .calc__opbouw div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgb(243 228 210 / 0.15);
+  }
+  .calc__opbouw dt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .calc__opbouw dd {
+    margin: 0;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .calc__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .calc__uitkomst .btn {
+    justify-self: start;
+    position: relative;
+    z-index: 1;
+  }
+  .calc__disclaimer {
+    margin: 1.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    max-width: 52rem;
+  }
+</style>

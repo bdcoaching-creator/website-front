@@ -1,50 +1,126 @@
 ---
+import { LOGO_LETTERS, LOGO_VIEWBOX } from "../lib/logo";
+
 interface Props {
-  light?: boolean;
+  /** Kleurvariant uit de huisstijl. */
+  variant?: "green" | "cream" | "ink" | "gradient" | "gradient-light";
+  /** Letters schuiven bij het laden in elkaar. */
+  animate?: boolean;
+  /** Letters maken een golfje bij hover (header). */
+  wave?: boolean;
+  class?: string;
+  title?: string;
 }
-const { light = false } = Astro.props;
+
+const { variant = "green", animate = false, wave = false, class: className, title = "AdaptXS" } = Astro.props;
+const gradientId = `logo-grad-${Math.random().toString(36).slice(2, 8)}`;
+const isGradient = variant.startsWith("gradient");
+const fill = isGradient ? `url(#${gradientId})` : "currentColor";
 ---
 
-<span class:list={["logo", { "logo--light": light }]}>
-  <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true">
-    <rect width="64" height="64" rx="14" fill="currentColor"></rect>
-    <path d="M16 46 L30 18 L44 46" fill="none" stroke="var(--logo-contrast)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M36 30 H50" stroke="#e39a6b" stroke-width="6" stroke-linecap="round"></path>
-  </svg>
-  <span class="logo__text">Adept<span class="logo__xs">XS</span></span>
-</span>
+<svg
+  class:list={["logo", `logo--${variant}`, { "logo--animate": animate, "logo--wave": wave }, className]}
+  viewBox={LOGO_VIEWBOX}
+  role="img"
+  aria-label={title}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {
+    isGradient && (
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0.15" gradientUnits="objectBoundingBox">
+          {variant === "gradient" ? (
+            <>
+              <stop offset="0" stop-color="#0c6d45" />
+              <stop offset="0.55" stop-color="#7a9474" />
+              <stop offset="1" stop-color="#c9c4b1" />
+            </>
+          ) : (
+            <>
+              <stop offset="0" stop-color="#f3e4d2" />
+              <stop offset="0.6" stop-color="#a8b098" />
+              <stop offset="1" stop-color="#7a9474" />
+            </>
+          )}
+        </linearGradient>
+      </defs>
+    )
+  }
+  <g fill={fill} fill-rule="evenodd">
+    {LOGO_LETTERS.map((d, i) => <path class="logo__l" style={`--i:${i}`} d={d} />)}
+  </g>
+</svg>
 
 <style>
   .logo {
-    --logo-contrast: #fff;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--primary);
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
   }
-  .logo--light {
-    --logo-contrast: var(--primary);
-    color: #fff;
+  .logo--green {
+    color: var(--green);
   }
-  .logo__mark {
-    width: 2.25rem;
-    height: 2.25rem;
+  .logo--cream {
+    color: var(--cream);
   }
-  .logo__text {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
+  .logo--ink {
     color: var(--ink);
   }
-  .logo--light .logo__text {
-    color: #fff;
+
+  .logo__l {
+    transform-box: fill-box;
+    transform-origin: center bottom;
   }
-  .logo__xs {
-    color: var(--accent);
-    font-weight: 700;
+
+  /* Intro: letters schuiven als losse strepen in elkaar (om en om van boven/onder). */
+  .logo--animate .logo__l {
+    animation: logo-in 1.1s var(--ease) both;
+    animation-delay: calc(0.15s + var(--i) * 0.09s);
   }
-  .logo--light .logo__xs {
-    color: #f0b48d;
+  .logo--animate .logo__l:nth-child(even) {
+    animation-name: logo-in-up;
+  }
+  @keyframes logo-in {
+    from {
+      opacity: 0;
+      transform: translateY(-60%) skewX(-12deg);
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes logo-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(60%) skewX(12deg);
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  /* Golfje bij hover in de header. */
+  :global(a:hover) > .logo--wave .logo__l,
+  .logo--wave:hover .logo__l {
+    animation: logo-wave 0.6s var(--ease);
+    animation-delay: calc(var(--i) * 0.05s);
+  }
+  @keyframes logo-wave {
+    40% {
+      transform: translateY(-14%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo__l {
+      animation: none !important;
+    }
   }
 </style>

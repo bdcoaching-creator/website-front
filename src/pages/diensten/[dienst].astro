@@ -5,7 +5,8 @@ import Stappen from "../../components/Stappen.astro";
 import Faq from "../../components/Faq.astro";
 import PrijsTabel from "../../components/PrijsTabel.astro";
 import IntakeForm from "../../components/IntakeForm.astro";
-import { getDiensten, zonderAfbreken } from "../../lib/diensten";
+import PaginaHero from "../../components/PaginaHero.astro";
+import { getDiensten } from "../../lib/diensten";
 
 export async function getStaticPaths() {
   const diensten = await getDiensten();
@@ -15,6 +16,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
+const toonTools = ["re-integratie", "arbeidsdeskundig-onderzoek"].includes(entry.id);
 
 const faqLd = {
   "@context": "https://schema.org",
@@ -30,28 +32,24 @@ const faqLd = {
 <BaseLayout title={d.seo.titel} description={d.seo.omschrijving}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 
-  <section class="dienst-hero">
-    <div class="container">
-      <nav class="breadcrumb" aria-label="Kruimelpad">
-        <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/diensten">Diensten</a>
-        <span aria-hidden="true">/</span> <span aria-current="page">{d.titel}</span>
-      </nav>
-      <span class="eyebrow">{d.hero.label}</span>
-      <h1>{zonderAfbreken(d.hero.titel)}</h1>
-      <p class="dienst-hero__intro">{d.hero.intro}</p>
-      <a class="btn btn--primary" href="#aanvraag">{d.cta.knop}</a>
-    </div>
-  </section>
+  <PaginaHero
+    label={d.hero.label}
+    titel={d.hero.titel}
+    intro={d.hero.intro}
+    kruimel={[{ label: "Home", href: "/" }, { label: "Diensten", href: "/diensten" }, { label: d.titel }]}
+  >
+    <a class="btn btn--light" href="#aanvraag">{d.cta.knop} <span class="btn__arrow" aria-hidden="true">→</span></a>
+  </PaginaHero>
 
   <section class="section section--alt">
     <div class="container grid grid--2">
-      <div>
+      <div data-reveal="left">
         <h2>Herken je dit?</h2>
         <ul class="checklist">
           {d.herkenning.map((h) => <li>{h}</li>)}
         </ul>
       </div>
-      <div class="prose">
+      <div class="prose" data-reveal>
         <h2>In het kort</h2>
         <Content />
       </div>
@@ -60,20 +58,20 @@ const faqLd = {
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>Voor wie en wie betaalt?</h2>
       </div>
-      <div class="grid grid--2">
+      <div class="grid grid--2" data-reveal-group>
         {
           d.voorWie.map((v) => (
-            <div class="card">
+            <div class="card" data-reveal>
               <h3>{v.titel}</h3>
               <p>{v.tekst}</p>
             </div>
           ))
         }
       </div>
-      <div class="note betaalt">
+      <div class="note betaalt" data-reveal>
         <p><strong>Wie betaalt?</strong> {d.wieBetaalt}</p>
       </div>
     </div>
@@ -81,13 +79,13 @@ const faqLd = {
 
   <section class="section section--alt">
     <div class="container grid grid--2">
-      <div>
+      <div data-reveal="left">
         <h2>Wat levert het op?</h2>
         <ul class="checklist">
           {d.oplevering.map((o) => <li>{o}</li>)}
         </ul>
       </div>
-      <div>
+      <div data-reveal>
         <h2>Deskundigheid</h2>
         <p>{d.kwalificatie}</p>
         <h3>Online of op locatie</h3>
@@ -98,20 +96,31 @@ const faqLd = {
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>Zo werkt het</h2>
       </div>
-      <Stappen stappen={d.stappen} />
+      <div data-reveal><Stappen stappen={d.stappen} /></div>
+      {
+        toonTools && (
+          <div class="tools-tip" data-reveal>
+            <p><strong>Handig voor werkgevers:</strong> bekijk waar je staat in het verzuimtraject of bereken wat verzuim kost.</p>
+            <div class="btn-row">
+              <a class="btn btn--ghost" href="/tools/poortwachter-tijdlijn">Poortwachter-tijdlijn <span class="btn__arrow" aria-hidden="true">→</span></a>
+              <a class="btn btn--ghost" href="/tools/verzuimkosten-calculator">Verzuimkosten-calculator <span class="btn__arrow" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        )
+      }
     </div>
   </section>
 
   <section class="section section--alt">
     <div class="container grid grid--2">
-      <div>
+      <div data-reveal="left">
         <h2>Tarief</h2>
         <PrijsTabel dienst={entry.id} />
       </div>
-      <div>
+      <div data-reveal>
         <h2>Veelgestelde vragen</h2>
         <Faq items={d.faq} />
       </div>
@@ -119,7 +128,7 @@ const faqLd = {
   </section>
 
   <section class="section">
-    <div class="container aanvraag">
+    <div class="container aanvraag" data-reveal="scale">
       <IntakeForm
         dienst={entry.id}
         titel={d.cta.formulierTitel}
@@ -132,34 +141,20 @@ const faqLd = {
 </BaseLayout>
 
 <style>
-  .dienst-hero {
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
-    background:
-      radial-gradient(circle at 90% 0%, var(--primary-tint), transparent 50%),
-      var(--bg);
-  }
-  .dienst-hero h1 {
-    max-width: 48rem;
-  }
-  .dienst-hero__intro {
-    font-size: 1.2rem;
-    color: var(--ink-soft);
-    max-width: 44rem;
-    margin-bottom: 2rem;
-  }
-  .breadcrumb {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    margin-bottom: 1.5rem;
-  }
-  .breadcrumb a {
-    color: var(--ink-soft);
-  }
   .betaalt {
     margin-top: 1.5rem;
     max-width: 60rem;
   }
   .aanvraag {
-    max-width: 52rem;
+    max-width: 54rem;
+  }
+  .tools-tip {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--cream);
+  }
+  .tools-tip p {
+    margin-bottom: 1rem;
   }
 </style>

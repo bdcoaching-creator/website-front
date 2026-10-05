@@ -154,7 +154,7 @@ export async function verwerkAanvraag(request: Request, env: Env, doFetch: typeo
   }
 
   if (!env.BREVO_API_KEY || !env.MAIL_TO || !env.MAIL_FROM) {
-    return antwoord(request, 503, "Het formulier is tijdelijk niet beschikbaar. Mail je vraag naar info@adeptxs.nl.");
+    return antwoord(request, 503, "Het formulier is tijdelijk niet beschikbaar. Mail je vraag naar info@adaptxs.nl.");
   }
 
   const { onderwerp, tekst } = maakMail(resultaat.aanvraag);
@@ -162,7 +162,7 @@ export async function verwerkAanvraag(request: Request, env: Env, doFetch: typeo
     method: "POST",
     headers: { "api-key": env.BREVO_API_KEY, "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({
-      sender: { email: env.MAIL_FROM, name: "Website AdeptXS" },
+      sender: { email: env.MAIL_FROM, name: "Website AdaptXS" },
       to: [{ email: env.MAIL_TO }],
       replyTo: { email: resultaat.aanvraag.email, name: resultaat.aanvraag.naam },
       subject: onderwerp,
@@ -172,7 +172,7 @@ export async function verwerkAanvraag(request: Request, env: Env, doFetch: typeo
 
   if (!res.ok) {
     console.error(`Versturen mislukt: mailprovider gaf status ${res.status}`);
-    return antwoord(request, 502, "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adeptxs.nl.");
+    return antwoord(request, 502, "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adaptxs.nl.");
   }
   return antwoord(request, 200);
 }

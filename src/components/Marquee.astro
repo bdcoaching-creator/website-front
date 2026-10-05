@@ -1,0 +1,14 @@
+---
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+// Twee keer dezelfde reeks, zodat de band naadloos doorloopt.
+const reeks = [...items, ...items, ...items];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {[0, 1].map(() => reeks.map((t) => <span class="marquee__item">{t}</span>))}
+  </div>
+</div>

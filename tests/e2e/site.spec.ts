@@ -16,6 +16,9 @@ const PAGINAS = [
   "/cookieverklaring",
   "/algemene-voorwaarden",
   "/klachtenregeling",
+  "/tools",
+  "/tools/poortwachter-tijdlijn",
+  "/tools/verzuimkosten-calculator",
 ];
 
 // Zonder Turnstile-sleutel mag de site geen enkel extern verzoek doen.
@@ -103,4 +106,51 @@ test("mobiel menu opent en sluit", async ({ page, isMobile }) => {
   await expect(knop).toHaveAttribute("aria-expanded", "true");
   await page.keyboard.press("Escape");
   await expect(menu).toBeHidden();
+});
+
+test("hero: animatie draait en het logo staat erin", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".hero .sporen__canvas")).toBeVisible();
+  await expect(page.locator(".hero__logo svg[aria-label='AdaptXS']")).toBeVisible();
+  const getekend = await page.evaluate(() => {
+    const c = document.querySelector<HTMLCanvasElement>(".sporen__canvas")!;
+    const d = c.getContext("2d")!.getImageData(0, 0, c.width, c.height).data;
+    let n = 0;
+    for (let i = 3; i < d.length; i += 4 * 50) if (d[i] > 0) n++;
+    return n;
+  });
+  expect(getekend).toBeGreaterThan(50);
+});
+
+test("minder beweging: geen animaties, inhoud direct zichtbaar", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/");
+  await expect(page.locator("[data-reveal]").first()).toHaveCSS("opacity", "1");
+  await expect(page.locator(".marquee__track")).toHaveCSS("animation-name", "none");
+  await context.close();
+});
+
+test("Poortwachter-tijdlijn: marker en schuifregelaar tonen het juiste moment", async ({ page }) => {
+  await page.goto("/tools/poortwachter-tijdlijn");
+  await page.getByRole("button", { name: /Week 42/ }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("[data-pw-titel]")).toHaveText("Ziekmelding bij het UWV");
+  await expect(page.locator("[data-pw-week]")).toHaveText("42");
+  await page.locator("[data-pw-slider]").fill("93");
+  await expect(page.locator("[data-pw-titel]")).toHaveText("WIA-aanvraag");
+  await expect(page.locator("[data-pw-volgende]")).toContainText("Einde loondoorbetaling");
+  await page.getByRole("button", { name: "Volgende stap" }).click();
+  await expect(page.locator("[data-pw-week]")).toHaveText("104");
+  await page.getByRole("button", { name: "Vorige stap" }).click();
+  await expect(page.locator("[data-pw-week]")).toHaveText("93");
+});
+
+test("verzuimkosten-calculator rekent mee met de invoer", async ({ page }) => {
+  await page.goto("/tools/verzuimkosten-calculator");
+  await page.fill("#c-salaris", "5200");
+  await page.locator("#c-weken").fill("52");
+  // 5200 * 12 / 52 * 52 weken * 100% * 1,30 = 81.120
+  await expect(page.locator("[data-calc-totaal]")).toHaveText(/81\.120/);
+  await expect(page.locator("[data-calc-weken-label]")).toHaveText("52 weken");
 });

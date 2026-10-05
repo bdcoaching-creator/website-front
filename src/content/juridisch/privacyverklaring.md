@@ -1,16 +1,16 @@
 ---
 titel: Privacyverklaring
-omschrijving: Hoe AdeptXS omgaat met je persoonsgegevens.
+omschrijving: Hoe AdaptXS omgaat met je persoonsgegevens.
 bijgewerkt: "[INVULLEN: datum]"
 ---
 
 > **Concept.** Laat deze tekst vóór livegang controleren. Vul alle velden met [INVULLEN] in en pas de tekst aan op je eigen werkwijze, verwerkersovereenkomsten en bewaartermijnen.
 
-AdeptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid zijn gevoelige onderwerpen. In deze verklaring lees je welke gegevens ik verwerk, waarom, en welke rechten je hebt.
+AdaptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid zijn gevoelige onderwerpen. In deze verklaring lees je welke gegevens ik verwerk, waarom, en welke rechten je hebt.
 
 ## Wie is verantwoordelijk?
 
-AdeptXS, gevestigd op [INVULLEN: adres], ingeschreven bij de KvK onder nummer [INVULLEN: KvK-nummer], is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adeptxs.nl.
+AdaptXS, gevestigd op [INVULLEN: adres], ingeschreven bij de KvK onder nummer [INVULLEN: KvK-nummer], is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.nl.
 
 Voer ik een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leg ik in de opdrachtbevestiging vast wie welke rol heeft onder de AVG. [INVULLEN: bepaal per dienst of je verwerkingsverantwoordelijke of verwerker bent.]
 
@@ -55,6 +55,6 @@ Ik neem passende maatregelen om je gegevens te beschermen, waaronder versleuteld
 
 ## Jouw rechten
 
-Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adeptxs.nl. Ik reageer binnen een maand.
+Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adaptxs.nl. Ik reageer binnen een maand.
 
 Ben je het niet eens met hoe ik met je gegevens omga? Dan kun je een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl).

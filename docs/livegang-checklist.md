@@ -46,4 +46,4 @@ Vink af wat klaar is. De meeste punten gaan over je bedrijfsvoering, niet over d
 - [ ] Algemene voorwaarden (bij voorkeur het model van de NVvA of opgesteld door een jurist)
 - [ ] Klachtenregeling ingevuld, inclusief de actuele klachtenprocedure van de SRA
 - [ ] Beroepsaansprakelijkheidsverzekering
-- [ ] Naam AdeptXS gecheckt bij KvK en BOIP (merkregister)
+- [ ] Naam AdaptXS gecheckt bij KvK en BOIP (merkregister)

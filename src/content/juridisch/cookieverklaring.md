@@ -20,4 +20,4 @@ Op pagina's met een contactformulier gebruik ik Cloudflare Turnstile om spam teg
 
 Ga ik in de toekomst wel cookies gebruiken waarvoor toestemming nodig is, dan vraag ik die eerst en pas ik deze verklaring aan.
 
-Vragen? Mail naar info@adeptxs.nl.
+Vragen? Mail naar info@adaptxs.nl.

@@ -1,6 +1,6 @@
 ---
 titel: Klachtenregeling
-omschrijving: Wat je kunt doen als je niet tevreden bent over de dienstverlening van AdeptXS.
+omschrijving: Wat je kunt doen als je niet tevreden bent over de dienstverlening van AdaptXS.
 bijgewerkt: "[INVULLEN: datum]"
 ---
 
@@ -8,11 +8,11 @@ Ik doe mijn uiterste best om je goed te helpen. Ben je toch ergens niet tevreden
 
 ## 1. Bespreek het met mij
 
-Neem contact met me op via info@adeptxs.nl of telefonisch. In de meeste gevallen lossen we het samen op.
+Neem contact met me op via info@adaptxs.nl of telefonisch. In de meeste gevallen lossen we het samen op.
 
 ## 2. Dien een schriftelijke klacht in
 
-Komen we er samen niet uit? Stuur dan een schriftelijke klacht naar info@adeptxs.nl met:
+Komen we er samen niet uit? Stuur dan een schriftelijke klacht naar info@adaptxs.nl met:
 
 - je naam en contactgegevens
 - een omschrijving van de klacht en wanneer het speelde

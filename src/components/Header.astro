@@ -5,12 +5,30 @@ import { getDiensten, dienstUrl, schoonPad } from "../lib/diensten";
 const diensten = await getDiensten();
 const pad = schoonPad(Astro.url.pathname);
 const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href || pad.startsWith(`${href}/`));
+
+const menu = [
+  {
+    label: "Diensten",
+    href: "/diensten",
+    sub: diensten.map((d) => ({ label: d.data.titel, href: dienstUrl(d.id) })),
+  },
+  {
+    label: "Tools",
+    href: "/tools",
+    sub: [
+      { label: "Poortwachter-tijdlijn", href: "/tools/poortwachter-tijdlijn" },
+      { label: "Verzuimkosten-calculator", href: "/tools/verzuimkosten-calculator" },
+    ],
+  },
+  { label: "Tarieven", href: "/tarieven" },
+  { label: "Over mij", href: "/over" },
+];
 ---
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a href="/" class="site-header__logo" aria-label="AdeptXS, naar de homepage">
-      <Logo />
+    <a href="/" class="site-header__logo" aria-label="AdaptXS, naar de homepage">
+      <Logo variant="green" wave />
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hoofdmenu">
@@ -20,23 +38,29 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
 
     <nav id="hoofdmenu" class="site-nav" aria-label="Hoofdmenu">
       <ul class="site-nav__list">
-        <li class="site-nav__item site-nav__item--diensten">
-          <a href="/diensten" aria-current={isActief("/diensten") ? "page" : undefined}>Diensten</a>
-          <ul class="site-nav__sub">
-            {
-              diensten.map((d) => (
-                <li>
-                  <a href={dienstUrl(d.id)} aria-current={pad === dienstUrl(d.id) ? "page" : undefined}>
-                    {d.data.titel}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
+        {
+          menu.map((item) => (
+            <li class:list={["site-nav__item", { "site-nav__item--sub": item.sub }]}>
+              <a href={item.href} aria-current={isActief(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+              {item.sub && (
+                <ul class="site-nav__sub">
+                  {item.sub.map((s) => (
+                    <li>
+                      <a href={s.href} aria-current={pad === s.href ? "page" : undefined}>
+                        {s.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+        <li class="site-nav__cta">
+          <a class="btn" href="/contact">Contact <span class="btn__arrow" aria-hidden="true">→</span></a>
         </li>
-        <li><a href="/tarieven" aria-current={isActief("/tarieven") ? "page" : undefined}>Tarieven</a></li>
-        <li><a href="/over" aria-current={isActief("/over") ? "page" : undefined}>Over mij</a></li>
-        <li class="site-nav__cta"><a class="btn btn--primary" href="/contact">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -66,31 +90,41 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgb(248 246 241 / 0.95);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
+    background: rgb(250 245 238 / 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: transform 0.45s var(--ease), border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .site-header:global(.is-scrolled) {
+    border-bottom-color: var(--line);
+    box-shadow: 0 6px 24px rgb(35 31 32 / 0.06);
+  }
+  .site-header:global(.is-hidden) {
+    transform: translateY(-100%);
   }
   .site-header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    min-height: 4.5rem;
+    min-height: 4.75rem;
     flex-wrap: wrap;
   }
   .site-header__logo {
-    text-decoration: none;
+    width: 9.5rem;
+    display: block;
   }
 
   .nav-toggle {
     display: none;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     min-height: 2.75rem;
-    padding: 0.5rem 0.9rem;
+    padding: 0.5rem 1rem;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: var(--surface);
+    background: var(--white);
     font: inherit;
     font-weight: 600;
     color: var(--ink);
@@ -105,6 +139,7 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
     background: currentColor;
     border-radius: 2px;
     position: relative;
+    transition: transform 0.3s var(--ease), background-color 0.2s;
   }
   .nav-toggle__bars::before,
   .nav-toggle__bars::after {
@@ -117,6 +152,15 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
   .nav-toggle__bars::after {
     top: 6px;
   }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars {
+    background: transparent;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 
   .site-nav__list {
     list-style: none;
@@ -124,36 +168,47 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
     padding: 0;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.15rem;
   }
   .site-nav a:not(.btn) {
+    position: relative;
     display: block;
-    padding: 0.6rem 0.85rem;
+    padding: 0.6rem 0.9rem;
     border-radius: var(--radius-sm);
     color: var(--ink);
     font-weight: 500;
     text-decoration: none;
   }
-  .site-nav a:not(.btn):hover {
-    background: var(--primary-tint);
-    color: var(--primary-hover);
+  .site-nav__list > li > a:not(.btn)::after {
+    content: "";
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.35rem;
+    height: 2px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease);
   }
+  .site-nav__list > li > a:not(.btn):hover::after,
+  .site-nav__list > li > a[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .site-nav a:not(.btn):hover,
   .site-nav a[aria-current="page"] {
-    color: var(--primary);
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.35em;
+    color: var(--green);
   }
   .site-nav__cta {
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
   }
   .site-nav__cta .btn {
     min-height: 2.75rem;
     padding-block: 0.5rem;
   }
 
-  /* Submenu desktop */
-  .site-nav__item--diensten {
+  .site-nav__item--sub {
     position: relative;
   }
   .site-nav__sub {
@@ -161,26 +216,29 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
     margin: 0;
     padding: 0.5rem;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.25rem);
     left: 0;
-    min-width: 17rem;
-    background: var(--surface);
+    min-width: 17.5rem;
+    background: var(--white);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.35s var(--ease), visibility 0.25s;
   }
-  .site-nav__item--diensten:hover .site-nav__sub,
-  .site-nav__item--diensten:focus-within .site-nav__sub {
+  .site-nav__sub a:hover {
+    background: var(--cream);
+  }
+  .site-nav__item--sub:hover .site-nav__sub,
+  .site-nav__item--sub:focus-within .site-nav__sub {
     opacity: 1;
     visibility: visible;
     transform: none;
   }
 
-  @media (max-width: 55.99rem) {
+  @media (max-width: 59.99rem) {
     :global(.js) .nav-toggle {
       display: inline-flex;
     }
@@ -197,6 +255,9 @@ const isActief = (href: string) => (href === "/" ? pad === "/" : pad === href ||
       flex-direction: column;
       align-items: stretch;
       padding-bottom: 1rem;
+    }
+    .site-nav__list > li > a:not(.btn)::after {
+      display: none;
     }
     .site-nav__sub {
       position: static;

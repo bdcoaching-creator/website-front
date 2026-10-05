@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaginaHero from "../../components/PaginaHero.astro";
+import VerzuimCalculator from "../../components/VerzuimCalculator.astro";
+import CtaBand from "../../components/CtaBand.astro";
+---
+
+<BaseLayout
+  title="Verzuimkosten-calculator voor het MKB"
+  description="Bereken wat het verzuim van een medewerker je als werkgever ongeveer kost: loondoorbetaling, werkgeverslasten en overige kosten."
+>
+  <PaginaHero
+    label="Tool"
+    titel="Wat kost verzuim je eigenlijk?"
+    intro="Een medewerker die langdurig uitvalt kost meer dan je denkt. Vul een paar gegevens in en zie direct een indicatie."
+    kruimel={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Verzuimkosten-calculator" }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <VerzuimCalculator />
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Verzuim korter maken begint vroeg"
+    tekst="Hoe eerder de juiste begeleiding start, hoe groter de kans op een snelle en duurzame terugkeer."
+    knop="Bespreek je situatie"
+    href="/contact?dienst=re-integratie"
+  />
+</BaseLayout>

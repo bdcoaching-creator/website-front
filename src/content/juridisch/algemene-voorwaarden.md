@@ -1,6 +1,6 @@
 ---
 titel: Algemene voorwaarden
-omschrijving: De algemene voorwaarden van AdeptXS.
+omschrijving: De algemene voorwaarden van AdaptXS.
 bijgewerkt: "[INVULLEN: datum]"
 ---
 

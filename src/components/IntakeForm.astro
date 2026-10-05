@@ -106,7 +106,7 @@ const adNotitie =
 
     <div class="intake__status" role="alert" aria-live="assertive" data-status></div>
 
-    <button class="btn btn--primary" type="submit">{knop}</button>
+    <button class="btn" type="submit">{knop}</button>
     <p class="intake__reactie">Je ontvangt {site.reactietijd} een reactie.</p>
   </form>
 </div>
@@ -171,9 +171,9 @@ const adNotitie =
           window.location.href = "/bedankt";
           return;
         }
-        toonFout(data.fout ?? "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adeptxs.nl.");
+        toonFout(data.fout ?? "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adaptxs.nl.");
       } catch {
-        toonFout("Er ging iets mis bij het versturen. Controleer je internetverbinding of mail naar info@adeptxs.nl.");
+        toonFout("Er ging iets mis bij het versturen. Controleer je internetverbinding of mail naar info@adaptxs.nl.");
       }
       knop.disabled = false;
       knop.textContent = "Verstuur aanvraag";
@@ -231,7 +231,7 @@ const adNotitie =
   .intake__radios input {
     width: 1.2rem;
     height: 1.2rem;
-    accent-color: var(--primary);
+    accent-color: var(--green);
   }
   .field {
     display: grid;
@@ -241,7 +241,7 @@ const adNotitie =
     font-weight: 600;
   }
   .req {
-    color: var(--accent);
+    color: var(--green);
   }
   .opt {
     font-weight: 400;
@@ -266,7 +266,7 @@ const adNotitie =
   .field input:focus-visible,
   .field select:focus-visible,
   .field textarea:focus-visible {
-    border-color: var(--primary);
+    border-color: var(--green);
   }
   .hint {
     margin: 0;

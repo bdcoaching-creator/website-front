@@ -1,0 +1,79 @@
+{
+  "titel": "De Poortwachter-tijdlijn",
+  "intro": "Wat moet je als werkgever doen als een medewerker langdurig ziek is? Schuif door de 104 weken van de Wet verbetering poortwachter en zie per moment wat er van je verwacht wordt, en waar ik je kan helpen.",
+  "disclaimer": "Deze tijdlijn is een vereenvoudigd overzicht en geen juridisch advies. De precieze verplichtingen hangen af van je situatie. Controleer de actuele regels op uwv.nl of neem contact met me op.",
+  "momenten": [
+    {
+      "week": 1,
+      "titel": "Ziekmelding",
+      "wie": "Werkgever",
+      "tekst": "Je medewerker meldt zich ziek. Schakel zo snel mogelijk je bedrijfsarts of arbodienst in en houd contact met je medewerker.",
+      "hulp": "Ik denk vanaf het begin mee, zodat je meteen de goede stappen zet.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 6,
+      "titel": "Probleemanalyse",
+      "wie": "Bedrijfsarts",
+      "tekst": "Uiterlijk in week 6 maakt de bedrijfsarts een probleemanalyse: wat kan je medewerker nog, wat niet, en wat is er nodig om terug te keren?",
+      "hulp": "Ik vertaal de probleemanalyse naar de praktijk van het werk op de werkvloer.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 8,
+      "titel": "Plan van aanpak",
+      "wie": "Werkgever en medewerker",
+      "tekst": "Uiterlijk in week 8 stel je samen met je medewerker een plan van aanpak op. Je wijst ook een casemanager aan die het traject bewaakt.",
+      "hulp": "Ik help een realistisch plan op te stellen met concrete stappen.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 14,
+      "titel": "Evalueren en bijsturen",
+      "wie": "Werkgever, medewerker en bedrijfsarts",
+      "tekst": "Minimaal elke zes weken bespreek je de voortgang en stel je het plan van aanpak zo nodig bij. Leg alles goed vast: het komt terug in het re-integratieverslag.",
+      "hulp": "Ik begeleid je medewerker richting passend werk en houd jou op de hoogte.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 42,
+      "titel": "Ziekmelding bij het UWV",
+      "wie": "Werkgever",
+      "tekst": "Uiterlijk in week 42 meld je de langdurige ziekte van je medewerker bij het UWV.",
+      "hulp": "Ik kijk met je mee of het dossier tot nu toe compleet is.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 46,
+      "titel": "Eerstejaarsevaluatie",
+      "wie": "Werkgever en medewerker",
+      "tekst": "Tussen week 46 en 52 kijk je terug op het eerste jaar en bepaal je het doel voor het tweede jaar. Is terugkeer in het eigen werk niet haalbaar? Dan komt het tweede spoor in beeld.",
+      "hulp": "Een arbeidsdeskundig onderzoek geeft hier een onafhankelijke en onderbouwde basis voor je keuze.",
+      "dienst": "arbeidsdeskundig-onderzoek"
+    },
+    {
+      "week": 85,
+      "titel": "WIA-aanvraag voorbereiden",
+      "wie": "Werkgever en medewerker",
+      "tekst": "Rond week 85 tot 88 ontvangt je medewerker informatie van het UWV over de WIA-aanvraag. Samen maak je het re-integratieverslag compleet.",
+      "hulp": "Ik help om de verslaglegging aan te laten sluiten bij wat het UWV verwacht.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 93,
+      "titel": "WIA-aanvraag",
+      "wie": "Medewerker",
+      "tekst": "Uiterlijk in week 93 vraagt je medewerker een WIA-uitkering aan, met het re-integratieverslag. Het UWV toetst of er genoeg aan re-integratie is gedaan. Zo niet, dan kan het UWV een loonsanctie opleggen: tot 52 weken extra loondoorbetaling.",
+      "hulp": "Met een goed begeleid traject verklein je de kans op een loonsanctie.",
+      "dienst": "re-integratie"
+    },
+    {
+      "week": 104,
+      "titel": "Einde loondoorbetaling",
+      "wie": "UWV",
+      "tekst": "Na 104 weken stopt in principe de loondoorbetaling en beoordeelt het UWV het recht op een WIA-uitkering.",
+      "hulp": "Ook na deze periode kan begeleiding naar passend werk zinvol blijven.",
+      "dienst": "re-integratie"
+    }
+  ]
+}

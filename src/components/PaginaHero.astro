@@ -1,0 +1,79 @@
+---
+import { zonderAfbreken } from "../lib/diensten";
+
+interface Props {
+  label: string;
+  titel: string;
+  intro?: string;
+  kruimel?: { label: string; href?: string }[];
+}
+const { label, titel, intro, kruimel } = Astro.props;
+---
+
+<section class="pagina-hero">
+  <div class="pagina-hero__strepen" aria-hidden="true"></div>
+  <div class="container">
+    {
+      kruimel && (
+        <nav class="breadcrumb" aria-label="Kruimelpad">
+          {kruimel.map((k, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> / </span>}
+              {k.href ? <a href={k.href}>{k.label}</a> : <span aria-current="page">{k.label}</span>}
+            </>
+          ))}
+        </nav>
+      )
+    }
+    <span class="eyebrow" data-reveal>{label}</span>
+    <h1 data-reveal style="--i:1">{zonderAfbreken(titel)}</h1>
+    {intro && <p class="pagina-hero__intro" data-reveal style="--i:2">{intro}</p>}
+    <div data-reveal style="--i:3"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .pagina-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--green-deep);
+    color: var(--cream);
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+  .pagina-hero__strepen {
+    position: absolute;
+    right: -10%;
+    top: -30%;
+    width: 60%;
+    height: 160%;
+    color: var(--sage);
+    background: repeating-linear-gradient(-60deg, currentColor 0 3px, transparent 3px 22px);
+    opacity: 0.18;
+    transform: rotate(8deg);
+    mask-image: radial-gradient(closest-side, #000 40%, transparent);
+    animation: strepen-drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes strepen-drift {
+    to {
+      transform: rotate(8deg) translateX(-6%);
+    }
+  }
+  .pagina-hero h1 {
+    max-width: 52rem;
+    color: var(--cream);
+  }
+  .pagina-hero__intro {
+    font-size: 1.2rem;
+    color: rgb(243 228 210 / 0.85);
+    max-width: 44rem;
+    margin-bottom: 2rem;
+  }
+  .breadcrumb {
+    font-size: 0.9rem;
+    color: rgb(243 228 210 / 0.75);
+    margin-bottom: 1.75rem;
+  }
+  .breadcrumb a {
+    color: rgb(243 228 210 / 0.85);
+  }
+</style>
