@@ -154,3 +154,43 @@ test("verzuimkosten-calculator rekent mee met de invoer", async ({ page }) => {
   await expect(page.locator("[data-calc-totaal]")).toHaveText(/81\.120/);
   await expect(page.locator("[data-calc-weken-label]")).toHaveText("52 weken");
 });
+
+test("footerlogo onthult één keer van links naar rechts; headerlogo blijft ongewijzigd", async ({ page }) => {
+  await page.goto("/diensten");
+  const footerLogo = page.locator("[data-footer-logo]");
+  const footerSvg = footerLogo.locator("svg");
+  await expect(footerSvg).toHaveCSS("clip-path", /inset\(0px 100%/);
+  await expect(footerSvg).toHaveCSS("transition-duration", "0.9s");
+  await expect(footerSvg).toHaveCSS("transition-timing-function", "ease-out");
+  await expect(page.locator(".site-header__logo svg")).toHaveCSS("clip-path", "none");
+
+  await footerLogo.scrollIntoViewIfNeeded();
+  await expect(footerLogo).toHaveClass(/is-onthuld/);
+  await expect(footerSvg).toHaveCSS("clip-path", "inset(0px)");
+});
+
+for (const pad of ["/", "/diensten/re-integratie"]) {
+  test(`${pad}: werkwijze-kaarten komen na elkaar in beeld`, async ({ page }) => {
+    await page.goto(pad);
+    const kaarten = page.locator("[data-stappen] li");
+    await expect(kaarten).toHaveCount(4);
+    await expect(kaarten.first()).toHaveCSS("opacity", "0");
+    const vertragingen = await kaarten.evaluateAll((els) => els.map((el) => getComputedStyle(el).transitionDelay));
+    expect(vertragingen.map((v) => v.split(",")[0].trim())).toEqual(["0s", "0.15s", "0.3s", "0.45s"]);
+
+    await page.locator("[data-stappen]").scrollIntoViewIfNeeded();
+    await expect(page.locator("[data-stappen]")).toHaveClass(/is-zichtbaar/);
+    for (let i = 0; i < 4; i++) await expect(kaarten.nth(i)).toHaveCSS("opacity", "1");
+    await expect(kaarten.last()).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
+  });
+}
+
+test("minder beweging: footerlogo en werkwijze-kaarten zonder animatie", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/diensten/jobcoaching");
+  await expect(page.locator("[data-footer-logo] svg")).toHaveCSS("clip-path", "none");
+  const kaarten = page.locator("[data-stappen] li");
+  for (let i = 0; i < 4; i++) await expect(kaarten.nth(i)).toHaveCSS("opacity", "1");
+  await context.close();
+});

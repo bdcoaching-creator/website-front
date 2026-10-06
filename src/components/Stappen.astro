@@ -1,17 +1,61 @@
 ---
+/**
+ * Werkwijze-kaarten ("Zo werkt het"). Overal waar dit onderdeel staat, faden de kaarten
+ * na elkaar in en schuiven ze omhoog zodra de sectie in beeld komt (alleen opacity en transform).
+ * Bij "minder beweging" staan ze direct op hun plek.
+ */
 interface Props {
   stappen: { titel: string; tekst: string }[];
 }
 const { stappen } = Astro.props;
 ---
 
-<ol class="steps">
+<ol class="steps" data-stappen>
   {
-    stappen.map((s) => (
-      <li>
+    stappen.map((s, i) => (
+      <li style={`--i:${i}`}>
         <h3>{s.titel}</h3>
         <p>{s.tekst}</p>
       </li>
     ))
   }
 </ol>
+
+<script>
+  const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (const lijst of document.querySelectorAll<HTMLElement>("[data-stappen]")) {
+    if (rustig || !("IntersectionObserver" in window)) {
+      lijst.classList.add("is-zichtbaar");
+      continue;
+    }
+    const sectie = lijst.closest("section") ?? lijst;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          lijst.classList.add("is-zichtbaar");
+          io.unobserve(sectie);
+        }
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(sectie);
+  }
+</script>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .steps li {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.5s ease-out,
+        transform 0.5s ease-out;
+      transition-delay: calc(var(--i, 0) * 150ms);
+    }
+    :global(.js) .steps.is-zichtbaar li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

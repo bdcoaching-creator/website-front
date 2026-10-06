@@ -9,7 +9,7 @@ const jaar = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container">
-    <div class="site-footer__logo" data-reveal>
+    <div class="site-footer__logo" data-footer-logo>
       <Logo variant="gradient-light" />
     </div>
 
@@ -65,6 +65,28 @@ const jaar = new Date().getFullYear();
   </div>
 </footer>
 
+<script>
+  // Footerlogo: één keer van links naar rechts onthullen zodra het in beeld komt.
+  const logo = document.querySelector<HTMLElement>("[data-footer-logo]");
+  if (logo) {
+    const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (rustig || !("IntersectionObserver" in window)) {
+      logo.classList.add("is-onthuld");
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            logo.classList.add("is-onthuld");
+            io.unobserve(logo);
+          }
+        },
+        { threshold: 0.3 },
+      );
+      io.observe(logo);
+    }
+  }
+</script>
+
 <style>
   .site-footer {
     background: var(--ink);
@@ -78,6 +100,17 @@ const jaar = new Date().getFullYear();
   .site-footer__logo {
     max-width: 44rem;
     margin-bottom: 3.5rem;
+  }
+  /* De knip zit op het logo zelf; de observer kijkt naar de container (een volledig
+     dichtgeknipt element telt in Chrome niet als "in beeld"). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .site-footer__logo > :global(svg) {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    :global(.js) .site-footer__logo.is-onthuld > :global(svg) {
+      clip-path: inset(0 0 0 0);
+    }
   }
   .site-footer__grid {
     display: grid;
