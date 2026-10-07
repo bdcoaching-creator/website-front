@@ -14,14 +14,19 @@ import site from "../data/site.json";
         <span class="eyebrow">Contact</span>
         <h1>Laten we kennismaken</h1>
         <p class="contact__intro">
-          Vertel kort waar je vraag over gaat. Ik neem {site.reactietijd} contact met je op. Het eerste gesprek van 30 minuten is gratis en vrijblijvend.
+          Vertel kort waar je vraag over gaat. Wij nemen {site.reactietijd} contact met je op. Het eerste gesprek van 30 minuten is gratis en vrijblijvend.
         </p>
         <div class="card contact__gegevens">
           <h2>Direct contact</h2>
           <p>
             <a href={`mailto:${site.email}`}>{site.email}</a><br />
-            {site.telefoon}
+            <a href={`tel:${site.telefoon}`}>{site.telefoon}</a>
           </p>
+          <address class="contact__adres">
+            {site.bedrijfsnaam}<br />
+            {site.adres.straat}<br />
+            {site.adres.postcode} {site.adres.plaats}
+          </address>
           <p class="contact__klein">
             Online via {site.videobellen} in heel Nederland.<br />
             Op locatie in {site.werkgebied}.
@@ -68,6 +73,10 @@ import site from "../data/site.json";
   }
   .contact__gegevens h2 {
     font-size: 1.25rem;
+  }
+  .contact__adres {
+    font-style: normal;
+    margin-bottom: 1rem;
   }
   .contact__klein {
     font-size: 0.95rem;

@@ -93,6 +93,9 @@ Dit zit in de CSP (`public/_headers`) al toegestaan.
 
 ### Huisstijl en beweging
 - Kleuren uit het beeldmerk: groen `#0C6D45`, crème `#F3E4D2`, antraciet `#231F20`, salie `#7A9474`.
+- Lettertypen: koppen in **Californian FB** als die op het apparaat van de bezoeker staat, anders de gratis, verwante
+  Goudy-letter **Sorts Mill Goudy** (zelf gehost). Lopende tekst, navigatie en knoppen in **Inter**.
+  Californian FB is een commercieel lettertype: zet het alleen als webfont op de site met een webfont-licentie.
 - Het logo (`src/lib/logo.ts`) is direct uit de PDF van het beeldmerk overgenomen als vector.
 - Alle animaties respecteren de instelling "minder beweging" van het apparaat: dan staat alles direct in de eindstand.
 

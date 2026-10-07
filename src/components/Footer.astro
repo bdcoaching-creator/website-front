@@ -42,7 +42,7 @@ const jaar = new Date().getFullYear();
           {site.adres.straat}<br />
           {site.adres.postcode} {site.adres.plaats}<br />
           <a href={`mailto:${site.email}`}>{site.email}</a><br />
-          {site.telefoon}
+          <a href={`tel:${site.telefoon}`}>{site.telefoon}</a>
         </address>
       </div>
 

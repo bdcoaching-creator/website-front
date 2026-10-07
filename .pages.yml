@@ -222,7 +222,8 @@ content:
     format: yaml-frontmatter
     operations: { create: false, delete: false, rename: false }
     fields:
-      - { name: titel, label: Titel, type: string }
+      - { name: titel, label: Paginatitel (menu en Google), type: string }
+      - { name: kop, label: Kop bovenaan de pagina (H1), type: string }
       - { name: omschrijving, label: Omschrijving voor Google, type: text }
       - { name: intro, label: Introductie, type: text }
       - { name: body, label: Tekst, type: rich-text }

@@ -11,5 +11,13 @@ export const dienstUrl = (id: string) => `/diensten/${id}`;
 export const schoonPad = (pathname: string) =>
   pathname.replace(/\.html$/, "").replace(/\/index$/, "").replace(/\/$/, "") || "/";
 
-/** Voorkomt dat "re-integratie" in koppen over twee regels wordt afgebroken. */
-export const zonderAfbreken = (tekst: string) => tekst.replace(/re-integratie/gi, (m) => m.replace("-", "‑"));
+const escape = (t: string) =>
+  t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * Voorkomt dat "re-integratie" in koppen over twee regels wordt afgebroken.
+ * Het gewone koppelteken blijft staan (belangrijk voor zoekmachines); het woord krijgt alleen white-space: nowrap.
+ * Geeft veilige HTML terug voor gebruik met set:html.
+ */
+export const zonderAfbreken = (tekst: string) =>
+  escape(tekst).replace(/re-integratie/gi, (m) => `<span class="nowrap">${m}</span>`);

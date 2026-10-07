@@ -194,3 +194,44 @@ test("minder beweging: footerlogo en werkwijze-kaarten zonder animatie", async (
   for (let i = 0; i < 4; i++) await expect(kaarten.nth(i)).toHaveCSS("opacity", "1");
   await context.close();
 });
+
+const SEO = [
+  ["/", "Arbeidsdeskundige en jobcoach voor werkgevers | AdaptXS", "Arbeidsdeskundige en jobcoach voor werkgevers en medewerkers"],
+  ["/diensten/jobcoaching", "Jobcoaching voor medewerkers met een arbeidsbeperking | AdaptXS", "Jobcoaching voor medewerkers met een arbeidsbeperking"],
+  ["/diensten/re-integratie", "Re-integratie bij ziekte | Begeleiding voor werkgevers | AdaptXS", "Re-integratie van medewerkers bij ziekte"],
+  ["/diensten/arbeidsdeskundig-onderzoek", "Arbeidsdeskundig onderzoek | Passend werk & re-integratie | AdaptXS", "Arbeidsdeskundig onderzoek naar passend werk"],
+  ["/diensten/coaching-voor-ondernemers", "Coaching voor ondernemers en zzp'ers | AdaptXS", "Coaching voor ondernemers en zzp'ers"],
+  ["/over", "Over ons | AdaptXS", "AdaptXS: een team met kennis van werk, wetgeving en mensen"],
+] as const;
+
+for (const [pad, titel, h1] of SEO) {
+  test(`${pad}: SEO-titel en H1`, async ({ page }) => {
+    await page.goto(pad);
+    await expect(page).toHaveTitle(titel);
+    await expect(page.locator("h1")).toHaveText(h1);
+  });
+}
+
+test("structured data bevat de echte bedrijfsgegevens", async ({ page }) => {
+  await page.goto("/");
+  const ld = JSON.parse((await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "{}");
+  expect(ld.name).toBe("AdaptXS");
+  expect(ld.telephone).toBe("+31626630196");
+  expect(ld.address).toMatchObject({ streetAddress: "Buizenwerf 28", postalCode: "3063 AZ", addressLocality: "Rotterdam" });
+});
+
+test("telefoonnummer en adres op contactpagina en in footer", async ({ page }) => {
+  await page.goto("/contact");
+  await expect(page.locator('main a[href="tel:+31626630196"]')).toHaveText("+31626630196");
+  await expect(page.locator("main address")).toContainText("Buizenwerf 28");
+  await expect(page.locator("main address")).toContainText("3063 AZ Rotterdam");
+  await expect(page.locator('footer a[href="tel:+31626630196"]')).toBeVisible();
+});
+
+test("Over ons: team in de wij-vorm, UWV-ervaring bij de re-integratiebegeleider", async ({ page }) => {
+  await page.goto("/over");
+  const tekst = (await page.locator("main").innerText()).replace(/\s+/g, " ");
+  expect(tekst).not.toMatch(/\b(ik|mij|mijn)\b/i);
+  expect(tekst).toContain("De re-integratiebegeleider binnen AdaptXS heeft zes jaar bij het UWV gewerkt");
+  for (const w of ["Onafhankelijk", "Vertrouwelijk", "Helder", "Persoonlijk"]) expect(tekst).toContain(w);
+});

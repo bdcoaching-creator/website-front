@@ -6,17 +6,17 @@ bijgewerkt: "[INVULLEN: datum]"
 
 > **Concept.** Laat deze tekst vóór livegang controleren. Vul alle velden met [INVULLEN] in en pas de tekst aan op je eigen werkwijze, verwerkersovereenkomsten en bewaartermijnen.
 
-AdaptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid zijn gevoelige onderwerpen. In deze verklaring lees je welke gegevens ik verwerk, waarom, en welke rechten je hebt.
+AdaptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid zijn gevoelige onderwerpen. In deze verklaring lees je welke gegevens wij verwerken, waarom, en welke rechten je hebt.
 
 ## Wie is verantwoordelijk?
 
 AdaptXS, gevestigd op [INVULLEN: adres], ingeschreven bij de KvK onder nummer [INVULLEN: KvK-nummer], is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.nl.
 
-Voer ik een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leg ik in de opdrachtbevestiging vast wie welke rol heeft onder de AVG. [INVULLEN: bepaal per dienst of je verwerkingsverantwoordelijke of verwerker bent.]
+Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leggen wij in de opdrachtbevestiging vast wie welke rol heeft onder de AVG. [INVULLEN: bepaal per dienst of je verwerkingsverantwoordelijke of verwerker bent.]
 
-## Welke gegevens verwerk ik?
+## Welke gegevens verwerken wij?
 
-**Via het contactformulier:** naam, e-mailadres, telefoonnummer (optioneel), organisatie en aantal medewerkers (optioneel), je rol, de gekozen dienst, de postcode van de werkplek (alleen bij een arbeidsdeskundig onderzoek) en je bericht. Ik vraag je uitdrukkelijk om **geen medische informatie** via het formulier te sturen.
+**Via het contactformulier:** naam, e-mailadres, telefoonnummer (optioneel), organisatie en aantal medewerkers (optioneel), je rol, de gekozen dienst, de postcode van de werkplek (alleen bij een arbeidsdeskundig onderzoek) en je bericht. Wij vragen je uitdrukkelijk om **geen medische informatie** via het formulier te sturen.
 
 **Tijdens een traject of onderzoek:** gegevens die nodig zijn om de opdracht uit te voeren, zoals functie- en werkgegevens, verslagen van gesprekken en, alleen als dat noodzakelijk en toegestaan is, gegevens over belastbaarheid zoals vastgesteld door de bedrijfsarts of verzekeringsarts.
 
@@ -31,9 +31,9 @@ Voer ik een opdracht uit voor een werkgever, zoals een re-integratietraject of e
 | Facturatie en administratie | Wettelijke verplichting (art. 6 lid 1 sub c AVG) |
 | Beveiliging van de website | Gerechtvaardigd belang (art. 6 lid 1 sub f AVG) |
 
-## Met wie deel ik gegevens?
+## Met wie delen wij gegevens?
 
-Ik verkoop je gegevens nooit. Ik deel ze alleen met partijen die ze nodig hebben om de dienstverlening mogelijk te maken, en met wie ik een verwerkersovereenkomst heb:
+Wij verkopen je gegevens nooit. Wij delen ze alleen met partijen die ze nodig hebben om de dienstverlening mogelijk te maken, en met wie wij een verwerkersovereenkomst hebben:
 
 - Hosting en beveiliging van de website: Cloudflare [INVULLEN: controleer verwerkersovereenkomst]
 - Versturen van formulierberichten: [INVULLEN: Brevo of Mailjet]
@@ -41,9 +41,9 @@ Ik verkoop je gegevens nooit. Ik deel ze alleen met partijen die ze nodig hebben
 - Videobellen: [INVULLEN: Zoom, met gegevensopslag in de EU]
 - Boekhouding: [INVULLEN: boekhoudpakket]
 
-Sommige van deze partijen zijn gevestigd buiten de Europese Economische Ruimte. In dat geval gebeurt doorgifte op basis van het EU-VS Data Privacy Framework of standaardcontractbepalingen. Medische gegevens deel ik nooit met een werkgever.
+Sommige van deze partijen zijn gevestigd buiten de Europese Economische Ruimte. In dat geval gebeurt doorgifte op basis van het EU-VS Data Privacy Framework of standaardcontractbepalingen. Medische gegevens delen wij nooit met een werkgever.
 
-## Hoe lang bewaar ik gegevens?
+## Hoe lang bewaren wij gegevens?
 
 - Aanvragen via het contactformulier zonder vervolg: maximaal [INVULLEN: 6] maanden
 - Dossiers van trajecten en onderzoeken: [INVULLEN: termijn volgens beroepscode en afspraken met opdrachtgever]
@@ -51,10 +51,10 @@ Sommige van deze partijen zijn gevestigd buiten de Europese Economische Ruimte. 
 
 ## Beveiliging
 
-Ik neem passende maatregelen om je gegevens te beschermen, waaronder versleutelde verbindingen, tweestapsverificatie, versleutelde apparaten en het beveiligd versturen van rapporten.
+Wij nemen passende maatregelen om je gegevens te beschermen, waaronder versleutelde verbindingen, tweestapsverificatie, versleutelde apparaten en het beveiligd versturen van rapporten.
 
 ## Jouw rechten
 
-Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adaptxs.nl. Ik reageer binnen een maand.
+Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adaptxs.nl. Wij reageren binnen een maand.
 
-Ben je het niet eens met hoe ik met je gegevens omga? Dan kun je een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl).
+Ben je het niet eens met hoe wij met je gegevens omgaan? Dan kun je een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl).

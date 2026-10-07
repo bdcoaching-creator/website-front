@@ -10,26 +10,22 @@ import VerzuimCalculator from "../components/VerzuimCalculator.astro";
 import CtaBand from "../components/CtaBand.astro";
 import home from "../data/home.json";
 import site from "../data/site.json";
-import { getDiensten, zonderAfbreken } from "../lib/diensten";
+import { getDiensten, zonderAfbreken, dienstUrl } from "../lib/diensten";
+import { organisatieSchema } from "../lib/organisatie";
 
 const diensten = await getDiensten();
 const beschrijving =
-  "Arbeidsdeskundige en jobcoach voor MKB-werkgevers in Zuid-Holland: re-integratie, arbeidsdeskundig onderzoek, jobcoaching en coaching voor ondernemers.";
+  "Arbeidsdeskundige en jobcoach voor werkgevers en medewerkers. Begeleiding bij verzuim, re-integratie, arbeidsbeperkingen en passend werk in Zuid-Holland en omgeving.";
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: site.bedrijfsnaam,
-  description: beschrijving,
-  url: Astro.site?.toString(),
-  email: site.email,
-  areaServed: [
-    { "@type": "AdministrativeArea", name: "Zuid-Holland" },
-    { "@type": "Country", name: "Nederland" },
-  ],
+  ...organisatieSchema(
+    Astro.site,
+    diensten.map((d) => ({ titel: d.data.titel, url: new URL(dienstUrl(d.id), Astro.site).toString() })),
+  ),
 };
 ---
 
-<BaseLayout title={site.bedrijfsnaam} description={beschrijving}>
+<BaseLayout title="Arbeidsdeskundige en jobcoach voor werkgevers" description={beschrijving}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- Hero: "Weer op het spoor" -->
@@ -40,7 +36,7 @@ const jsonLd = {
         <Logo variant="gradient-light" animate title={`${site.bedrijfsnaam}`} />
       </div>
       <span class="eyebrow hero__fade" style="--d:0.9s">{home.hero.label}</span>
-      <h1 class="hero__fade" style="--d:1.05s">{zonderAfbreken(home.hero.titel)}</h1>
+      <h1 class="hero__fade" style="--d:1.05s" set:html={zonderAfbreken(home.hero.titel)} />
       <p class="hero__intro hero__fade" style="--d:1.2s">{home.hero.intro}</p>
       <div class="btn-row hero__fade" style="--d:1.35s">
         <a class="btn btn--light" href="/contact">{home.hero.ctaPrimair} <span class="btn__arrow" aria-hidden="true">→</span></a>
@@ -76,7 +72,7 @@ const jsonLd = {
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Diensten</span>
-        <h2>Waarmee ik je help</h2>
+        <h2>Waarmee wij je helpen</h2>
         <p>Vier diensten, één aanspreekpunt. Van begeleiding op de werkvloer tot een onafhankelijk rapport.</p>
       </div>
       <div class="grid grid--4" data-reveal-group>
@@ -132,22 +128,23 @@ const jsonLd = {
         <span class="eyebrow">Privacy</span>
         <h2>{home.privacy.titel}</h2>
         <p>{home.privacy.tekst}</p>
-        <a href="/privacyverklaring">Lees hoe ik met je gegevens omga</a>
+        <a href="/privacyverklaring">Lees hoe wij met je gegevens omgaan</a>
       </div>
       <div class="card over-kaart" data-reveal>
         <h3>Over {site.bedrijfsnaam}</h3>
         <p>
-          Achter {site.bedrijfsnaam} staat één persoon: geregistreerd arbeidsdeskundige, erkend jobcoach en gecertificeerd coach.
-          Je hebt van kennismaking tot afronding met mij te maken.
+          {site.bedrijfsnaam} is een team met kennis van werk, wetgeving en mensen. Binnen {site.bedrijfsnaam} werken
+          jobcoaching, arbeidsdeskundige expertise en re-integratiebegeleiding samen. Je hebt van kennismaking tot
+          afronding met ons te maken.
         </p>
-        <a class="btn btn--ghost" href="/over">Meer over mij <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href="/over">Meer over ons <span class="btn__arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
   <CtaBand
     titel="Speelt er verzuim of een vraag over passend werk?"
-    tekst="Plan een gratis adviesgesprek van 30 minuten via Zoom. Je weet daarna wat je volgende stap is, ook als die niet bij mij ligt."
+    tekst="Plan een gratis adviesgesprek van 30 minuten via Zoom. Je weet daarna wat je volgende stap is, ook als die niet bij ons ligt."
     knop={home.hero.ctaPrimair}
     href="/contact"
   />

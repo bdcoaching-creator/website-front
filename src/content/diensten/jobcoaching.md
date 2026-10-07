@@ -3,16 +3,16 @@ titel: Jobcoaching
 volgorde: 1
 kaartTekst: Begeleiding op de werkvloer voor medewerkers met een arbeidsbeperking, zodat werk duurzaam lukt voor medewerker én werkgever.
 seo:
-  titel: Jobcoaching voor MKB-werkgevers en medewerkers
-  omschrijving: Erkend jobcoach voor medewerkers met een arbeidsbeperking. Begeleiding op de werkplek in Zuid-Holland, voor werkgever en medewerker.
+  titel: Jobcoaching voor medewerkers met een arbeidsbeperking
+  omschrijving: "Praktische jobcoaching op de werkvloer voor medewerkers met een arbeidsbeperking. Begeleiding voor medewerker, werkgever en collega's in Zuid-Holland en omgeving."
 hero:
   label: Jobcoaching
-  titel: Een medewerker met een arbeidsbeperking duurzaam aan het werk
-  intro: Als erkend jobcoach begeleid ik je medewerker op de werkvloer en help ik jou als werkgever met de juiste randvoorwaarden. Zo wordt een plaatsing geen experiment, maar een blijvend succes.
+  titel: Jobcoaching voor medewerkers met een arbeidsbeperking
+  intro: Met erkende jobcoaching begeleiden wij je medewerker op de werkvloer en helpen wij jou als werkgever met de juiste randvoorwaarden. Zo wordt een plaatsing geen experiment, maar een blijvend succes.
 cta:
   knop: Bespreek de inzet van een jobcoach
   formulierTitel: Vraag jobcoaching aan
-  formulierIntro: Vertel kort om welke situatie het gaat. Ik neem contact op om de mogelijkheden en de financiering samen door te nemen.
+  formulierIntro: Vertel kort om welke situatie het gaat. Wij nemen contact op om de mogelijkheden en de financiering samen door te nemen.
 herkenning:
   - Je hebt een medewerker met een arbeidsbeperking in dienst, of je overweegt dat, en wilt het goed aanpakken.
   - Het werk loopt nog niet soepel en je collega's weten niet goed hoe ze kunnen helpen.
@@ -32,22 +32,22 @@ stappen:
   - titel: Kennismaking
     tekst: Een gratis gesprek met de werkgever, eventueel samen met de medewerker. We bespreken de situatie en de mogelijkheden voor financiering.
   - titel: Begeleidingsplan
-    tekst: Ik breng het werk en de werkplek in kaart en stel samen met jullie een plan op met haalbare doelen.
+    tekst: Wij brengen het werk en de werkplek in kaart en stellen samen met jullie een plan op met haalbare doelen.
   - titel: Begeleiding op de werkvloer
-    tekst: Ik ben regelmatig aanwezig op de werkplek en tussendoor telefonisch of via Zoom bereikbaar.
+    tekst: Wij zijn regelmatig aanwezig op de werkplek en tussendoor telefonisch of via Zoom bereikbaar.
   - titel: Afbouw en evaluatie
     tekst: De begeleiding bouwt af zodra de medewerker zelfstandiger werkt. We evalueren tussentijds en aan het einde.
 locatie: Begeleiding vindt grotendeels plaats op de werkplek, in Zuid-Holland en omgeving. Tussentijdse gesprekken kunnen via Zoom.
-kwalificatie: Ik ben erkend jobcoach en geregistreerd arbeidsdeskundige (SRA). Daardoor kijk ik niet alleen naar de medewerker, maar ook naar de functie, de werkplek en de belastbaarheid.
+kwalificatie: Binnen AdaptXS werken erkende jobcoaching en arbeidsdeskundige expertise (SRA) samen. Daardoor kijken wij niet alleen naar de medewerker, maar ook naar de functie, de werkplek en de belastbaarheid.
 faq:
   - vraag: Wat doet een jobcoach precies?
     antwoord: Een jobcoach begeleidt een medewerker met een arbeidsbeperking op en rond de werkplek. Denk aan het aanleren van taken, het aanbrengen van structuur en het bespreekbaar maken van wat wel en niet lukt. De jobcoach adviseert ook de werkgever en collega's.
   - vraag: Hoe lang duurt jobcoaching?
     antwoord: Dat verschilt per situatie. Meestal is de begeleiding in het begin intensiever en bouwt deze af naarmate de medewerker zelfstandiger werkt. De duur hangt ook af van wat de financier toekent.
   - vraag: Wie vraagt de jobcoaching aan?
-    antwoord: Afhankelijk van de situatie doet de werkgever of de medewerker de aanvraag bij het UWV of de gemeente. Ik help je te bepalen welke route past en wat daarvoor nodig is.
+    antwoord: Afhankelijk van de situatie doet de werkgever of de medewerker de aanvraag bij het UWV of de gemeente. Wij helpen je te bepalen welke route past en wat daarvoor nodig is.
   - vraag: Wat gebeurt er met mijn gegevens?
-    antwoord: Ik verwerk alleen de gegevens die nodig zijn voor de begeleiding en werk volgens de AVG en mijn beroepscode. Medische informatie deel ik nooit met de werkgever. Lees meer in de privacyverklaring.
+    antwoord: Wij verwerken alleen de gegevens die nodig zijn voor de begeleiding en werken volgens de AVG en onze beroepscode. Medische informatie delen wij nooit met de werkgever. Lees meer in de privacyverklaring.
 ---
 
-Jobcoaching gaat verder dan een medewerker op weg helpen. Een plaatsing slaagt pas als het werk, de werkplek en de mensen eromheen ook meebewegen. Daarom betrek ik vanaf het begin zowel de medewerker als de werkgever. Het doel is dat mijn begeleiding op termijn niet meer nodig is.
+Jobcoaching gaat verder dan een medewerker op weg helpen. Een plaatsing slaagt pas als het werk, de werkplek en de mensen eromheen ook meebewegen. Daarom betrekken wij vanaf het begin zowel de medewerker als de werkgever. Het doel is dat onze begeleiding op termijn niet meer nodig is.

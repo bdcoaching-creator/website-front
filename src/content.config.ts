@@ -43,6 +43,7 @@ const paginas = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/paginas" }),
   schema: z.object({
     titel: z.string(),
+    kop: z.string().optional(),
     omschrijving: z.string(),
     intro: z.string().optional().default(""),
   }),

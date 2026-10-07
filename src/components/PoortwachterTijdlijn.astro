@@ -68,7 +68,7 @@ const MAX = 104;
         <p data-pw-tekst></p>
       </div>
       <div class="pw__hulp">
-        <p class="pw__hulp-label">Hoe ik help</p>
+        <p class="pw__hulp-label">Hoe wij helpen</p>
         <p data-pw-hulp></p>
         <a class="pw__link" data-pw-link href="/diensten/re-integratie">Bekijk de dienst <span aria-hidden="true">→</span></a>
         <p class="pw__volgende" data-pw-volgende></p>
@@ -86,7 +86,7 @@ const MAX = 104;
               <h3>{m.titel}</h3>
               <p>{m.tekst}</p>
               <p class="pw__lijst-hulp">
-                <strong>Hoe ik help:</strong> {m.hulp} <a href={dienstUrl(m.dienst)}>Meer informatie</a>
+                <strong>Hoe wij helpen:</strong> {m.hulp} <a href={dienstUrl(m.dienst)}>Meer informatie</a>
               </p>
             </div>
           </li>
@@ -279,7 +279,7 @@ const MAX = 104;
   }
   .pw__week {
     margin: 0;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-size: clamp(3rem, 9vw, 5rem);
     font-weight: 300;
     line-height: 1;
@@ -497,12 +497,12 @@ const MAX = 104;
     }
   }
   .pw__lijst-week {
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 500;
     color: var(--green);
   }
   .pw__lijst h3 {
-    font-size: 1.15rem;
+    font-size: 1.3rem;
   }
   .pw__lijst p {
     margin-bottom: 0.5rem;

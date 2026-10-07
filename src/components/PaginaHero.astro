@@ -26,7 +26,7 @@ const { label, titel, intro, kruimel } = Astro.props;
       )
     }
     <span class="eyebrow" data-reveal>{label}</span>
-    <h1 data-reveal style="--i:1">{zonderAfbreken(titel)}</h1>
+    <h1 data-reveal style="--i:1" set:html={zonderAfbreken(titel)} />
     {intro && <p class="pagina-hero__intro" data-reveal style="--i:2">{intro}</p>}
     <div data-reveal style="--i:3"><slot /></div>
   </div>

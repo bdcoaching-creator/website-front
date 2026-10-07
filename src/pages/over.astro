@@ -13,8 +13,8 @@ const { Content } = await render(pagina);
   <section class="section">
     <div class="container over">
       <div class="over__main">
-        <span class="eyebrow">Over mij</span>
-        <h1>{site.eigenaar}</h1>
+        <span class="eyebrow">Over ons</span>
+        <h1>{pagina.data.kop ?? pagina.data.titel}</h1>
         <p class="over__intro">{pagina.data.intro}</p>
         <div class="prose">
           <Content />
@@ -24,23 +24,23 @@ const { Content } = await render(pagina);
       <aside class="over__aside">
         {
           site.portret ? (
-            <img class="over__foto" src={site.portret} alt={`Portret van ${site.eigenaar}`} width="480" height="600" loading="lazy" />
+            <img class="over__foto" src={site.portret} alt={`Het team van ${site.bedrijfsnaam}`} width="480" height="600" loading="lazy" />
           ) : (
             <div class="over__foto over__foto--leeg">
-              <span>Plek voor je portretfoto (upload via het CMS)</span>
+              <span>Plek voor een teamfoto (upload via het CMS)</span>
             </div>
           )
         }
         <div class="card">
-          <h2 class="over__aside-title">Registraties en certificering</h2>
+          <h2 class="over__aside-title">Registraties en certificering binnen het team</h2>
           <ul class="checklist">
-            <li>Geregistreerd arbeidsdeskundige bij de SRA, registernummer {site.sraRegisternummer}</li>
-            <li>Lid van de Nederlandse Vereniging voor Arbeidsdeskundigen (NVvA)</li>
-            <li>Erkend jobcoach</li>
-            <li>Gecertificeerd coach</li>
+            <li>Arbeidsdeskundige: geregistreerd bij de SRA, registernummer {site.sraRegisternummer}</li>
+            <li>Arbeidsdeskundige: lid van de Nederlandse Vereniging voor Arbeidsdeskundigen (NVvA)</li>
+            <li>Jobcoaching: erkend jobcoach</li>
+            <li>Coaching: gecertificeerd coach</li>
           </ul>
           <p class="over__verify">
-            Mijn registratie kun je controleren in het <a href={site.sraRegisterUrl} rel="noopener">register van de SRA</a>.
+            De registratie van de arbeidsdeskundige kun je controleren in het <a href={site.sraRegisterUrl} rel="noopener">register van de SRA</a>.
           </p>
         </div>
       </aside>

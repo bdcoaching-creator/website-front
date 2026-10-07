@@ -7,6 +7,7 @@ import PrijsTabel from "../../components/PrijsTabel.astro";
 import IntakeForm from "../../components/IntakeForm.astro";
 import PaginaHero from "../../components/PaginaHero.astro";
 import { getDiensten } from "../../lib/diensten";
+import site from "../../data/site.json";
 
 export async function getStaticPaths() {
   const diensten = await getDiensten();
@@ -17,6 +18,32 @@ const { entry } = Astro.props;
 const d = entry.data;
 const { Content } = await render(entry);
 const toonTools = ["re-integratie", "arbeidsdeskundig-onderzoek"].includes(entry.id);
+
+// Werkgebied per dienst, zoals beschreven onder "Online of op locatie" op de pagina zelf.
+const ZH = { "@type": "AdministrativeArea", name: "Zuid-Holland" };
+const NL = { "@type": "Country", name: "Nederland" };
+const werkgebied: Record<string, object[]> = {
+  jobcoaching: [ZH],
+  "re-integratie": [ZH, NL],
+  "arbeidsdeskundig-onderzoek": [ZH],
+  "coaching-voor-ondernemers": [NL],
+};
+const siteUrl = Astro.site?.toString();
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: d.titel,
+  serviceType: d.titel,
+  description: d.seo.omschrijving,
+  url: new URL(Astro.url.pathname.replace(/\.html$/, ""), Astro.site).toString(),
+  areaServed: werkgebied[entry.id] ?? [ZH],
+  provider: {
+    "@type": "ProfessionalService",
+    "@id": siteUrl ? `${siteUrl}#organisatie` : undefined,
+    name: site.bedrijfsnaam,
+    url: siteUrl,
+  },
+};
 
 const faqLd = {
   "@context": "https://schema.org",
@@ -30,6 +57,7 @@ const faqLd = {
 ---
 
 <BaseLayout title={d.seo.titel} description={d.seo.omschrijving}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqLd)} />
 
   <PaginaHero

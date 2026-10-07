@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /bedankt
 
 Sitemap: https://www.adaptxs.nl/sitemap-index.xml
