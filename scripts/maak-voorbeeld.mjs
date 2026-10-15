@@ -21,7 +21,7 @@ if (!UIT) {
 rmSync(UIT, { recursive: true, force: true });
 mkdirSync(UIT, { recursive: true });
 cpSync(DIST, UIT, { recursive: true });
-for (const weg of ["_headers", "robots.txt", "sitemap-0.xml", "sitemap-index.xml"]) rmSync(join(UIT, weg), { force: true });
+for (const weg of [".htaccess", "api", "robots.txt", "sitemap-0.xml", "sitemap-index.xml"]) rmSync(join(UIT, weg), { recursive: true, force: true });
 // Mappen die met "_" beginnen zijn bij sommige hosts gereserveerd: _astro wordt assets.
 renameSync(join(UIT, "_astro"), join(UIT, "assets"));
 

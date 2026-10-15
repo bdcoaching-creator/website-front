@@ -21,7 +21,7 @@ const PAGINAS = [
   "/tools/verzuimkosten-calculator",
 ];
 
-// Zonder Turnstile-sleutel mag de site geen enkel extern verzoek doen.
+// De site doet geen enkel extern verzoek (geen trackers, geen externe scripts).
 const TOEGESTANE_HOSTS = ["localhost"];
 
 for (const pad of PAGINAS) {
@@ -80,7 +80,7 @@ test("contact: dienst uit de URL en organisatievelden alleen voor werkgevers", a
 
 test("formulier: foutmelding bij lege velden, doorsturen na succes", async ({ page }) => {
   let ontvangen = "";
-  await page.route("**/api/intake", async (route) => {
+  await page.route("**/api/intake.php", async (route) => {
     ontvangen = route.request().postData() ?? "";
     await route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' });
   });

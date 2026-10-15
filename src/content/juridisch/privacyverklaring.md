@@ -18,7 +18,7 @@ Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject o
 
 **Tijdens een traject of onderzoek:** gegevens die nodig zijn om de opdracht uit te voeren, zoals functie- en werkgegevens, verslagen van gesprekken en, alleen als dat noodzakelijk en toegestaan is, gegevens over belastbaarheid zoals vastgesteld door de bedrijfsarts of verzekeringsarts.
 
-**Bij het bezoeken van de website:** deze website gebruikt geen tracking-cookies. Voor de beveiliging en de werking van de website verwerkt de hostingprovider technische gegevens zoals je IP-adres. Websitestatistieken worden zonder cookies en zonder herleidbare profielen bijgehouden.
+**Bij het bezoeken van de website:** deze website gebruikt geen tracking-cookies. Voor de beveiliging en de werking van de website verwerkt de hostingprovider technische gegevens zoals je IP-adres in serverlogbestanden. Om misbruik van het contactformulier te voorkomen, bewaren wij bij het versturen maximaal een uur een gehashte code van je IP-adres. Je IP-adres zelf slaan wij daarbij niet op.
 
 ## Waarvoor en op welke grondslag?
 
@@ -33,8 +33,7 @@ Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject o
 
 Wij verkopen je gegevens nooit. Wij delen ze alleen met partijen die ze nodig hebben om de dienstverlening mogelijk te maken, en met wie wij een verwerkersovereenkomst hebben:
 
-- Hosting, beveiliging, statistieken en spamfilter van de website: Cloudflare
-- Versturen van formulierberichten: Brevo
+- Hosting van de website en versturen van formulierberichten: GoDaddy
 - Zakelijke e-mail: onze e-mailprovider
 - Videobellen: Zoom
 - Boekhouding: ons boekhoudpakket

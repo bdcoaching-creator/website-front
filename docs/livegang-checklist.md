@@ -5,17 +5,16 @@ Vink af wat klaar is. De meeste punten gaan over je bedrijfsvoering, niet over d
 ## 1. Domein en e-mail
 - [ ] Zakelijke mailbox op je eigen domein (bijv. Microsoft 365 Business Basic of mailbox.org), mét tweestapsverificatie
 - [ ] Geen cliëntcorrespondentie meer via een privé-adres (`@outlook.com`) of WhatsApp
-- [ ] Brevo-account aangemaakt, domein geverifieerd (SPF, DKIM en DMARC in de DNS van je domein)
-- [ ] Domein gekoppeld aan Cloudflare Pages (Custom domains), HTTPS actief
+- [ ] SPF, DKIM en DMARC ingesteld in de DNS van je domein (bij GoDaddy), zodat formuliermails niet in de spam belanden
+- [ ] SSL-certificaat actief in cPanel (SSL/TLS Status), https://www.adaptxs.com werkt zonder waarschuwing
 
 ## 2. Website technisch
-- [ ] Cloudflare Pages-project gekoppeld aan deze repository (zie README)
-- [ ] Turnstile-widget aangemaakt, sleutels ingesteld als environment variables
-- [ ] Brevo-sleutel, `MAIL_TO` en `MAIL_FROM` ingesteld
+- [ ] Uploadmap in `public_html` gezet, inclusief `.htaccess` en `api/intake.php` (zie README)
+- [ ] PHP-versie in cPanel op 8.x gezet (minimaal 7.4)
+- [ ] cPanel → Email Routing goed ingesteld (Local of Remote Mail Exchanger, zie README)
 - [ ] Testaanvraag verstuurd via elk van de 4 dienstpagina's en via /contact, en binnengekomen in je mailbox (niet in spam)
 - [ ] Nette URL's werken (bijv. `/diensten` en `/diensten/re-integratie` zonder `.html`)
-- [ ] Cloudflare Web Analytics aangezet (cookieloos)
-- [ ] Pages CMS gekoppeld en één testwijziging gedaan (bijv. een prijs), die binnen ~1 minuut live stond
+- [ ] Pages CMS gekoppeld en één testwijziging gedaan (bijv. een prijs); na opnieuw bouwen en uploaden stond die live
 - [ ] `npm run check:livegang` geeft geen open placeholders meer
 
 ## 3. Inhoud
@@ -32,7 +31,7 @@ Vink af wat klaar is. De meeste punten gaan over je bedrijfsvoering, niet over d
 - [ ] Privacyverklaring ingevuld en laten toetsen
 - [ ] Per dienst vastgelegd of je verwerkingsverantwoordelijke of verwerker bent
 - [ ] Model-verwerkersovereenkomst voor opdrachtgevers (werkgevers) klaar
-- [ ] Verwerkersovereenkomsten afgesloten met Cloudflare, Brevo, e-mailprovider, Zoom en boekhoudpakket
+- [ ] Verwerkersovereenkomsten afgesloten met GoDaddy (hosting), e-mailprovider, Zoom en boekhoudpakket
 - [ ] Zoom: dataopslag op de EU-regio
 - [ ] Verwerkingsregister (art. 30 AVG) opgesteld
 - [ ] Bewaartermijnen vastgelegd (intake-aanvragen, dossiers, facturen)

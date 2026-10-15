@@ -1,11 +1,11 @@
 # Website AdaptXS
 
 De website van AdaptXS: jobcoaching, re-integratie, arbeidsdeskundig onderzoek en coaching voor ondernemers.
-De site is gebouwd met [Astro](https://astro.build), gehost op Cloudflare Pages en te bewerken via Pages CMS.
+De site is gebouwd met [Astro](https://astro.build), gehost bij GoDaddy (cPanel) en te bewerken via Pages CMS.
 
-- **Kosten**: €0 voor hosting, CMS en formulier. Alleen domein en zakelijke e-mail kosten geld.
+- **Kosten**: geen extra kosten naast je GoDaddy-hosting, domein en e-mail. CMS en formulier zijn gratis.
 - **Geen tracking-cookies**, dus geen cookiebanner nodig.
-- **Formulieren** worden niet opgeslagen, alleen als e-mail doorgestuurd (via Brevo, EU).
+- **Formulieren** worden niet opgeslagen, alleen als e-mail doorgestuurd (PHP-script op de eigen hosting).
 
 Checklist vóór livegang: **[docs/livegang-checklist.md](docs/livegang-checklist.md)**
 
@@ -21,11 +21,12 @@ Checklist vóór livegang: **[docs/livegang-checklist.md](docs/livegang-checklis
    - **Diensten**: de vier dienstpagina's, inclusief veelgestelde vragen
    - **Poortwachter-tijdlijn**: de momenten in de interactieve tijdlijn
    - **Homepage**, **Over ons** en **Juridische pagina's**
-4. Klik op **Save**. Binnen ongeveer een minuut staat de wijziging live.
+4. Klik op **Save**. De wijziging staat dan op GitHub, maar **nog niet live**: de site moet opnieuw gebouwd
+   (`npm run pakket`) en geüpload worden. Zie [Uploaden naar GoDaddy](#uploaden-naar-godaddy-cpanel).
 
 **Veiligheidsnet:** bij elke wijziging controleert de site automatisch of er woorden in staan die je bewust niet
 gebruikt (mediation/mediator/bemiddeling, lifestyle/wellness/hormonen). Staat zo'n woord erin, dan gaat de
-wijziging **niet** live. In Cloudflare Pages zie je dan een mislukte build met de regel waar het woord staat.
+wijziging **niet** live: `npm run pakket` stopt dan met de regel waar het woord staat.
 
 **Wat je niet zelf kunt:** nieuwe paginatypes toevoegen of de vormgeving aanpassen. Daarvoor is een wijziging in de code nodig.
 
@@ -53,12 +54,12 @@ src/components/Logo.astro        logo ADAPTXS als vector, optioneel geanimeerd
 src/components/PoortwachterTijdlijn.astro  interactieve tijdlijn (data: src/data/poortwachter.json)
 src/components/VerzuimCalculator.astro     verzuimkosten-calculator (logica: src/lib/verzuimkosten.ts)
 src/scripts/interactie.ts        scroll-animaties, lichtvlek op kaarten, header
-src/server/intake.ts             verwerking formulier → e-mail via Brevo (niets opslaan)
-functions/api/intake.ts          Cloudflare Pages Function (POST /api/intake)
+public/api/intake.php            verwerking formulier → e-mail via mail() van de hosting (niets opslaan)
 src/lib/werkgebied.ts            postcodegebieden voor AD-onderzoek
 scripts/check-content.mjs        controle op verboden termen en placeholders
 .pages.yml                       configuratie Pages CMS
-public/_headers                  beveiligingsheaders (CSP e.d.)
+public/.htaccess                 Apache: nette URL's, https + www, beveiligingsheaders (CSP e.d.), caching
+scripts/maak-pakket.mjs          maakt de uploadmap upload/public_html en een zip
 ```
 
 ### Lokaal ontwikkelen
@@ -67,29 +68,26 @@ public/_headers                  beveiligingsheaders (CSP e.d.)
 npm install
 npm run dev              # http://localhost:4321
 npm run build            # inhoudscontrole + build naar dist/
-npm test                 # unittests + Playwright (pagina's, cookies, toegankelijkheid, formulier)
+npm test                 # PHP-formuliertests (vereist PHP) + Playwright (pagina's, cookies, toegankelijkheid)
+npm run pakket           # build + uploadklare map upload/public_html en upload/adaptxs-public_html.zip
 ```
 
-### Cloudflare Pages instellen
+### Uploaden naar GoDaddy (cPanel)
 
-| Instelling | Waarde |
-|---|---|
-| Build command | `npm run build` |
-| Output directory | `dist` |
-| Environment variable | `NODE_VERSION` = `22` |
+1. `npm run pakket` maakt `upload/adaptxs-public_html.zip` (inhoud = wat in `public_html` hoort, inclusief `.htaccess`).
+2. cPanel → **File Manager** → `public_html`. Zet via **Settings** "Show Hidden Files (dotfiles)" aan.
+3. Maak eerst een back-up van wat er al staat (selecteer alles → **Compress**), verwijder daarna de oude bestanden.
+   Laat `.well-known` en `cgi-bin` staan.
+4. **Upload** de zip, klik er met rechts op → **Extract** naar `/public_html`, en verwijder daarna de zip.
+5. Controleer: https://www.adaptxs.com, https://www.adaptxs.com/diensten/re-integratie en een testaanvraag.
 
-**Environment variables (Settings → Variables and Secrets):**
+**Formulier (`public/api/intake.php`):** stuurt met `mail()` van de hosting naar `info@adaptxs.com`. Ontvanger en
+afzender staan bovenin het script. Er zijn geen API-sleutels of geheimen nodig. Spam wordt tegengehouden met een
+verborgen veld (honeypot), een controle op herkomst en een limiet van 5 aanvragen per uur per bezoeker.
 
-| Naam | Waarde | Type |
-|---|---|---|
-| `PUBLIC_TURNSTILE_SITE_KEY` | site key van Turnstile | tekst (nodig tijdens de build) |
-| `TURNSTILE_SECRET_KEY` | secret key van Turnstile | geheim |
-| `BREVO_API_KEY` | API-sleutel van Brevo | geheim |
-| `MAIL_TO` | adres waar aanvragen binnenkomen, bijv. `info@adaptxs.com` | tekst |
-| `MAIL_FROM` | geverifieerd afzenderadres in Brevo, bijv. `website@adaptxs.com` | tekst |
-
-Cloudflare Web Analytics (cookieloos) zet je aan via **Pages → je project → Metrics → Web Analytics**.
-Dit zit in de CSP (`public/_headers`) al toegestaan.
+**E-mail komt niet aan?** Controleer in cPanel → **Email Routing**: staat je mailbox in cPanel, kies *Local Mail
+Exchanger*; staat je mail bij een andere dienst (bijv. Microsoft 365), kies *Remote Mail Exchanger*. Controleer ook
+of het SPF-record van je domein de server van GoDaddy toestaat.
 
 ### Huisstijl en beweging
 - Kleuren uit het beeldmerk: groen `#0C6D45`, crème `#F3E4D2`, antraciet `#231F20`, salie `#7A9474`.

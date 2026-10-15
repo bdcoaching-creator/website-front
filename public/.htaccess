@@ -1,0 +1,54 @@
+# Instellingen voor Apache (cPanel-hosting). Komt mee in de uploadmap voor public_html.
+
+Options -Indexes
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+# /diensten moet de pagina diensten.html tonen, niet doorsturen naar de map /diensten/.
+DirectorySlash Off
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Certificaatcontrole van de hosting (AutoSSL) niet doorsturen.
+  RewriteRule ^\.well-known/ - [L]
+
+  # Altijd via https en via www.adaptxs.com.
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://www.adaptxs.com%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP_HOST} ^adaptxs\.com(:\d+)?$ [NC]
+  RewriteRule ^ https://www.adaptxs.com%{REQUEST_URI} [R=301,L]
+
+  # Oude of handmatige adressen netjes maken: /index.html → /, /pagina.html → /pagina, /pagina/ → /pagina.
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
+  RewriteRule ^ / [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html[\s?]
+  RewriteRule ^ /%1 [R=301,L]
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # Nette URL's: /diensten/re-integratie toont diensten/re-integratie.html.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'"
+
+  # Bestanden in _astro hebben een unieke naam per versie: die mogen lang in de cache.
+  <If "%{REQUEST_URI} =~ m#^/_astro/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json image/svg+xml application/xml
+</IfModule>
