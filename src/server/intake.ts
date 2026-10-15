@@ -154,7 +154,7 @@ export async function verwerkAanvraag(request: Request, env: Env, doFetch: typeo
   }
 
   if (!env.BREVO_API_KEY || !env.MAIL_TO || !env.MAIL_FROM) {
-    return antwoord(request, 503, "Het formulier is tijdelijk niet beschikbaar. Mail je vraag naar info@adaptxs.nl.");
+    return antwoord(request, 503, "Het formulier is tijdelijk niet beschikbaar. Mail je vraag naar info@adaptxs.com.");
   }
 
   const { onderwerp, tekst } = maakMail(resultaat.aanvraag);
@@ -172,7 +172,7 @@ export async function verwerkAanvraag(request: Request, env: Env, doFetch: typeo
 
   if (!res.ok) {
     console.error(`Versturen mislukt: mailprovider gaf status ${res.status}`);
-    return antwoord(request, 502, "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adaptxs.nl.");
+    return antwoord(request, 502, "Er ging iets mis bij het versturen. Probeer het later opnieuw of mail naar info@adaptxs.com.");
   }
   return antwoord(request, 200);
 }

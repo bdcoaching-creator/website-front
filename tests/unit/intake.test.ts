@@ -5,7 +5,7 @@ import { formatPrijs } from "../../src/lib/prijs.ts";
 import { valtBinnenWerkgebied } from "../../src/lib/werkgebied.ts";
 import { berekenVerzuimkosten } from "../../src/lib/verzuimkosten.ts";
 
-const env = { BREVO_API_KEY: "test", MAIL_TO: "info@adaptxs.nl", MAIL_FROM: "website@adaptxs.nl" };
+const env = { BREVO_API_KEY: "test", MAIL_TO: "info@adaptxs.com", MAIL_FROM: "website@adaptxs.com" };
 
 function formulier(velden: Record<string, string>) {
   const fd = new FormData();
@@ -15,7 +15,7 @@ function formulier(velden: Record<string, string>) {
 const geldig = { rol: "werkgever", naam: "Jan Jansen", email: "jan@example.nl", dienst: "re-integratie", organisatie: "Bakkerij", medewerkers: "10–24", bericht: "Medewerker is ziek." };
 
 function verzoek(velden: Record<string, string>, json = true) {
-  return new Request("https://www.adaptxs.nl/api/intake", {
+  return new Request("https://www.adaptxs.com/api/intake", {
     method: "POST",
     body: formulier(velden),
     headers: json ? { Accept: "application/json" } : {},
@@ -65,7 +65,7 @@ test("verwerkAanvraag: verstuurt mail via Brevo met reply-to", async () => {
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, "https://api.brevo.com/v3/smtp/email");
   const body = JSON.parse(String(calls[0].init.body));
-  assert.equal(body.to[0].email, "info@adaptxs.nl");
+  assert.equal(body.to[0].email, "info@adaptxs.com");
   assert.equal(body.replyTo.email, "jan@example.nl");
 });
 

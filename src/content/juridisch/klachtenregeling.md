@@ -8,11 +8,11 @@ Wij doen ons uiterste best om je goed te helpen. Ben je toch ergens niet tevrede
 
 ## 1. Bespreek het met ons
 
-Neem contact met ons op via info@adaptxs.nl of telefonisch. In de meeste gevallen lossen we het samen op.
+Neem contact met ons op via info@adaptxs.com of telefonisch. In de meeste gevallen lossen we het samen op.
 
 ## 2. Dien een schriftelijke klacht in
 
-Komen we er samen niet uit? Stuur dan een schriftelijke klacht naar info@adaptxs.nl met:
+Komen we er samen niet uit? Stuur dan een schriftelijke klacht naar info@adaptxs.com met:
 
 - je naam en contactgegevens
 - een omschrijving van de klacht en wanneer het speelde

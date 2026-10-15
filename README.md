@@ -85,8 +85,8 @@ npm test                 # unittests + Playwright (pagina's, cookies, toegankeli
 | `PUBLIC_TURNSTILE_SITE_KEY` | site key van Turnstile | tekst (nodig tijdens de build) |
 | `TURNSTILE_SECRET_KEY` | secret key van Turnstile | geheim |
 | `BREVO_API_KEY` | API-sleutel van Brevo | geheim |
-| `MAIL_TO` | adres waar aanvragen binnenkomen, bijv. `info@adaptxs.nl` | tekst |
-| `MAIL_FROM` | geverifieerd afzenderadres in Brevo, bijv. `website@adaptxs.nl` | tekst |
+| `MAIL_TO` | adres waar aanvragen binnenkomen, bijv. `info@adaptxs.com` | tekst |
+| `MAIL_FROM` | geverifieerd afzenderadres in Brevo, bijv. `website@adaptxs.com` | tekst |
 
 Cloudflare Web Analytics (cookieloos) zet je aan via **Pages → je project → Metrics → Web Analytics**.
 Dit zit in de CSP (`public/_headers`) al toegestaan.

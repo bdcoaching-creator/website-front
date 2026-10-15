@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.adaptxs.nl/sitemap-index.xml
+Sitemap: https://www.adaptxs.com/sitemap-index.xml
