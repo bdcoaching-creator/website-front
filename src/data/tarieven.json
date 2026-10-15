@@ -1,0 +1,12 @@
+{
+  "toelichting": "Zakelijke tarieven zijn exclusief btw. Tarieven voor particulieren zijn inclusief btw. Voor trajecten ontvang je vooraf altijd een offerte op maat.",
+  "tarieven": [
+    { "dienst": "algemeen", "omschrijving": "Kennismakingsgesprek (30 minuten, online)", "prijs": 0, "vanaf": false, "eenheid": "", "btw": "excl", "toelichting": "Vrijblijvend" },
+    { "dienst": "jobcoaching", "omschrijving": "Jobcoaching op de werkplek", "prijs": null, "vanaf": false, "eenheid": "per uur", "btw": "excl", "toelichting": "Mogelijk vergoed via UWV of gemeente" },
+    { "dienst": "re-integratie", "omschrijving": "Re-integratietraject eerste spoor", "prijs": null, "vanaf": true, "eenheid": "per traject", "btw": "excl", "toelichting": "" },
+    { "dienst": "re-integratie", "omschrijving": "Re-integratietraject tweede spoor", "prijs": null, "vanaf": true, "eenheid": "per traject", "btw": "excl", "toelichting": "" },
+    { "dienst": "arbeidsdeskundig-onderzoek", "omschrijving": "Arbeidsdeskundig onderzoek inclusief werkplekbezoek en rapport", "prijs": null, "vanaf": true, "eenheid": "per onderzoek", "btw": "excl", "toelichting": "Reiskosten buiten Zuid-Holland in overleg" },
+    { "dienst": "coaching-voor-ondernemers", "omschrijving": "Coachgesprek (60 minuten, online)", "prijs": null, "vanaf": false, "eenheid": "per sessie", "btw": "excl", "toelichting": "" },
+    { "dienst": "coaching-voor-ondernemers", "omschrijving": "Coachtraject (6 sessies)", "prijs": null, "vanaf": false, "eenheid": "per traject", "btw": "excl", "toelichting": "" }
+  ]
+}

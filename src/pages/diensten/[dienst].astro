@@ -1,0 +1,188 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Stappen from "../../components/Stappen.astro";
+import Faq from "../../components/Faq.astro";
+import PrijsTabel from "../../components/PrijsTabel.astro";
+import IntakeForm from "../../components/IntakeForm.astro";
+import PaginaHero from "../../components/PaginaHero.astro";
+import { getDiensten } from "../../lib/diensten";
+import site from "../../data/site.json";
+
+export async function getStaticPaths() {
+  const diensten = await getDiensten();
+  return diensten.map((entry) => ({ params: { dienst: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const toonTools = ["re-integratie", "arbeidsdeskundig-onderzoek"].includes(entry.id);
+
+// Werkgebied per dienst, zoals beschreven onder "Online of op locatie" op de pagina zelf.
+const ZH = { "@type": "AdministrativeArea", name: "Zuid-Holland" };
+const NL = { "@type": "Country", name: "Nederland" };
+const werkgebied: Record<string, object[]> = {
+  jobcoaching: [ZH],
+  "re-integratie": [ZH, NL],
+  "arbeidsdeskundig-onderzoek": [ZH],
+  "coaching-voor-ondernemers": [NL],
+};
+const siteUrl = Astro.site?.toString();
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: d.titel,
+  serviceType: d.titel,
+  description: d.seo.omschrijving,
+  url: new URL(Astro.url.pathname.replace(/\.html$/, ""), Astro.site).toString(),
+  areaServed: werkgebied[entry.id] ?? [ZH],
+  provider: {
+    "@type": "ProfessionalService",
+    "@id": siteUrl ? `${siteUrl}#organisatie` : undefined,
+    name: site.bedrijfsnaam,
+    url: siteUrl,
+  },
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: d.faq.map((f) => ({
+    "@type": "Question",
+    name: f.vraag,
+    acceptedAnswer: { "@type": "Answer", text: f.antwoord },
+  })),
+};
+---
+
+<BaseLayout title={d.seo.titel} description={d.seo.omschrijving}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <PaginaHero
+    label={d.hero.label}
+    titel={d.hero.titel}
+    intro={d.hero.intro}
+    kruimel={[{ label: "Home", href: "/" }, { label: "Diensten", href: "/diensten" }, { label: d.titel }]}
+  >
+    <a class="btn btn--light" href="#aanvraag">{d.cta.knop} <span class="btn__arrow" aria-hidden="true">→</span></a>
+  </PaginaHero>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div data-reveal="left">
+        <h2>Herken je dit?</h2>
+        <ul class="checklist">
+          {d.herkenning.map((h) => <li>{h}</li>)}
+        </ul>
+      </div>
+      <div class="prose" data-reveal>
+        <h2>In het kort</h2>
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2>Voor wie en wie betaalt?</h2>
+      </div>
+      <div class="grid grid--2" data-reveal-group>
+        {
+          d.voorWie.map((v) => (
+            <div class="card" data-reveal>
+              <h3>{v.titel}</h3>
+              <p>{v.tekst}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="note betaalt" data-reveal>
+        <p><strong>Wie betaalt?</strong> {d.wieBetaalt}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div data-reveal="left">
+        <h2>Wat levert het op?</h2>
+        <ul class="checklist">
+          {d.oplevering.map((o) => <li>{o}</li>)}
+        </ul>
+      </div>
+      <div data-reveal>
+        <h2>Deskundigheid</h2>
+        <p>{d.kwalificatie}</p>
+        <h3>Online of op locatie</h3>
+        <p>{d.locatie}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2>Zo werkt het</h2>
+      </div>
+      <Stappen stappen={d.stappen} />
+      {
+        toonTools && (
+          <div class="tools-tip" data-reveal>
+            <p><strong>Handig voor werkgevers:</strong> bekijk waar je staat in het verzuimtraject of bereken wat verzuim kost.</p>
+            <div class="btn-row">
+              <a class="btn btn--ghost" href="/tools/poortwachter-tijdlijn">Poortwachter-tijdlijn <span class="btn__arrow" aria-hidden="true">→</span></a>
+              <a class="btn btn--ghost" href="/tools/verzuimkosten-calculator">Verzuimkosten-calculator <span class="btn__arrow" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container grid grid--2">
+      <div data-reveal="left">
+        <h2>Tarief</h2>
+        <PrijsTabel dienst={entry.id} />
+      </div>
+      <div data-reveal>
+        <h2>Veelgestelde vragen</h2>
+        <Faq items={d.faq} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container aanvraag" data-reveal="scale">
+      <IntakeForm
+        dienst={entry.id}
+        titel={d.cta.formulierTitel}
+        intro={d.cta.formulierIntro}
+        knop={d.cta.knop}
+        werkgebiedNotitie={d.werkgebiedNotitie}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .betaalt {
+    margin-top: 1.5rem;
+    max-width: 60rem;
+  }
+  .aanvraag {
+    max-width: 54rem;
+  }
+  .tools-tip {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--cream);
+  }
+  .tools-tip p {
+    margin-bottom: 1rem;
+  }
+</style>

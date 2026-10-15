@@ -1,0 +1,167 @@
+---
+import Logo from "./Logo.astro";
+import site from "../data/site.json";
+import { getDiensten, dienstUrl } from "../lib/diensten";
+
+const diensten = await getDiensten();
+const jaar = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__logo" data-footer-logo>
+      <Logo variant="gradient-light" />
+    </div>
+
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__tagline">{site.tagline}</p>
+        <ul class="site-footer__badges" aria-label="Registraties">
+          <li>Geregistreerd arbeidsdeskundige (SRA)</li>
+          <li>Lid NVvA</li>
+          <li>Erkend jobcoach</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Diensten</h2>
+        <ul class="site-footer__links">
+          {diensten.map((d) => <li><a href={dienstUrl(d.id)}>{d.data.titel}</a></li>)}
+          <li><a href="/tarieven">Tarieven</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Tools</h2>
+        <ul class="site-footer__links">
+          <li><a href="/tools/poortwachter-tijdlijn">Poortwachter-tijdlijn</a></li>
+          <li><a href="/tools/verzuimkosten-calculator">Verzuimkosten-calculator</a></li>
+        </ul>
+        <h2 class="site-footer__title site-footer__title--spaced">Contact</h2>
+        <address class="site-footer__address">
+          {site.adres.straat}<br />
+          {site.adres.postcode} {site.adres.plaats}<br />
+          <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          <a href={`tel:${site.telefoon}`}>{site.telefoon}</a>
+        </address>
+      </div>
+
+      <div>
+        <h2 class="site-footer__title">Gegevens</h2>
+        <ul class="site-footer__links">
+          {site.kvk && <li>KvK: {site.kvk}</li>}
+          {site.btw && <li>Btw: {site.btw}</li>}
+          <li><a href="/privacyverklaring">Privacyverklaring</a></li>
+          <li><a href="/cookieverklaring">Cookieverklaring</a></li>
+          <li><a href="/algemene-voorwaarden">Algemene voorwaarden</a></li>
+          <li><a href="/klachtenregeling">Klachtenregeling</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="site-footer__bottom">
+      © {jaar} {site.bedrijfsnaam}. Deze website gebruikt geen tracking-cookies.
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Footerlogo: één keer van links naar rechts onthullen zodra het in beeld komt.
+  const logo = document.querySelector<HTMLElement>("[data-footer-logo]");
+  if (logo) {
+    const rustig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (rustig || !("IntersectionObserver" in window)) {
+      logo.classList.add("is-onthuld");
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            logo.classList.add("is-onthuld");
+            io.unobserve(logo);
+          }
+        },
+        { threshold: 0.3 },
+      );
+      io.observe(logo);
+    }
+  }
+</script>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: rgb(243 228 210 / 0.85);
+    padding-block: 4rem 2rem;
+    font-size: 0.975rem;
+  }
+  .site-footer a {
+    color: var(--cream);
+  }
+  .site-footer__logo {
+    max-width: 44rem;
+    margin-bottom: 3.5rem;
+  }
+  /* De knip zit op het logo zelf; de observer kijkt naar de container (een volledig
+     dichtgeknipt element telt in Chrome niet als "in beeld"). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .site-footer__logo > :global(svg) {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.9s ease-out;
+    }
+    :global(.js) .site-footer__logo.is-onthuld > :global(svg) {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 48rem) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+  }
+  .site-footer__tagline {
+    max-width: 22rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--cream);
+  }
+  .site-footer__title {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 0.75rem;
+  }
+  .site-footer__title--spaced {
+    margin-top: 1.75rem;
+  }
+  .site-footer__links,
+  .site-footer__badges {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .site-footer__badges li {
+    font-size: 0.9rem;
+  }
+  .site-footer__badges li::before {
+    content: "✓ ";
+    color: var(--sage-light);
+  }
+  .site-footer__address {
+    font-style: normal;
+  }
+  .site-footer__bottom {
+    margin: 3rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(243 228 210 / 0.15);
+    font-size: 0.875rem;
+    color: rgb(243 228 210 / 0.7);
+  }
+</style>

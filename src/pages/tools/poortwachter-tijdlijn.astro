@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaginaHero from "../../components/PaginaHero.astro";
+import PoortwachterTijdlijn from "../../components/PoortwachterTijdlijn.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import data from "../../data/poortwachter.json";
+---
+
+<BaseLayout
+  title="Poortwachter-tijdlijn voor werkgevers"
+  description="Interactieve tijdlijn van de Wet verbetering poortwachter: wat moet je als werkgever doen in week 1 tot 104 van het verzuim van een medewerker?"
+>
+  <PaginaHero
+    label="Tool"
+    titel={data.titel}
+    intro={data.intro}
+    kruimel={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Poortwachter-tijdlijn" }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <PoortwachterTijdlijn />
+    </div>
+  </section>
+
+  <CtaBand
+    titel="Wil je zeker weten dat je niets mist?"
+    tekst="Plan een gratis adviesgesprek. Samen kijken we waar je nu staat en wat de volgende stap is."
+    knop="Plan een gratis adviesgesprek"
+    href="/contact?dienst=re-integratie"
+  />
+</BaseLayout>

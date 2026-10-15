@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaginaHero from "../../components/PaginaHero.astro";
+---
+
+<BaseLayout
+  title="Tools voor werkgevers"
+  description="Gratis tools voor MKB-werkgevers: de Poortwachter-tijdlijn en de verzuimkosten-calculator. Direct in je browser, zonder dat er gegevens worden opgeslagen."
+>
+  <PaginaHero
+    label="Tools"
+    titel="Handige tools voor werkgevers"
+    intro="Gratis en direct te gebruiken. Alles rekent in je eigen browser: er wordt niets opgeslagen of verstuurd."
+    kruimel={[{ label: "Home", href: "/" }, { label: "Tools" }]}
+  />
+
+  <section class="section">
+    <div class="container grid grid--2" data-reveal-group>
+      <a class="card card--link tool-kaart" href="/tools/poortwachter-tijdlijn" data-reveal>
+        <span class="card__nr">Tijdlijn</span>
+        <h2>Poortwachter-tijdlijn</h2>
+        <p>Schuif door de 104 weken van langdurig verzuim en zie per moment wat je als werkgever moet doen.</p>
+        <span class="card__more">Open de tijdlijn <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="card card--link tool-kaart" href="/tools/verzuimkosten-calculator" data-reveal>
+        <span class="card__nr">Calculator</span>
+        <h2>Verzuimkosten-calculator</h2>
+        <p>Bereken in een paar seconden wat verzuim van een medewerker je ongeveer kost.</p>
+        <span class="card__more">Bereken de kosten <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tool-kaart h2 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+  }
+</style>
