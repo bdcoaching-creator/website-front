@@ -1,7 +1,7 @@
 ---
 titel: Klachtenregeling
 omschrijving: Wat je kunt doen als je niet tevreden bent over de dienstverlening van AdaptXS.
-bijgewerkt: "[INVULLEN: datum]"
+bijgewerkt: "15 oktober 2026"
 ---
 
 Wij doen ons uiterste best om je goed te helpen. Ben je toch ergens niet tevreden over? Dan horen wij dat graag, zodat we samen naar een oplossing kunnen zoeken.
@@ -18,11 +18,11 @@ Komen we er samen niet uit? Stuur dan een schriftelijke klacht naar info@adaptxs
 - een omschrijving van de klacht en wanneer het speelde
 - wat je graag als oplossing zou zien
 
-Wij bevestigen de ontvangst binnen [INVULLEN: 5] werkdagen en reageren inhoudelijk binnen [INVULLEN: 4] weken.
+Wij bevestigen de ontvangst binnen 5 werkdagen en reageren inhoudelijk binnen 4 weken.
 
 ## 3. Klacht over de beroepsuitoefening van een arbeidsdeskundige
 
-Gaat je klacht over het handelen van een geregistreerd arbeidsdeskundige binnen AdaptXS? Dan kun je je ook wenden tot de Stichting Register Arbeidsdeskundigen (SRA). [INVULLEN: controleer de actuele klachtenprocedure op sra.nl en verwijs daarnaar.]
+Gaat je klacht over het handelen van een geregistreerd arbeidsdeskundige binnen AdaptXS? Dan kun je je ook wenden tot de Stichting Register Arbeidsdeskundigen (SRA). Op [sra.nl](https://www.sra.nl) lees je hoe je een klacht indient.
 
 ## Vertrouwelijk
 

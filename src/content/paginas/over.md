@@ -5,8 +5,6 @@ omschrijving: AdaptXS is een team met kennis van werk, wetgeving en mensen. Binn
 intro: "AdaptXS is een team met kennis van werk, wetgeving en mensen. Binnen AdaptXS werken verschillende deskundigheden samen: jobcoaching, arbeidsdeskundige expertise en re-integratiebegeleiding."
 ---
 
-[INVULLEN: vertel in een paar alinea's wie jullie zijn, wat jullie achtergrond is en waarom AdaptXS is gestart. Schrijf in de wij-vorm en houd het concreet. Noem alleen ervaring die jullie kunnen onderbouwen en noem geen aantal teamleden.]
-
 ## Onze deskundigheid
 
 ### Jobcoaching

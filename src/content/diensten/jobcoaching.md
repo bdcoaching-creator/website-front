@@ -22,7 +22,7 @@ voorWie:
     tekst: Je krijgt praktische ondersteuning bij het inwerken, het aanpassen van taken en het betrekken van leidinggevende en collega's. Zo houd je de plaatsing stabiel zonder dat het al je tijd kost.
   - titel: Voor medewerkers
     tekst: Je hebt een vaste coach die met je meekijkt op de werkplek, helpt structuur aan te brengen en er is als het even lastig wordt. Het doel is dat je zelfstandig en met plezier je werk doet.
-wieBetaalt: "Jobcoaching wordt in veel situaties vergoed door het UWV of de gemeente, afhankelijk van de situatie van de medewerker (bijvoorbeeld Wajong, Participatiewet of WIA). Of en hoe dat in jouw geval kan, zoeken we samen uit vóórdat je kosten maakt. [INVULLEN: controleer je voorwaarden en contracten met UWV/gemeenten en pas deze tekst daarop aan.]"
+wieBetaalt: "Jobcoaching wordt in veel situaties vergoed door het UWV of de gemeente, afhankelijk van de situatie van de medewerker (bijvoorbeeld Wajong, Participatiewet of WIA). Of en hoe dat in jouw geval kan, zoeken we samen uit vóórdat je kosten maakt."
 oplevering:
   - Een begeleidingsplan met concrete doelen voor de medewerker
   - Regelmatige begeleiding op de werkplek, afgebouwd naarmate het beter gaat

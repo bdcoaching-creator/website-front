@@ -34,7 +34,7 @@ const { Content } = await render(pagina);
         <div class="card">
           <h2 class="over__aside-title">Registraties en certificering binnen het team</h2>
           <ul class="checklist">
-            <li>Arbeidsdeskundige: geregistreerd bij de SRA, registernummer {site.sraRegisternummer}</li>
+            <li>Arbeidsdeskundige: geregistreerd bij de SRA{site.sraRegisternummer && `, registernummer ${site.sraRegisternummer}`}</li>
             <li>Arbeidsdeskundige: lid van de Nederlandse Vereniging voor Arbeidsdeskundigen (NVvA)</li>
             <li>Jobcoaching: erkend jobcoach</li>
             <li>Coaching: gecertificeerd coach</li>

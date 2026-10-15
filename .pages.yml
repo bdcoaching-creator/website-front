@@ -30,9 +30,9 @@ content:
           - { name: straat, label: Straat en huisnummer, type: string }
           - { name: postcode, label: Postcode, type: string }
           - { name: plaats, label: Plaats, type: string }
-      - { name: kvk, label: KvK-nummer, type: string }
-      - { name: btw, label: Btw-identificatienummer, type: string }
-      - { name: sraRegisternummer, label: SRA-registernummer, type: string }
+      - { name: kvk, label: KvK-nummer, type: string, description: "Leeg = niet zichtbaar op de site." }
+      - { name: btw, label: Btw-identificatienummer, type: string, description: "Leeg = niet zichtbaar op de site." }
+      - { name: sraRegisternummer, label: SRA-registernummer, type: string, description: "Leeg = alleen 'geregistreerd bij de SRA' zonder nummer." }
       - { name: sraRegisterUrl, label: Link naar SRA-register, type: string }
       - { name: linkedin, label: LinkedIn-profiel (URL), type: string }
       - { name: reactietijd, label: Reactietijd, type: string, description: "Bijv. 'binnen twee werkdagen'." }
@@ -216,7 +216,7 @@ content:
 
   # ---------- Over mij ----------
   - name: paginas
-    label: Over mij
+    label: Over ons
     type: collection
     path: src/content/paginas
     format: yaml-frontmatter

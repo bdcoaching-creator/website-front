@@ -49,8 +49,8 @@ const jaar = new Date().getFullYear();
       <div>
         <h2 class="site-footer__title">Gegevens</h2>
         <ul class="site-footer__links">
-          <li>KvK: {site.kvk}</li>
-          <li>Btw: {site.btw}</li>
+          {site.kvk && <li>KvK: {site.kvk}</li>}
+          {site.btw && <li>Btw: {site.btw}</li>}
           <li><a href="/privacyverklaring">Privacyverklaring</a></li>
           <li><a href="/cookieverklaring">Cookieverklaring</a></li>
           <li><a href="/algemene-voorwaarden">Algemene voorwaarden</a></li>

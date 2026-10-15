@@ -1,18 +1,16 @@
 ---
 titel: Privacyverklaring
 omschrijving: Hoe AdaptXS omgaat met je persoonsgegevens.
-bijgewerkt: "[INVULLEN: datum]"
+bijgewerkt: "15 oktober 2026"
 ---
-
-> **Concept.** Laat deze tekst vóór livegang controleren. Vul alle velden met [INVULLEN] in en pas de tekst aan op je eigen werkwijze, verwerkersovereenkomsten en bewaartermijnen.
 
 AdaptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid zijn gevoelige onderwerpen. In deze verklaring lees je welke gegevens wij verwerken, waarom, en welke rechten je hebt.
 
 ## Wie is verantwoordelijk?
 
-AdaptXS, gevestigd op [INVULLEN: adres], ingeschreven bij de KvK onder nummer [INVULLEN: KvK-nummer], is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.nl.
+AdaptXS, Buizenwerf 28, 3063 AZ Rotterdam, is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.nl of +31626630196.
 
-Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leggen wij in de opdrachtbevestiging vast wie welke rol heeft onder de AVG. [INVULLEN: bepaal per dienst of je verwerkingsverantwoordelijke of verwerker bent.]
+Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leggen wij in de opdrachtbevestiging vast wie welke rol heeft onder de AVG.
 
 ## Welke gegevens verwerken wij?
 
@@ -27,7 +25,7 @@ Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject o
 | Doel | Grondslag |
 |---|---|
 | Beantwoorden van je aanvraag en een voorstel doen | Voorbereiding of uitvoering van een overeenkomst (art. 6 lid 1 sub b AVG) |
-| Uitvoeren van een traject of onderzoek | Uitvoering van een overeenkomst. Voor gezondheidsgegevens: de wettelijke uitzonderingen voor re-integratie en arbeidsgeschiktheid (art. 9 AVG jo. art. 30 UAVG) [INVULLEN: laten toetsen] |
+| Uitvoeren van een traject of onderzoek | Uitvoering van een overeenkomst. Voor gezondheidsgegevens: de wettelijke uitzonderingen voor re-integratie en arbeidsgeschiktheid (art. 9 AVG jo. art. 30 UAVG) |
 | Facturatie en administratie | Wettelijke verplichting (art. 6 lid 1 sub c AVG) |
 | Beveiliging van de website | Gerechtvaardigd belang (art. 6 lid 1 sub f AVG) |
 
@@ -35,18 +33,18 @@ Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject o
 
 Wij verkopen je gegevens nooit. Wij delen ze alleen met partijen die ze nodig hebben om de dienstverlening mogelijk te maken, en met wie wij een verwerkersovereenkomst hebben:
 
-- Hosting en beveiliging van de website: Cloudflare [INVULLEN: controleer verwerkersovereenkomst]
-- Versturen van formulierberichten: [INVULLEN: Brevo of Mailjet]
-- Zakelijke e-mail: [INVULLEN: e-mailprovider]
-- Videobellen: [INVULLEN: Zoom, met gegevensopslag in de EU]
-- Boekhouding: [INVULLEN: boekhoudpakket]
+- Hosting, beveiliging, statistieken en spamfilter van de website: Cloudflare
+- Versturen van formulierberichten: Brevo
+- Zakelijke e-mail: onze e-mailprovider
+- Videobellen: Zoom
+- Boekhouding: ons boekhoudpakket
 
 Sommige van deze partijen zijn gevestigd buiten de Europese Economische Ruimte. In dat geval gebeurt doorgifte op basis van het EU-VS Data Privacy Framework of standaardcontractbepalingen. Medische gegevens delen wij nooit met een werkgever.
 
 ## Hoe lang bewaren wij gegevens?
 
-- Aanvragen via het contactformulier zonder vervolg: maximaal [INVULLEN: 6] maanden
-- Dossiers van trajecten en onderzoeken: [INVULLEN: termijn volgens beroepscode en afspraken met opdrachtgever]
+- Aanvragen via het contactformulier zonder vervolg: maximaal 6 maanden
+- Dossiers van trajecten en onderzoeken: niet langer dan nodig, volgens de bewaartermijnen uit onze beroepscode en de afspraken met de opdrachtgever
 - Facturen en administratie: 7 jaar (fiscale bewaarplicht)
 
 ## Beveiliging

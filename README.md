@@ -20,7 +20,7 @@ Checklist vóór livegang: **[docs/livegang-checklist.md](docs/livegang-checklis
    - **Tarieven**: alle prijzen op één plek (leeg = "Op aanvraag", 0 = "Gratis")
    - **Diensten**: de vier dienstpagina's, inclusief veelgestelde vragen
    - **Poortwachter-tijdlijn**: de momenten in de interactieve tijdlijn
-   - **Homepage**, **Over mij** en **Juridische pagina's**
+   - **Homepage**, **Over ons** en **Juridische pagina's**
 4. Klik op **Save**. Binnen ongeveer een minuut staat de wijziging live.
 
 **Veiligheidsnet:** bij elke wijziging controleert de site automatisch of er woorden in staan die je bewust niet
@@ -43,7 +43,7 @@ npm run check:livegang
 ```
 src/content/diensten/*.md        tekst per dienst (frontmatter + "In het kort")
 src/content/juridisch/*.md       privacy, cookies, voorwaarden, klachten
-src/content/paginas/over.md      over mij
+src/content/paginas/over.md      over ons
 src/data/site.json               bedrijfsgegevens
 src/data/tarieven.json           alle prijzen
 src/data/home.json               homepage

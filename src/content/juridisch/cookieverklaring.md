@@ -1,7 +1,7 @@
 ---
 titel: Cookieverklaring
 omschrijving: Deze website gebruikt geen tracking-cookies.
-bijgewerkt: "[INVULLEN: datum]"
+bijgewerkt: "15 oktober 2026"
 ---
 
 ## Geen tracking-cookies

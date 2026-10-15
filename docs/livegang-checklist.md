@@ -47,3 +47,5 @@ Vink af wat klaar is. De meeste punten gaan over je bedrijfsvoering, niet over d
 - [ ] Klachtenregeling ingevuld, inclusief de actuele klachtenprocedure van de SRA
 - [ ] Beroepsaansprakelijkheidsverzekering
 - [ ] Naam AdaptXS gecheckt bij KvK en BOIP (merkregister)
+- [ ] KvK-nummer en btw-id invullen via het CMS (Bedrijfsgegevens) zodra ze bekend zijn; ze verschijnen dan vanzelf in de footer
+- [ ] Definitieve algemene voorwaarden op de pagina zetten (nu staat er een tijdelijke tekst)
