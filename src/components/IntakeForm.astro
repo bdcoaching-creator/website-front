@@ -13,7 +13,6 @@ interface Props {
 
 const { dienst, titel, intro, knop = "Verstuur aanvraag", werkgebiedNotitie = "" } = Astro.props;
 const diensten = await getDiensten();
-const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const AD_ID = "arbeidsdeskundig-onderzoek";
 const adNotitie =
   werkgebiedNotitie || diensten.find((d) => d.id === AD_ID)?.data.werkgebiedNotitie || "";
@@ -23,7 +22,7 @@ const adNotitie =
   <h2>{titel}</h2>
   <p class="intake__intro">{intro}</p>
 
-  <form class="intake__form" method="post" action="/api/intake" data-intake>
+  <form class="intake__form" method="post" action="/api/intake.php" data-intake>
     <fieldset class="intake__fieldset">
       <legend>Ik ben</legend>
       <div class="intake__radios">
@@ -98,8 +97,6 @@ const adNotitie =
       <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
     </div>
 
-    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-language="nl" data-theme="light"></div>}
-
     <p class="intake__privacy">
       Wij gebruiken je gegevens alleen om je aanvraag te beantwoorden. Lees de <a href="/privacyverklaring">privacyverklaring</a>.
     </p>
@@ -110,8 +107,6 @@ const adNotitie =
     <p class="intake__reactie">Je ontvangt {site.reactietijd} een reactie.</p>
   </form>
 </div>
-
-{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 
 <script>
   import { valtBinnenWerkgebied } from "../lib/werkgebied";
@@ -177,7 +172,6 @@ const adNotitie =
       }
       knop.disabled = false;
       knop.textContent = "Verstuur aanvraag";
-      (window as any).turnstile?.reset?.();
     });
   }
 </script>

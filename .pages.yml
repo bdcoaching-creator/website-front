@@ -1,6 +1,6 @@
 # Configuratie voor Pages CMS (https://pagescms.org).
 # Hiermee bewerk je teksten, prijzen en foto's via een webinterface, zonder code.
-# Elke opslag = een commit op GitHub = automatisch nieuwe versie van de site via Cloudflare Pages.
+# Elke opslag = een commit op GitHub. Daarna moet de site opnieuw gebouwd en geüpload worden (zie README).
 
 media:
   input: public/images
