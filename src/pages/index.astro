@@ -15,7 +15,7 @@ import { organisatieSchema } from "../lib/organisatie";
 
 const diensten = await getDiensten();
 const beschrijving =
-  "Arbeidsdeskundige en jobcoach voor werkgevers en medewerkers. Begeleiding bij verzuim, re-integratie, arbeidsbeperkingen en passend werk in Zuid-Holland en omgeving.";
+  "Re-integratie, jobcoaching en arbeidsdeskundig onderzoek voor MKB-werkgevers en medewerkers. Begeleiding bij verzuim en passend werk in Zuid-Holland en online.";
 const jsonLd = {
   "@context": "https://schema.org",
   ...organisatieSchema(
@@ -25,7 +25,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title="Arbeidsdeskundige en jobcoach voor werkgevers" description={beschrijving}>
+<BaseLayout title="Re-integratie, jobcoaching en arbeidsdeskundig onderzoek" description={beschrijving}>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- Hero: "Weer op het spoor" -->

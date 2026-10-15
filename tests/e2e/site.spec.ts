@@ -196,7 +196,7 @@ test("minder beweging: footerlogo en werkwijze-kaarten zonder animatie", async (
 });
 
 const SEO = [
-  ["/", "Arbeidsdeskundige en jobcoach voor werkgevers | AdaptXS", "Arbeidsdeskundige en jobcoach voor werkgevers en medewerkers"],
+  ["/", "Re-integratie, jobcoaching en arbeidsdeskundig onderzoek | AdaptXS", "Re-integratie, jobcoaching en arbeidsdeskundig onderzoek"],
   ["/diensten/jobcoaching", "Jobcoaching voor medewerkers met een arbeidsbeperking | AdaptXS", "Jobcoaching voor medewerkers met een arbeidsbeperking"],
   ["/diensten/re-integratie", "Re-integratie bij ziekte | Begeleiding voor werkgevers | AdaptXS", "Re-integratie van medewerkers bij ziekte"],
   ["/diensten/arbeidsdeskundig-onderzoek", "Arbeidsdeskundig onderzoek | Passend werk & re-integratie | AdaptXS", "Arbeidsdeskundig onderzoek naar passend werk"],

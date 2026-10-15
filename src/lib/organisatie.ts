@@ -8,7 +8,7 @@ export function organisatieSchema(basis: URL | undefined, diensten: { titel: str
     "@id": url ? `${url}#organisatie` : undefined,
     name: site.bedrijfsnaam,
     description:
-      "AdaptXS is een team met kennis van werk, wetgeving en mensen. Arbeidsdeskundige en jobcoach voor werkgevers en medewerkers: jobcoaching, re-integratiebegeleiding, arbeidsdeskundig onderzoek en coaching voor ondernemers.",
+      "AdaptXS is een team met kennis van werk, wetgeving en mensen. Wij bieden re-integratiebegeleiding, jobcoaching, arbeidsdeskundig onderzoek en coaching voor ondernemers.",
     url,
     email: site.email,
     telephone: site.telefoon,
