@@ -8,7 +8,7 @@ AdaptXS gaat zorgvuldig om met je persoonsgegevens. Werk, inkomen en gezondheid 
 
 ## Wie is verantwoordelijk?
 
-AdaptXS, Buizenwerf 28, 3063 AZ Rotterdam, is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.nl of +31626630196.
+AdaptXS, Buizenwerf 28, 3063 AZ Rotterdam, is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring. Contact: info@adaptxs.com of +31626630196.
 
 Voeren wij een opdracht uit voor een werkgever, zoals een re-integratietraject of een arbeidsdeskundig onderzoek, dan leggen wij in de opdrachtbevestiging vast wie welke rol heeft onder de AVG.
 
@@ -53,6 +53,6 @@ Wij nemen passende maatregelen om je gegevens te beschermen, waaronder versleute
 
 ## Jouw rechten
 
-Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adaptxs.nl. Wij reageren binnen een maand.
+Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te beperken, bezwaar te maken en je gegevens over te dragen. Stuur je verzoek naar info@adaptxs.com. Wij reageren binnen een maand.
 
 Ben je het niet eens met hoe wij met je gegevens omgaan? Dan kun je een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl).

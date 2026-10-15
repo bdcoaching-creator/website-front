@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 
 // Pas `site` aan zodra het definitieve domein bekend is.
 export default defineConfig({
-  site: "https://www.adaptxs.nl",
+  site: "https://www.adaptxs.com",
   trailingSlash: "never",
   build: { format: "file" },
   integrations: [sitemap({ filter: (page) => !page.includes("/bedankt") })],
