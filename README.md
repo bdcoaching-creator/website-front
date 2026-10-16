@@ -21,12 +21,14 @@ Checklist vóór livegang: **[docs/livegang-checklist.md](docs/livegang-checklis
    - **Diensten**: de vier dienstpagina's, inclusief veelgestelde vragen
    - **Poortwachter-tijdlijn**: de momenten in de interactieve tijdlijn
    - **Homepage**, **Over ons** en **Juridische pagina's**
-4. Klik op **Save**. De wijziging staat dan op GitHub, maar **nog niet live**: de site moet opnieuw gebouwd
-   (`npm run pakket`) en geüpload worden. Zie [Uploaden naar GoDaddy](#uploaden-naar-godaddy-cpanel).
+4. Klik op **Save**. GitHub bouwt de site daarna automatisch en zet hem bij GoDaddy. Na een paar minuten staat de
+   wijziging live. Je ziet de voortgang op GitHub onder **Actions** → *Upload naar GoDaddy*
+   (zie [Automatische upload](#automatische-upload-github--godaddy)).
 
 **Veiligheidsnet:** bij elke wijziging controleert de site automatisch of er woorden in staan die je bewust niet
 gebruikt (mediation/mediator/bemiddeling, lifestyle/wellness/hormonen). Staat zo'n woord erin, dan gaat de
-wijziging **niet** live: `npm run pakket` stopt dan met de regel waar het woord staat.
+wijziging **niet** live: de automatische upload stopt dan (rood kruisje onder **Actions**) met de regel waar het
+woord staat. De vorige versie blijft gewoon online.
 
 **Wat je niet zelf kunt:** nieuwe paginatypes toevoegen of de vormgeving aanpassen. Daarvoor is een wijziging in de code nodig.
 
@@ -72,7 +74,26 @@ npm test                 # PHP-formuliertests (vereist PHP) + Playwright (pagina
 npm run pakket           # build + uploadklare map upload/public_html en upload/adaptxs-public_html.zip
 ```
 
-### Uploaden naar GoDaddy (cPanel)
+### Automatische upload (GitHub → GoDaddy)
+
+`.github/workflows/upload-godaddy.yml` draait bij elke wijziging op `main` (ook vanuit Pages CMS): inhoudscontrole,
+build, test van het formulierscript en daarna upload van `dist/` via **FTPS** naar `public_html`.
+Alleen gewijzigde bestanden worden verstuurd; mappen van de hosting zelf (`.well-known`, `cgi-bin`) blijven staan.
+Handmatig starten kan via **Actions** → *Upload naar GoDaddy* → **Run workflow**.
+
+**Eenmalig instellen**
+1. cPanel → **FTP Accounts**: maak een account (bijv. `deploy`). Zet **Directory** op `public_html`
+   (cPanel vult standaard `public_html/deploy` in; dat is fout). Klik daarna op **Configure FTP Client** voor de servernaam.
+2. GitHub → repository → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+   `FTP_SERVER`, `FTP_USERNAME` (volledig, bijv. `deploy@adaptxs.com`) en `FTP_PASSWORD`.
+3. **Actions** → *Upload naar GoDaddy* → **Run workflow**, en controleer de site.
+
+Zonder deze drie geheimen bouwt en controleert GitHub de site wel, maar uploadt niets.
+**Certificaatfout bij de upload?** Het certificaat van de FTP-server staat dan meestal op de servernaam van GoDaddy en
+niet op `ftp.adaptxs.com`. Gebruik als `FTP_SERVER` dan de servernaam uit cPanel (*General Information* → *Server Name*
+of het hostnaam-veld bij *Configure FTP Client*). Zet de beveiliging niet uit.
+
+### Handmatig uploaden naar GoDaddy (cPanel)
 
 1. `npm run pakket` maakt `upload/adaptxs-public_html.zip` (inhoud = wat in `public_html` hoort, inclusief `.htaccess`).
 2. cPanel → **File Manager** → `public_html`. Zet via **Settings** "Show Hidden Files (dotfiles)" aan.

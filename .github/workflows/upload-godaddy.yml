@@ -1,0 +1,70 @@
+# Bouwt de site na elke wijziging op main (ook vanuit Pages CMS) en zet hem via FTPS in public_html bij GoDaddy.
+# Nodig: drie repository secrets (Settings → Secrets and variables → Actions):
+#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+# Zolang die ontbreken, wordt de site wel gebouwd en gecontroleerd, maar niet geüpload.
+
+name: Upload naar GoDaddy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Nooit twee uploads tegelijk; een nieuwere wijziging wacht op de vorige.
+concurrency:
+  group: upload-godaddy
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Node installeren
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Afhankelijkheden installeren
+        run: npm ci
+
+      - name: Inhoud controleren en site bouwen
+        run: npm run build
+
+      - name: Formulierscript testen
+        run: node --test tests/unit/*.test.ts
+
+      - name: Controleren of de FTP-gegevens zijn ingesteld
+        id: ftp
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [ -n "$FTP_SERVER" ] && [ -n "$FTP_USERNAME" ] && [ -n "$FTP_PASSWORD" ]; then
+            echo "klaar=ja" >> "$GITHUB_OUTPUT"
+          else
+            echo "klaar=nee" >> "$GITHUB_OUTPUT"
+            echo "::notice::Geen upload: FTP_SERVER, FTP_USERNAME en FTP_PASSWORD zijn nog niet allemaal ingesteld."
+          fi
+
+      - name: Uploaden naar public_html
+        if: steps.ftp.outputs.klaar == 'ja'
+        uses: SamKirkland/FTP-Deploy-Action@3a9c65ae0fc12ac924ccef8afc26941cc43aad0b # v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: strict
+          local-dir: ./dist/
+          # De FTP-account start in public_html.
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state.json
