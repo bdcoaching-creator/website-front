@@ -77,21 +77,24 @@ npm run pakket           # build + uploadklare map upload/public_html en upload/
 ### Automatische upload (GitHub → GoDaddy)
 
 `.github/workflows/upload-godaddy.yml` draait bij elke wijziging op `main` (ook vanuit Pages CMS): inhoudscontrole,
-build, test van het formulierscript en daarna upload van `dist/` via **FTPS** naar `public_html`.
-Alleen gewijzigde bestanden worden verstuurd; mappen van de hosting zelf (`.well-known`, `cgi-bin`) blijven staan.
+build, test van het formulierscript en daarna upload van `dist/` via **SSH (poort 22)** naar `public_html`
+(`scripts/upload-ssh.sh`). FTP/FTPS (poort 21) werkt niet vanaf GitHub naar deze hosting.
+Bestaande bestanden worden overschreven; mappen van de hosting zelf (`.well-known`, `cgi-bin`) blijven staan.
+Oude bestanden in `_astro` worden opgeruimd. Een pagina die van de site verdwijnt, haal je zelf weg in File Manager.
 Handmatig starten kan via **Actions** → *Upload naar GoDaddy* → **Run workflow**.
 
 **Eenmalig instellen**
-1. cPanel → **FTP Accounts**: maak een account (bijv. `deploy`). Zet **Directory** op `public_html`
-   (cPanel vult standaard `public_html/deploy` in; dat is fout). Klik daarna op **Configure FTP Client** voor de servernaam.
-2. GitHub → repository → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
-   `FTP_SERVER`, `FTP_USERNAME` (volledig, bijv. `deploy@adaptxs.com`) en `FTP_PASSWORD`.
-3. **Actions** → *Upload naar GoDaddy* → **Run workflow**, en controleer de site.
+1. GoDaddy → **My Hosting** → adaptxs.com → **Settings** (of *Server*) → **SSH Access** aanzetten.
+2. cPanel → **SSH Access** → **Manage SSH Keys** → **Generate a New Key** (RSA, 4096). Daarna bij de nieuwe sleutel
+   onder *Public Keys* → **Manage** → **Authorize**. Onder *Private Keys* → **View/Download** de private sleutel kopiëren.
+3. GitHub → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+   `SSH_HOST` (bijv. `adaptxs.com`), `SSH_USER` (cPanel-gebruikersnaam), `SSH_PRIVATE_KEY` (de hele private sleutel,
+   inclusief de regels `-----BEGIN` en `-----END`) en `SSH_PASSPHRASE` (het wachtwoord van de sleutel).
+4. **Actions** → *Upload naar GoDaddy* → **Run workflow**, en controleer de site.
 
-Zonder deze drie geheimen bouwt en controleert GitHub de site wel, maar uploadt niets.
-**Certificaatfout bij de upload?** Het certificaat van de FTP-server staat dan meestal op de servernaam van GoDaddy en
-niet op `ftp.adaptxs.com`. Gebruik als `FTP_SERVER` dan de servernaam uit cPanel (*General Information* → *Server Name*
-of het hostnaam-veld bij *Configure FTP Client*). Zet de beveiliging niet uit.
+Zonder deze secrets bouwt en controleert GitHub de site wel, maar uploadt niets.
+"Geen SSH-verbinding": SSH-toegang staat nog uit, of gebruik als `SSH_HOST` de servernaam uit cPanel
+(*General Information* → *Server Name*). Zet de controle van de servervingerafdruk niet uit.
 
 ### Handmatig uploaden naar GoDaddy (cPanel)
 
