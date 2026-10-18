@@ -4,7 +4,7 @@ De eigenaar is geen ontwikkelaar. Antwoord in het Nederlands, eerlijk en kritisc
 
 ## Hoe wijzigingen live komen
 - `main` = de live site. Na elke push naar `main` bouwt `.github/workflows/upload-godaddy.yml` de site en zet hem via
-  FTPS in `public_html` bij GoDaddy (cPanel). Controleer na een merge of die run groen is.
+  SSH (poort 22, `scripts/upload-ssh.sh`) in `public_html` bij GoDaddy (cPanel). Controleer na een merge of die run groen is.
 - Werk op een eigen branch, maak een pull request naar `main` en voeg pas samen als de eigenaar dat vraagt.
 - Teksten en prijzen kan de eigenaar ook zelf wijzigen via Pages CMS (`.pages.yml`); die wijzigingen komen ook op `main`.
 
@@ -32,7 +32,7 @@ Pas tests aan als teksten bewust veranderen (bijv. SEO-titels en H1's in `tests/
   Vraag nooit om medische gegevens in formulieren.
 - Apache-instellingen (nette URL's, https + www, headers, CSP) staan in `public/.htaccess`.
 - Animaties respecteren `prefers-reduced-motion`. Houd de site toegankelijk (WCAG 2.1 AA; axe-test).
-- Zet nooit wachtwoorden of sleutels in de repository. FTP-gegevens staan als GitHub-secrets.
+- Zet nooit wachtwoorden of sleutels in de repository. SSH-gegevens staan als GitHub-secrets.
 
 ## Waar staat wat
 - Diensten: `src/content/diensten/*.md` · Over ons: `src/content/paginas/over.md` · Homepage: `src/data/home.json`

@@ -14,7 +14,7 @@ Vink af wat klaar is. De meeste punten gaan over je bedrijfsvoering, niet over d
 - [ ] cPanel → Email Routing goed ingesteld (Local of Remote Mail Exchanger, zie README)
 - [ ] Testaanvraag verstuurd via elk van de 4 dienstpagina's en via /contact, en binnengekomen in je mailbox (niet in spam)
 - [ ] Nette URL's werken (bijv. `/diensten` en `/diensten/re-integratie` zonder `.html`)
-- [ ] FTP-account (map `public_html`) aangemaakt en `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` als secrets in GitHub gezet
+- [ ] SSH-toegang aan bij GoDaddy, sleutel aangemaakt en geautoriseerd in cPanel, en `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY`, `SSH_PASSPHRASE` als secrets in GitHub gezet
 - [ ] Pages CMS gekoppeld en één testwijziging gedaan (bijv. een prijs), die na een paar minuten automatisch live stond
 - [ ] `npm run check:livegang` geeft geen open placeholders meer
 

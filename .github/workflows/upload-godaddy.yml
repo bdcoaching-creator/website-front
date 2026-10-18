@@ -1,7 +1,12 @@
-# Bouwt de site na elke wijziging op main (ook vanuit Pages CMS) en zet hem via FTPS in public_html bij GoDaddy.
-# Nodig: drie repository secrets (Settings → Secrets and variables → Actions):
-#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
-# Zolang die ontbreken, wordt de site wel gebouwd en gecontroleerd, maar niet geüpload.
+# Bouwt de site na elke wijziging op main (ook vanuit Pages CMS) en zet hem via SSH (SFTP-poort 22)
+# in public_html bij GoDaddy. FTP/FTPS (poort 21) werkt niet vanaf GitHub naar deze hosting.
+# Nodig: repository secrets (Settings → Secrets and variables → Actions):
+#   SSH_HOST         servernaam, bijv. adaptxs.com of de servernaam uit cPanel
+#   SSH_USER         cPanel-gebruikersnaam
+#   SSH_PRIVATE_KEY  private sleutel (uit cPanel → SSH Access → Manage SSH Keys)
+#   SSH_PASSPHRASE   wachtwoord van die sleutel (leeg laten als de sleutel geen wachtwoord heeft)
+#   SSH_PORT         optioneel, standaard 22
+# Zolang de verplichte secrets ontbreken, wordt de site wel gebouwd en gecontroleerd, maar niet geüpload.
 
 name: Upload naar GoDaddy
 
@@ -41,30 +46,53 @@ jobs:
       - name: Formulierscript testen
         run: node --test tests/unit/*.test.ts
 
-      - name: Controleren of de FTP-gegevens zijn ingesteld
-        id: ftp
+      - name: Controleren of de SSH-gegevens zijn ingesteld
+        id: ssh
         env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          if [ -n "$FTP_SERVER" ] && [ -n "$FTP_USERNAME" ] && [ -n "$FTP_PASSWORD" ]; then
+          if [ -n "$SSH_HOST" ] && [ -n "$SSH_USER" ] && [ -n "$SSH_PRIVATE_KEY" ]; then
             echo "klaar=ja" >> "$GITHUB_OUTPUT"
           else
             echo "klaar=nee" >> "$GITHUB_OUTPUT"
-            echo "::notice::Geen upload: FTP_SERVER, FTP_USERNAME en FTP_PASSWORD zijn nog niet allemaal ingesteld."
+            echo "::notice::Geen upload: SSH_HOST, SSH_USER en SSH_PRIVATE_KEY zijn nog niet allemaal ingesteld."
           fi
 
-      - name: Uploaden naar public_html
-        if: steps.ftp.outputs.klaar == 'ja'
-        uses: SamKirkland/FTP-Deploy-Action@3a9c65ae0fc12ac924ccef8afc26941cc43aad0b # v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          security: strict
-          local-dir: ./dist/
-          # De FTP-account start in public_html.
-          server-dir: ./
-          state-name: .ftp-deploy-sync-state.json
+      - name: SSH-sleutel klaarzetten
+        if: steps.ssh.outputs.klaar == 'ja'
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+        run: |
+          install -m 700 -d ~/.ssh
+          # Windows-regeleinden weghalen (bij kopiëren uit cPanel kan dat gebeuren).
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/upload_key
+          chmod 600 ~/.ssh/upload_key
+          if [ -n "$SSH_PASSPHRASE" ]; then
+            ssh-keygen -p -q -P "$SSH_PASSPHRASE" -N "" -f ~/.ssh/upload_key \
+              || { echo "::error::De sleutel kon niet worden geopend. Klopt SSH_PASSPHRASE?"; exit 1; }
+          fi
+          ssh-keygen -y -f ~/.ssh/upload_key > /dev/null \
+            || { echo "::error::SSH_PRIVATE_KEY is geen geldige private sleutel (of heeft een wachtwoord dat ontbreekt)."; exit 1; }
+          # Vingerafdruk van de server ophalen; bij elke volgende verbinding wordt die gecontroleerd.
+          ssh-keyscan -p "$SSH_PORT" -T 30 "$SSH_HOST" > ~/.ssh/known_hosts 2> /dev/null || true
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "::error::Geen SSH-verbinding met $SSH_HOST op poort $SSH_PORT. Staat SSH-toegang aan bij GoDaddy?"
+            exit 1
+          fi
+
+      - name: Uploaden naar public_html (SSH)
+        if: steps.ssh.outputs.klaar == 'ja'
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+        run: SSH_KEY_FILE="$HOME/.ssh/upload_key" bash scripts/upload-ssh.sh
+
+      - name: Sleutel opruimen
+        if: always()
+        run: rm -f ~/.ssh/upload_key
