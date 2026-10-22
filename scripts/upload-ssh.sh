@@ -31,10 +31,19 @@ ssh_cmd=(ssh -i "$SSH_KEY_FILE" -p "$SSH_PORT"
   "$SSH_USER@$SSH_HOST")
 
 echo "Verbinding testen met $SSH_USER@$SSH_HOST:$SSH_PORT ..."
-"${ssh_cmd[@]}" "test -d \"\$HOME/$REMOTE_DIR\"" || {
+set +e
+"${ssh_cmd[@]}" "test -d \"\$HOME/$REMOTE_DIR\""
+status=$?
+set -e
+if [ "$status" -eq 255 ]; then
+  # ssh geeft 255 bij een mislukte verbinding of een geweigerde login.
+  echo "::error::Inloggen via SSH mislukt (zie de regel hierboven). Bij 'Permission denied': controleer SSH_USER" \
+    "(de cPanel-gebruikersnaam, niet je e-mailadres) en of de sleutel in cPanel op 'authorized' staat."
+  exit 1
+elif [ "$status" -ne 0 ]; then
   echo "::error::Inloggen gelukt, maar de map ~/$REMOTE_DIR bestaat niet op de server."
   exit 1
-}
+fi
 
 echo "Bestanden uploaden naar ~/$REMOTE_DIR ..."
 # Alleen de inhoud van dist/ (geen '.'-regel), zodat de rechten van public_html zelf niet veranderen.
