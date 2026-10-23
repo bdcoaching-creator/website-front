@@ -93,6 +93,8 @@ Handmatig starten kan via **Actions** → *Upload naar GoDaddy* → **Run workfl
 4. **Actions** → *Upload naar GoDaddy* → **Run workflow**, en controleer de site.
 
 Zonder deze secrets bouwt en controleert GitHub de site wel, maar uploadt niets.
+"Shell access is not enabled": GoDaddy heeft shell-toegang nog niet aangezet. Het script probeert dan SFTP;
+lukt ook dat niet, zet SSH Access (opnieuw) aan bij GoDaddy of vraag GoDaddy-support om shell-toegang.
 "Geen SSH-verbinding": SSH-toegang staat nog uit, of gebruik als `SSH_HOST` de servernaam uit cPanel
 (*General Information* → *Server Name*). Zet de controle van de servervingerafdruk niet uit.
 
