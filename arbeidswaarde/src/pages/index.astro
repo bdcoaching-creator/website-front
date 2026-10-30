@@ -1,11 +1,27 @@
 ---
 import Basis from "../layouts/Basis.astro";
-import Opzet from "../components/Opzet.astro";
+import Hero from "../components/home/Hero.astro";
+import Kaarten from "../components/home/Kaarten.astro";
+import Kernzin from "../components/home/Kernzin.astro";
+import Stappen from "../components/home/Stappen.astro";
+import Faq from "../components/home/Faq.astro";
+import Oproep from "../components/home/Oproep.astro";
+import home from "../data/home.json";
 ---
 
 <Basis
   titel="Arbeidswaarde"
-  beschrijving="Arbeidswaarde screent ex-werknemers voor de Eerstejaars Ziektewetbeoordeling van eigenrisicodragers. Duidelijk, onderbouwd en op tijd."
+  beschrijving="Arbeidswaarde screent dossiers van ex-werknemers voor de Eerstejaars Ziektewetbeoordeling, zodat u als eigenrisicodrager onderbouwd beslist of een aanvraag bij UWV zinvol is."
 >
-  <Opzet label="Home" kop="Homepage" fase="fase 2" />
+  <Hero />
+  <Kaarten id="waarom" {...home.waarom} vlak />
+  <Kaarten id="krijgt" {...home.krijgt} />
+  <Kernzin tekst={home.kernzin} />
+  <Stappen id="werkwijze" {...home.werkwijze} />
+  <Faq id="vragen" {...home.vragen} />
+  <Oproep {...home.oproep} />
 </Basis>
+
+<script>
+  import "../scripts/home.ts";
+</script>

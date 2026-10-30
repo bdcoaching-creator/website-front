@@ -1,0 +1,83 @@
+---
+import Icoon from "../Icoon.astro";
+
+interface Punt {
+  icoon: "kalender" | "venster" | "filter" | "onderzoek" | "document" | "lijst";
+  titel: string;
+  tekst: string;
+}
+interface Props {
+  id: string;
+  label: string;
+  titel: string;
+  punten: Punt[];
+  vlak?: boolean;
+}
+const { id, label, titel, punten, vlak = false } = Astro.props;
+---
+
+<section class:list={["sectie", { "sectie--vlak": vlak }]} aria-labelledby={id}>
+  <div class="container">
+    <span class="label">{label}</span>
+    <h2 id={id}>{titel}</h2>
+    <ul class="kaarten">
+      {
+        punten.map((p) => (
+          <li class="kaart">
+            <span class="kaart__icoon">
+              <Icoon naam={p.icoon} />
+            </span>
+            <h3>{p.titel}</h3>
+            <p>{p.tekst}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sectie--vlak {
+    background: var(--kleur-wit);
+  }
+  h2 {
+    max-width: 22ch;
+  }
+  .kaarten {
+    display: grid;
+    gap: var(--ruimte-5);
+    margin: var(--ruimte-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kaart {
+    padding: var(--ruimte-6);
+    background: var(--kleur-beige);
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--hoek-l);
+  }
+  .sectie:not(.sectie--vlak) .kaart {
+    background: var(--kleur-wit);
+  }
+  .kaart h3 {
+    margin-top: var(--ruimte-5);
+    margin-bottom: var(--ruimte-2);
+  }
+  .kaart p {
+    margin: 0;
+  }
+  .kaart__icoon {
+    display: inline-grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--kleur-salie-zacht);
+    color: var(--kleur-dennengroen);
+  }
+  @media (min-width: 48rem) {
+    .kaarten {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

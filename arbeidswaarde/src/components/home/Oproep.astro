@@ -1,0 +1,64 @@
+---
+interface Props {
+  titel: string;
+  tekst: string;
+  knop: string;
+}
+const { titel, tekst, knop } = Astro.props;
+---
+
+<section class="sectie" aria-labelledby="oproep-titel">
+  <div class="container">
+    <div class="oproep op-donker">
+      <svg class="oproep__vorm" viewBox="0 0 400 220" aria-hidden="true" focusable="false">
+        <path d="M60 220 A140 140 0 0 1 340 220" fill="none" stroke="#6A8F6F" stroke-width="2"></path>
+        <path d="M120 220 A80 80 0 0 1 280 220" fill="none" stroke="#D37A5A" stroke-width="10" stroke-linecap="round"></path>
+      </svg>
+      <h2 id="oproep-titel">{titel}</h2>
+      <p>{tekst}</p>
+      <a href="/contact/" class="knop knop--licht">{knop}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .oproep {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.5rem, 1rem + 4vw, 5rem);
+    background: var(--kleur-dennengroen);
+    border-radius: var(--hoek-l);
+    color: var(--kleur-beige);
+  }
+  .oproep h2 {
+    position: relative;
+    max-width: 18ch;
+    color: var(--kleur-beige);
+  }
+  .oproep p {
+    position: relative;
+    max-width: 34rem;
+    font-size: var(--tekst-l);
+  }
+  .oproep__vorm {
+    position: absolute;
+    right: -2rem;
+    bottom: 0;
+    width: min(26rem, 70%);
+    opacity: 0.9;
+  }
+  .knop--licht {
+    position: relative;
+    margin-top: var(--ruimte-4);
+    background: var(--kleur-beige);
+    color: var(--kleur-dennengroen);
+  }
+  .knop--licht:hover {
+    background: var(--kleur-wit);
+  }
+  @media (max-width: 47.99rem) {
+    .oproep__vorm {
+      opacity: 0.35;
+    }
+  }
+</style>

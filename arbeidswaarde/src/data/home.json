@@ -1,0 +1,95 @@
+{
+  "_toelichting": "CONCEPTTEKSTEN (fase 2). Geschreven zonder het plan van de eigenaar. Alles nog laten goedkeuren. Feiten komen uit zoekresultaten die naar UWV en SRA verwijzen; de pagina's zelf waren niet bereikbaar. [NOG TE CONTROLEREN] tegen uwv.nl.",
+  "hero": {
+    "label": "Screening voor eigenrisicodragers Ziektewet",
+    "titel": "Goed voorbereid naar de Eerstejaars Ziektewetbeoordeling",
+    "tekst": "Is een ex-werknemer bijna een jaar ziek? Wij screenen het dossier, zodat u onderbouwd beslist of een beoordeling door UWV kans van slagen heeft.",
+    "knop": "Neem contact op",
+    "link": "Zo werkt de Eerstejaars Ziektewetbeoordeling"
+  },
+  "waarom": {
+    "label": "Waarom nu",
+    "titel": "UWV vraagt eigenrisicodragers om eerst zelf te screenen",
+    "punten": [
+      {
+        "icoon": "kalender",
+        "titel": "Een nieuwe werkwijze",
+        "tekst": "Vanaf 1 november 2026 kunnen alle eigenrisicodragers voor de Ziektewet een beoordeling aanvragen volgens de nieuwe werkwijze van UWV."
+      },
+      {
+        "icoon": "venster",
+        "titel": "Een kort venster",
+        "tekst": "De screening gaat over ex-werknemers die tussen 44 en 54 weken ziek zijn. U heeft dus ongeveer tien weken."
+      },
+      {
+        "icoon": "filter",
+        "titel": "Alleen kansrijke dossiers",
+        "tekst": "UWV heeft beperkte capaciteit. Een aanvraag moet volledig zijn en vooraf voldoen aan de criteria van UWV."
+      }
+    ]
+  },
+  "krijgt": {
+    "label": "Wat u krijgt",
+    "titel": "Een onderbouwd advies per dossier",
+    "punten": [
+      {
+        "icoon": "onderzoek",
+        "titel": "Een toets aan de criteria",
+        "tekst": "Wij kijken of het dossier in het venster valt en of het voldoet aan de criteria die UWV stelt."
+      },
+      {
+        "icoon": "document",
+        "titel": "Een schriftelijk advies",
+        "tekst": "U leest of een aanvraag zinvol is en waarom. Helder geformuleerd, zodat u het intern kunt delen."
+      },
+      {
+        "icoon": "lijst",
+        "titel": "Een overzicht van wat ontbreekt",
+        "tekst": "Is het dossier nog niet volledig? Dan ziet u welke informatie nodig is voordat u de aanvraag indient."
+      }
+    ]
+  },
+  "kernzin": "Wij beoordelen het dossier. U houdt de regie over de aanvraag.",
+  "werkwijze": {
+    "label": "Hoe wij werken",
+    "titel": "In vijf stappen van dossier naar advies",
+    "stappen": [
+      { "titel": "Kennismaking", "tekst": "U vertelt ons om welke dossiers het gaat en welke termijnen spelen." },
+      { "titel": "Aanleveren", "tekst": "U levert de gegevens aan via een beveiligde route die wij samen afspreken." },
+      { "titel": "Screening", "tekst": "Wij toetsen elk dossier aan het venster en aan de criteria van UWV." },
+      { "titel": "Advies", "tekst": "U ontvangt per dossier een schriftelijk advies met onderbouwing." },
+      { "titel": "Uw besluit", "tekst": "U beslist zelf of u de beoordeling aanvraagt en dient de aanvraag in bij UWV." }
+    ]
+  },
+  "vragen": {
+    "label": "Veelgestelde vragen",
+    "titel": "Wat u wilt weten",
+    "items": [
+      {
+        "vraag": "Wat is de Eerstejaars Ziektewetbeoordeling?",
+        "antwoord": "Na ongeveer een jaar ziekte beoordeelt UWV of iemand met een Ziektewetuitkering zonder werkgever meer dan 65 procent kan verdienen van het loon van voor de ziekte. Is dat zo, dan stopt de uitkering."
+      },
+      {
+        "vraag": "Doen jullie de aanvraag bij UWV?",
+        "antwoord": "Nee. Wij screenen het dossier en geven advies. Als eigenrisicodrager dient u de aanvraag zelf in bij UWV."
+      },
+      {
+        "vraag": "Voor wie is de screening bedoeld?",
+        "antwoord": "Voor eigenrisicodragers voor de Ziektewet en voor wie namens hen werkt: HR, verzuimcoördinatoren, bedrijfsartsen, arbodiensten en administratiekantoren."
+      },
+      {
+        "vraag": "Wanneer neem ik het best contact op?",
+        "antwoord": "Zodra een ex-werknemer de 44 weken ziekte nadert. Dan is er tijd om het dossier compleet te maken binnen het venster."
+      },
+      {
+        "vraag": "Kan ik medische gegevens via de website sturen?",
+        "antwoord": "Nee, stuur geen medische gegevens via het contactformulier. Hoe u dossiers veilig aanlevert, spreken we samen af."
+      }
+    ]
+  },
+  "oproep": {
+    "titel": "Heeft u een dossier dat de 44 weken nadert?",
+    "tekst": "Neem contact op. Dan bekijken we samen of een screening zinvol is.",
+    "knop": "Neem contact op"
+  }
+}

@@ -1,0 +1,79 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  titel: string;
+  stappen: { titel: string; tekst: string }[];
+}
+const { id, label, titel, stappen } = Astro.props;
+---
+
+<section class="sectie" aria-labelledby={id}>
+  <div class="container">
+    <span class="label">{label}</span>
+    <h2 id={id}>{titel}</h2>
+    <ol class="stappen">
+      {
+        stappen.map((s, i) => (
+          <li class="stap">
+            <span class="stap__nummer" aria-hidden="true">{i + 1}</span>
+            <h3>{s.titel}</h3>
+            <p>{s.tekst}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  h2 {
+    max-width: 22ch;
+  }
+  .stappen {
+    display: grid;
+    gap: var(--ruimte-6);
+    margin: var(--ruimte-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .stap {
+    position: relative;
+    padding-top: var(--ruimte-5);
+    border-top: var(--lijn-dun) solid var(--kleur-saliegroen);
+  }
+  .stap__nummer {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: var(--ruimte-4);
+    border: var(--lijn-dun) solid var(--kleur-dennengroen);
+    border-radius: 50%;
+    font-family: var(--font-kop);
+    font-size: 1.125rem;
+    color: var(--kleur-dennengroen);
+  }
+  .stap:last-child .stap__nummer {
+    background: var(--kleur-dennengroen);
+    color: var(--kleur-beige);
+  }
+  .stap h3 {
+    margin-bottom: var(--ruimte-2);
+  }
+  .stap p {
+    margin: 0;
+    font-size: var(--tekst-s);
+  }
+  @media (min-width: 48rem) {
+    .stappen {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 64rem) {
+    .stappen {
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--ruimte-5);
+    }
+  }
+</style>
