@@ -1,0 +1,76 @@
+/*
+ * Ontwerptokens Arbeidswaarde (Concept 3, De basis uitgewerkt).
+ *
+ * Contrast op licht beige (#F7F4EF), gemeten volgens WCAG 2.1:
+ *   dennengroen 11,5:1  · antraciet 12,0:1  → lopende tekst
+ *   saliegroen   3,3:1                       → alleen grote tekst en vlakken
+ *   terracotta   2,9:1                       → alleen decoratie, nooit tekst, iconen of focusring
+ * Op dennengroen: beige 11,5:1, terracotta 4,0:1 (geschikt als focusring of accentlijn).
+ */
+:root {
+  /* Merkkleuren */
+  --kleur-dennengroen: #0e3a2f;
+  --kleur-saliegroen: #6a8f6f;
+  --kleur-terracotta: #d37a5a;
+  --kleur-antraciet: #2f3033;
+  --kleur-beige: #f7f4ef;
+  --kleur-wit: #ffffff;
+
+  /* Afgeleide tinten voor vlakken en lijnen (geen tekstkleuren) */
+  --kleur-salie-zacht: #e3eae2;
+  --kleur-terracotta-zacht: #f3e1d8;
+  --kleur-beige-donker: #ece6dc;
+  --kleur-lijn: #d9d2c5;
+
+  /* Rollen */
+  --achtergrond: var(--kleur-beige);
+  --vlak: var(--kleur-wit);
+  --tekst: var(--kleur-antraciet);
+  --kop: var(--kleur-dennengroen);
+  --link: var(--kleur-dennengroen);
+  --focus: var(--kleur-dennengroen);
+  --focus-op-donker: var(--kleur-terracotta);
+
+  /* Lettertypen (zelf gehost via @fontsource) */
+  --font-kop: "Playfair Display Variable", Georgia, "Times New Roman", serif;
+  --font-tekst: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Tekstgroottes, vloeiend tussen 360 en 1440 pixels breed */
+  --tekst-s: 0.9375rem;
+  --tekst-m: 1.0625rem;
+  --tekst-l: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --kop-3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --kop-2: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --kop-1: clamp(2.25rem, 1.6rem + 3vw, 4.25rem);
+
+  /* Ruimte */
+  --ruimte-1: 0.25rem;
+  --ruimte-2: 0.5rem;
+  --ruimte-3: 0.75rem;
+  --ruimte-4: 1rem;
+  --ruimte-5: 1.5rem;
+  --ruimte-6: 2rem;
+  --ruimte-7: 3rem;
+  --ruimte-8: 4rem;
+  --ruimte-sectie: clamp(4rem, 2.5rem + 6vw, 8rem);
+
+  /* Vorm */
+  --hoek-s: 8px;
+  --hoek-m: 16px;
+  --hoek-l: 28px;
+  --hoek-pil: 999px;
+  --lijn-dun: 1.5px;
+  --schaduw-zacht: 0 1px 2px rgb(14 58 47 / 0.06), 0 8px 24px rgb(14 58 47 / 0.08);
+
+  /* Opmaak */
+  --breedte-max: 72rem;
+  --breedte-tekst: 40rem;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2rem);
+
+  /* Beweging */
+  --duur-kort: 160ms;
+  --duur-m: 320ms;
+  --curve: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+}

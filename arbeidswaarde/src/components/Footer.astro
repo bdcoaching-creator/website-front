@@ -1,0 +1,103 @@
+---
+import Logo from "./Logo.astro";
+import site from "../data/site.json";
+
+const jaar = new Date().getFullYear();
+const { email, telefoon, kvk } = site.contact;
+---
+
+<footer class="voet op-donker">
+  <div class="container voet__raster">
+    <div class="voet__merk">
+      <Logo variant="donker" ondertitel />
+    </div>
+
+    <nav class="voet__blok" aria-label="Voettekst">
+      <h2 class="voet__kop">Pagina's</h2>
+      <ul>
+        {site.navigatie.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href="/privacy/">Privacyverklaring</a></li>
+      </ul>
+    </nav>
+
+    <div class="voet__blok">
+      <h2 class="voet__kop">Contact</h2>
+      {/* [NOG TE CONTROLEREN] E-mailadres, telefoonnummer en KvK-nummer zijn nog niet aangeleverd. */}
+      <ul>
+        {email && <li><a href={`mailto:${email}`}>{email}</a></li>}
+        {telefoon && <li><a href={`tel:${telefoon.replace(/\s/g, "")}`}>{telefoon}</a></li>}
+        <li><a href="/contact/">Naar het contactformulier</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container voet__onder">
+    <p>© {jaar} {site.naam}{kvk && <> · KvK {kvk}</>}</p>
+    <p>Deze website gebruikt geen cookies en meet geen bezoekers.</p>
+  </div>
+</footer>
+
+<style>
+  .voet {
+    position: relative;
+    margin-top: auto;
+    background: var(--kleur-dennengroen);
+    color: var(--kleur-beige);
+    font-size: var(--tekst-s);
+  }
+  /* Dunne terracotta lijn als accent, puur decoratief. */
+  .voet::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--kleur-terracotta) 0 18%, var(--kleur-saliegroen) 18% 46%, transparent 46%);
+  }
+  .voet__raster {
+    display: grid;
+    gap: var(--ruimte-7);
+    padding-block: var(--ruimte-8) var(--ruimte-7);
+  }
+  .voet__kop {
+    margin-bottom: var(--ruimte-3);
+    font-family: var(--font-tekst);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--kleur-beige);
+  }
+  .voet ul {
+    display: grid;
+    gap: var(--ruimte-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .voet a {
+    color: var(--kleur-beige);
+  }
+  .voet__onder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--ruimte-2) var(--ruimte-5);
+    position: relative;
+    padding-block: var(--ruimte-5);
+  }
+  .voet__onder::before {
+    content: "";
+    position: absolute;
+    inset: 0 var(--gutter) auto;
+    border-top: 1px solid rgb(247 244 239 / 0.18);
+  }
+  .voet__onder p {
+    margin: 0;
+    opacity: 0.85;
+  }
+  @media (min-width: 48rem) {
+    .voet__raster {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+</style>
