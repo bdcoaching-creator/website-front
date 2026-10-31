@@ -1,0 +1,142 @@
+{
+  "_toelichting": "CONCEPTTEKSTEN fase 3. Feiten komen uit zoekresultaten die naar UWV en SRA verwijzen; de pagina's zelf waren niet bereikbaar vanuit de bouwomgeving. Alles [NOG TE CONTROLEREN] tegen de bron. Cijfers verschijnen alleen op de site als 'gecontroleerd' op true staat; zet daarbij ook 'geraadpleegd' bij de bron.",
+  "intro": {
+    "titel": "De Eerstejaars Ziektewetbeoordeling uitgelegd",
+    "tekst": "Wat de beoordeling is, voor wie hij geldt, wat u als eigenrisicodrager zelf moet doen en waar de screening van Arbeidswaarde past. In gewone taal, met bronnen."
+  },
+  "weken": {
+    "titel": "Het eerste ziektejaar in weken",
+    "tekst": "De Ziektewetuitkering duurt maximaal 104 weken. De screening valt in een kort venster rond het einde van het eerste ziektejaar.",
+    "markeringen": [
+      {
+        "week": 0,
+        "titel": "Eerste ziektedag",
+        "tekst": "De ex-werknemer meldt zich ziek en krijgt een Ziektewetuitkering."
+      },
+      {
+        "week": 44,
+        "titel": "Venster opent",
+        "tekst": "Vanaf nu kan de eigenrisicodrager het dossier screenen en aanmelden bij UWV."
+      },
+      {
+        "week": 52,
+        "titel": "Einde eerste ziektejaar",
+        "tekst": "UWV beoordeelt de situatie na 52 weken ziekte."
+      },
+      {
+        "week": 54,
+        "titel": "Venster sluit",
+        "tekst": "Daarna valt het dossier buiten de screening van deze werkwijze."
+      },
+      {
+        "week": 104,
+        "titel": "Einde Ziektewet",
+        "tekst": "De Ziektewetuitkering stopt uiterlijk na 104 weken."
+      }
+    ]
+  },
+  "voorWie": {
+    "titel": "Voor wie geldt de beoordeling?",
+    "tekst": "De beoordeling is voor mensen die na het eerste ziektejaar nog een Ziektewetuitkering krijgen en geen werkgever meer hebben. Bijvoorbeeld omdat hun tijdelijke contract afliep terwijl ze ziek waren.",
+    "criterium": {
+      "getal": "65%",
+      "tekst": "UWV kijkt of iemand meer dan 65 procent kan verdienen van het loon van voor de ziekte. Is dat zo, dan stopt de uitkering ongeveer een maand na de beoordeling. Is dat niet zo, dan loopt de uitkering door."
+    }
+  },
+  "zelfDoen": {
+    "titel": "Wat u als eigenrisicodrager zelf doet",
+    "tekst": "Als eigenrisicodrager voor de Ziektewet betaalt u de uitkering van uw ex-werknemer zelf. Volgens de werkwijze die UWV vanaf 1 november 2026 hanteert, doet u vier dingen.",
+    "taken": [
+      {
+        "titel": "Screenen",
+        "tekst": "U bekijkt de dossiers van ex-werknemers die tussen 44 en 54 weken ziek zijn."
+      },
+      {
+        "titel": "Toetsen",
+        "tekst": "U beoordeelt vooraf of een dossier voldoet aan de criteria die UWV stelt voor een kansrijke aanvraag."
+      },
+      {
+        "titel": "Compleet maken",
+        "tekst": "U levert de aanvraag volledig en digitaal aan, met de medische informatie van de bedrijfsarts."
+      },
+      {
+        "titel": "Aanmelden",
+        "tekst": "U meldt het dossier zelf aan bij UWV. UWV doet daarna de beoordeling en neemt het besluit."
+      }
+    ]
+  },
+  "screening": {
+    "titel": "Waar de screening van Arbeidswaarde past",
+    "tekst": [
+      "Een arbeidsdeskundige van Arbeidswaarde toetst elk dossier aan het venster en aan de criteria van UWV. U krijgt een schriftelijk advies: aanmelden of niet, met de onderbouwing en een overzicht van wat nog ontbreekt.",
+      "Wij geven geen medisch oordeel. De medische informatie komt van uw bedrijfsarts."
+    ]
+  },
+  "cijfers": {
+    "titel": "De werkwijze in cijfers",
+    "tekst": "UWV werkte eerst met een kleine groep partijen en breidt de werkwijze nu uit naar alle eigenrisicodragers voor de Ziektewet.",
+    "items": [
+      {
+        "waarde": 1500,
+        "voorvoegsel": "bijna",
+        "label": "aanvragen ingediend",
+        "periode": "tot medio september 2026",
+        "bron": "uwv-uitbreiding",
+        "gecontroleerd": false
+      },
+      {
+        "waarde": 1200,
+        "voorvoegsel": "",
+        "label": "aanvragen doorgezet voor een sociaal-medische beoordeling",
+        "periode": "tot medio september 2026",
+        "bron": "uwv-uitbreiding",
+        "gecontroleerd": false
+      },
+      {
+        "waarde": 3400,
+        "voorvoegsel": "",
+        "label": "beoordelingen waar UWV op stuurt voor eigenrisicodragers",
+        "periode": "in 2026",
+        "bron": "uwv-uitbreiding",
+        "gecontroleerd": false
+      }
+    ]
+  },
+  "bronnen": [
+    {
+      "id": "uwv-uitbreiding",
+      "titel": "UWV breidt beproefde werkwijze rondom Eerstejaars Ziektewetbeoordelingen uit naar alle eigenrisicodragers Ziektewet",
+      "uitgever": "UWV",
+      "url": "https://www.uwv.nl/nl/nieuws/uwv-breidt-beproefde-werkwijze-rondom-eerstejaars-ziektewetbeoordelingen-uit-naar-alle-eigenrisicodragers-ziektewet",
+      "geraadpleegd": ""
+    },
+    {
+      "id": "uwv-tijdelijk",
+      "titel": "Tijdelijke werkwijze Eerstejaars Ziektewetbeoordelingen eigenrisicodragers voor de Ziektewet",
+      "uitgever": "UWV",
+      "url": "https://www.uwv.nl/nl/nieuws/tijdelijke-werkwijze-eerstejaars-ziektewetbeoordelingen-eigenrisicodragers-voor-ziektewet",
+      "geraadpleegd": ""
+    },
+    {
+      "id": "uwv-ziektewet-beoordeling",
+      "titel": "Ziektewet-beoordeling",
+      "uitgever": "UWV",
+      "url": "https://www.uwv.nl/nl/ziek/ziektewet-uitkering/ziektewet-beoordeling",
+      "geraadpleegd": ""
+    },
+    {
+      "id": "uwv-erd-ezwb",
+      "titel": "Eerstejaars Ziektewet-beoordeling (eigenrisicodrager)",
+      "uitgever": "UWV",
+      "url": "https://www.uwv.nl/werkgevers/eigenrisicodrager/eigenrisicodrager-ziektewet/tijdens-eigen-risico-dragen-ziektewet/detail/eerstejaars-ziektewet-beoordeling",
+      "geraadpleegd": ""
+    },
+    {
+      "id": "sra-1-november",
+      "titel": "Per 1 november wijziging Eerstejaars Ziektewet-beoordelingen",
+      "uitgever": "SRA",
+      "url": "https://www.sra.nl/nieuws/004501/2026/10/per-1-november-wijziging-eerstejaars-ziektewet-beoordelingen",
+      "geraadpleegd": ""
+    }
+  ]
+}

@@ -1,11 +1,178 @@
 ---
 import Basis from "../layouts/Basis.astro";
-import Opzet from "../components/Opzet.astro";
+import Weekbalk from "../components/ezwb/Weekbalk.astro";
+import Tellers from "../components/ezwb/Tellers.astro";
+import Bronnen from "../components/ezwb/Bronnen.astro";
+import Stappen from "../components/home/Stappen.astro";
+import Oproep from "../components/home/Oproep.astro";
+import ezwb from "../data/ezwb.json";
+import home from "../data/home.json";
+
+const { intro, voorWie, zelfDoen, screening } = ezwb;
+const overnemen = zelfDoen.taken.slice(0, 2);
+const zelf = zelfDoen.taken.slice(2);
 ---
 
 <Basis
   titel="De EZWB uitgelegd"
   beschrijving="Wat is de Eerstejaars Ziektewetbeoordeling, voor wie geldt hij en wat moet u als eigenrisicodrager zelf doen? Uitleg in gewone taal, met bronnen."
 >
-  <Opzet label="Uitleg" kop="De EZWB uitgelegd" fase="fase 3" />
+  <section class="intro" aria-labelledby="intro-titel">
+    <div class="container">
+      <h1 id="intro-titel">{intro.titel}</h1>
+      <p class="inleiding">{intro.tekst}</p>
+    </div>
+  </section>
+
+  <Weekbalk />
+
+  <section class="voorwie sectie" aria-labelledby="voorwie-titel">
+    <div class="container voorwie__raster">
+      <div>
+        <h2 id="voorwie-titel">{voorWie.titel}</h2>
+        <p class="inleiding">{voorWie.tekst}</p>
+      </div>
+      <div class="voorwie__criterium">
+        <p class="voorwie__getal" aria-hidden="true">{voorWie.criterium.getal}</p>
+        <p>{voorWie.criterium.tekst}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zelf sectie" aria-labelledby="zelf-titel">
+    <div class="container">
+      <h2 id="zelf-titel">{zelfDoen.titel}</h2>
+      <p class="inleiding">{zelfDoen.tekst}</p>
+      <div class="zelf__groepen">
+        <div class="zelf__groep zelf__groep--wij op-donker">
+          <h3>Dit kan Arbeidswaarde van u overnemen</h3>
+          <ol>
+            {overnemen.map((t) => <li><strong>{t.titel}.</strong> {t.tekst}</li>)}
+          </ol>
+        </div>
+        <div class="zelf__groep">
+          <h3>Dit doet u zelf</h3>
+          <ol start="3">
+            {zelf.map((t) => <li><strong>{t.titel}.</strong> {t.tekst}</li>)}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screening sectie" aria-labelledby="screening-titel">
+    <div class="container screening__raster">
+      <h2 id="screening-titel">{screening.titel}</h2>
+      <div>
+        {screening.tekst.map((t) => <p>{t}</p>)}
+        <p><a href="/#advies-titel">Zo is het schriftelijke advies opgebouwd</a></p>
+      </div>
+    </div>
+  </section>
+
+  <Tellers />
+  <Stappen id="werkwijze" titel="Hoe wij werken" stappen={home.werkwijze.stappen} />
+  <Bronnen />
+  <Oproep {...home.oproep} />
 </Basis>
+
+<script>
+  import "../scripts/ezwb.ts";
+</script>
+
+<style>
+  .intro {
+    padding-block: clamp(2.5rem, 1rem + 6vw, 6rem) 0;
+  }
+  .intro h1 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+  }
+
+  .voorwie {
+    background: var(--kleur-wit);
+  }
+  .voorwie__raster {
+    display: grid;
+    gap: var(--ruimte-6);
+    align-items: start;
+  }
+  .voorwie__raster h2 {
+    max-width: 18ch;
+  }
+  .voorwie__criterium {
+    padding-top: var(--ruimte-5);
+    border-top: var(--lijn-dun) solid var(--kleur-dennengroen);
+  }
+  .voorwie__getal {
+    margin: 0 0 var(--ruimte-3);
+    font-variant-numeric: lining-nums;
+    font-family: var(--font-kop);
+    font-size: clamp(4rem, 2.5rem + 6vw, 7.5rem);
+    line-height: 0.9;
+    color: var(--kleur-dennengroen);
+  }
+
+  .zelf h2 {
+    max-width: 20ch;
+  }
+  .zelf__groepen {
+    display: grid;
+    gap: var(--ruimte-4);
+    margin-top: var(--ruimte-6);
+  }
+  .zelf__groep {
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--hoek-l);
+    background: var(--kleur-wit);
+  }
+  .zelf__groep--wij {
+    background: var(--kleur-dennengroen);
+    border-color: var(--kleur-dennengroen);
+    color: var(--kleur-beige);
+  }
+  .zelf__groep h3 {
+    margin-bottom: var(--ruimte-4);
+  }
+  .zelf__groep--wij h3 {
+    color: var(--kleur-beige);
+  }
+  .zelf__groep ol {
+    display: grid;
+    gap: var(--ruimte-4);
+    margin: 0;
+    padding-left: 1.4rem;
+  }
+  .zelf__groep li::marker {
+    font-family: var(--font-kop);
+    font-weight: 600;
+  }
+
+  .screening {
+    padding-top: 0;
+  }
+  .screening__raster {
+    display: grid;
+    gap: var(--ruimte-4) var(--ruimte-8);
+  }
+  .screening__raster p {
+    max-width: var(--breedte-tekst);
+  }
+
+  @media (min-width: 48rem) {
+    .zelf__groepen {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 60rem) {
+    .voorwie__raster,
+    .screening__raster {
+      grid-template-columns: 7fr 5fr;
+      gap: var(--ruimte-8);
+    }
+    .screening__raster {
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+</style>

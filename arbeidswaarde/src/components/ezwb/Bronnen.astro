@@ -1,0 +1,61 @@
+---
+/** Bronnenlijst. "Geraadpleegd op" verschijnt pas als de datum in ezwb.json is ingevuld. */
+import ezwb from "../../data/ezwb.json";
+
+const datum = (iso: string) =>
+  new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<section class="bronnen sectie" aria-labelledby="bronnen-titel">
+  <div class="container">
+    <h2 id="bronnen-titel">Bronnen</h2>
+    <ol class="bronnen__lijst">
+      {
+        ezwb.bronnen.map((b) => (
+          <li id={`bron-${b.id}`}>
+            <span class="bronnen__uitgever">{b.uitgever}</span>
+            <a href={b.url} rel="noopener">{b.titel}</a>
+            {b.geraadpleegd && <span class="bronnen__datum">Geraadpleegd op {datum(b.geraadpleegd)}</span>}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .bronnen__lijst {
+    display: grid;
+    gap: var(--ruimte-4);
+    max-width: 48rem;
+    margin: var(--ruimte-5) 0 0;
+    padding-left: 1.5rem;
+  }
+  .bronnen__lijst li {
+    padding-left: var(--ruimte-2);
+    scroll-margin-top: 6rem;
+  }
+  .bronnen__lijst li:target {
+    outline: 2px solid var(--kleur-dennengroen);
+    outline-offset: 6px;
+    border-radius: 4px;
+  }
+  .bronnen__lijst li::marker {
+    font-family: var(--font-kop);
+    color: var(--kleur-dennengroen);
+  }
+  .bronnen__uitgever,
+  .bronnen__datum {
+    display: block;
+  }
+  .bronnen__uitgever {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .bronnen__lijst a {
+    overflow-wrap: anywhere;
+  }
+  .bronnen__datum {
+    font-size: 0.875rem;
+  }
+</style>

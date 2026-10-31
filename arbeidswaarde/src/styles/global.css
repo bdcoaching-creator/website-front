@@ -34,6 +34,7 @@ h1,
 h2,
 h3 {
   margin: 0 0 var(--ruimte-4);
+  font-variant-numeric: lining-nums;
   font-family: var(--font-kop);
   font-weight: 500;
   line-height: 1.15;
