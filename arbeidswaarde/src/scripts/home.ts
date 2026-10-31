@@ -38,8 +38,7 @@ function kernzin() {
 /* Hero-vorm: lagen bewegen zacht mee met scrollen (alleen breed scherm). */
 function zweef() {
   const lagen = [...document.querySelectorAll<SVGGElement>("[data-zweef]")];
-  const beeld = document.querySelector<HTMLElement>(".hero__beeld");
-  if (!lagen.length || !beeld) return;
+  if (!lagen.length) return;
 
   let gepland = false;
   const werkBij = () => {
@@ -50,7 +49,6 @@ function zweef() {
       const factor = Number(laag.dataset.zweef) || 0;
       laag.style.transform = actief ? `translate3d(0, ${(y * factor).toFixed(1)}px, 0)` : "";
     });
-    beeld.style.opacity = actief ? String(1 - Math.min(y / 1400, 0.3)) : "";
   };
   const plan = () => {
     if (!gepland) {

@@ -1,13 +1,9 @@
 ---
 import Icoon from "../Icoon.astro";
+import Route from "./Route.astro";
 import home from "../../data/home.json";
 
 const { hero } = home;
-// Venster van week 44 tot 54 op een halve boog van week 0 tot 104 (middelpunt 240,300; straal 170).
-const punt = (week: number) => {
-  const hoek = Math.PI * (1 - week / 104);
-  return `${(240 + 170 * Math.cos(hoek)).toFixed(1)} ${(300 - 170 * Math.sin(hoek)).toFixed(1)}`;
-};
 ---
 
 <section class="hero" aria-labelledby="hero-titel">
@@ -25,27 +21,9 @@ const punt = (week: number) => {
       </div>
     </div>
 
-    <figure class="hero__beeld">
-      <svg viewBox="0 0 480 440" width="480" height="440" aria-hidden="true" focusable="false">
-        <g data-zweef="-0.04">
-          <circle cx="245" cy="235" r="195" fill="#E3EAE2"></circle>
-        </g>
-        <g data-zweef="0.03">
-          <path d="M70 300 A170 170 0 0 1 410 300" fill="none" stroke="#6A8F6F" stroke-width="3" stroke-linecap="round"></path>
-          <path d={`M${punt(44)} A170 170 0 0 1 ${punt(54)}`} fill="none" stroke="#D37A5A" stroke-width="14" stroke-linecap="round"></path>
-          <circle cx="70" cy="300" r="5" fill="#6A8F6F"></circle>
-          <circle cx="410" cy="300" r="5" fill="#6A8F6F"></circle>
-        </g>
-        <g data-zweef="0.08">
-          <path d="M130 440 A110 110 0 0 1 350 440 H296 A56 56 0 0 0 184 440 Z" fill="#0E3A2F"></path>
-        </g>
-      </svg>
-      <figcaption class="hero__onderschrift">
-        <span>Week 0</span>
-        <span class="hero__venster">Screening tussen week 44 en 54</span>
-        <span>Week 104</span>
-      </figcaption>
-    </figure>
+    <div class="hero__beeld">
+      <Route />
+    </div>
   </div>
 </section>
 
@@ -95,24 +73,7 @@ const punt = (week: number) => {
   .hero__beeld {
     margin: 0;
     justify-self: center;
-    width: min(100%, 30rem);
-  }
-  .hero__beeld [data-zweef] {
-    will-change: transform;
-  }
-  .hero__onderschrift {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--ruimte-3);
-    margin-top: var(--ruimte-3);
-    padding-inline: 8%;
-    font-size: 0.8125rem;
-    color: var(--kleur-antraciet);
-  }
-  .hero__venster {
-    font-weight: 600;
-    color: var(--kleur-dennengroen);
-    text-align: center;
+    width: min(100%, 34rem);
   }
   @media (min-width: 60rem) {
     .hero__raster {
@@ -124,15 +85,7 @@ const punt = (week: number) => {
   }
   @media (max-width: 59.99rem) {
     .hero__beeld {
-      width: min(100%, 20rem);
-    }
-    .hero__onderschrift {
-      flex-wrap: wrap;
-      padding-inline: 6%;
-    }
-    .hero__venster {
-      order: 3;
-      flex-basis: 100%;
+      width: min(100%, 30rem);
     }
   }
 </style>

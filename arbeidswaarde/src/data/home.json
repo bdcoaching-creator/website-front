@@ -7,6 +7,27 @@
     "knop": "Neem contact op",
     "link": "Zo werkt de Eerstejaars Ziektewetbeoordeling"
   },
+  "route": {
+    "_toelichting": "[NOG TE CONTROLEREN] Weken en formulering tegen uwv.nl. Volgens het UWV-document gaat de beoordeling over de situatie na 52 weken; 54 is het einde van het screeningsvenster.",
+    "label": "Van week 40 tot week 54",
+    "stops": [
+      {
+        "week": 40,
+        "titel": "Voorbereiden",
+        "tekst": "Het dossier nadert de 44 weken. Dit is het moment om de screening te plannen."
+      },
+      {
+        "week": 44,
+        "titel": "Aanmelden bij UWV",
+        "tekst": "Vanaf week 44 kan de eigenrisicodrager het dossier aanmelden bij UWV. Wij screenen vooraf of het dossier kans maakt."
+      },
+      {
+        "week": 54,
+        "titel": "Beoordeling",
+        "tekst": "Rond het einde van het eerste ziektejaar beoordeelt UWV of de uitkering kan stoppen. Na week 54 is het venster voorbij."
+      }
+    ]
+  },
   "waarom": {
     "label": "Waarom nu",
     "titel": "UWV vraagt eigenrisicodragers om eerst zelf te screenen",

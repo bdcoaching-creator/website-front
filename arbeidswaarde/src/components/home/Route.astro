@@ -1,0 +1,261 @@
+---
+/**
+ * Interactieve route: een getekende figuur met dossiermap loopt van week 40 via week 44 naar week 54.
+ * - Breed scherm: loopt eenmalig zelf de route (korter dan 5 seconden), daarna met de knoppen te bedienen.
+ * - Mobiel en prefers-reduced-motion: geen loopanimatie, de figuur staat direct bij de gekozen week.
+ * - Zonder JavaScript: een gewone lijst met de drie stappen.
+ * De figuur is decoratief; de betekenis staat in de knoppen en de tekst eronder.
+ */
+import home from "../../data/home.json";
+
+const { label, stops } = home.route;
+const GROND = 290;
+const x = (week: number) => 60 + ((week - 40) / 14) * 440;
+const weken = Array.from({ length: 15 }, (_, i) => 40 + i);
+const eind = stops[stops.length - 1];
+---
+
+<figure class="route" data-route aria-label={label}>
+  <svg class="route__scene" viewBox="0 0 560 340" width="560" height="340" aria-hidden="true" focusable="false">
+    <circle cx="310" cy="190" r="150" fill="#E3EAE2" data-zweef="-0.04"></circle>
+
+    <!-- Grond met weekstreepjes en het venster van week 44 tot 54 -->
+    <line x1="30" y1={GROND} x2="530" y2={GROND} stroke="#6A8F6F" stroke-width="2" stroke-linecap="round"></line>
+    <line x1={x(44)} y1={GROND} x2={x(54)} y2={GROND} stroke="#D37A5A" stroke-width="8" stroke-linecap="round"></line>
+    {weken.map((w) => <line x1={x(w)} y1={GROND + 8} x2={x(w)} y2={GROND + (w % 2 === 0 ? 16 : 12)} stroke="#6A8F6F" stroke-width="1.5" />)}
+
+    <!-- Wegwijzers bij week 44 (aanmelden) en week 54 (beoordeling) -->
+    <g class="route__bord" data-bord="44">
+      <line x1={x(44)} y1={GROND} x2={x(44)} y2="196" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
+      <rect x={x(44) + 2} y="190" width="46" height="26" rx="6" fill="#0E3A2F"></rect>
+      <path d={`M${x(44) + 12} 203h26M${x(44) + 30} 197l8 6l-8 6`} fill="none" stroke="#F7F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </g>
+    <g class="route__bord" data-bord="54">
+      <line x1={x(54)} y1={GROND} x2={x(54)} y2="186" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
+      <rect x={x(54) + 2} y="160" width="46" height="32" rx="8" fill="#F7F4EF" stroke="#0E3A2F" stroke-width="2.5"></rect>
+      <path d={`M${x(54) + 15} 176l6 6l12 -12`} fill="none" stroke="#0E3A2F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </g>
+
+    {
+      stops.map((s) => (
+        <circle class="route__punt" data-punt={s.week} cx={x(s.week)} cy={GROND} r="7" fill="#F7F4EF" stroke="#0E3A2F" stroke-width="2.5" />
+      ))
+    }
+
+    <!-- De figuur; voeten op (0,0). Zonder JavaScript staat hij bij de laatste stop. -->
+    <g class="persoon" data-persoon style={`transform: translate(${x(eind.week) - 36}px, ${GROND}px)`}>
+      <ellipse cx="0" cy="0" rx="26" ry="4" fill="rgb(14 58 47 / 0.14)"></ellipse>
+      <g class="persoon__richting" data-richting>
+        <g class="persoon__lijf">
+          <path class="persoon__arm persoon__arm--achter" d="M-7 -128h11v48a5.5 5.5 0 0 1 -11 0z" fill="#557459"></path>
+          <g class="persoon__been persoon__been--achter">
+            <path d="M-7 -72h13l-1 64h-11z" fill="#0B2F26"></path>
+            <path d="M-7 -9h12q8 0 8 6v3h-20z" fill="#2F3033"></path>
+          </g>
+          <g class="persoon__been persoon__been--voor">
+            <path d="M-7 -72h13l-1 64h-11z" fill="#0E3A2F"></path>
+            <path d="M-7 -9h12q8 0 8 6v3h-20z" fill="#2F3033"></path>
+          </g>
+          <path d="M-17 -126q0-8 8-8h20q8 0 8 8v58h-36z" fill="#6A8F6F"></path>
+          <path d="M-5 -134l5 10l5-10z" fill="#F7F4EF"></path>
+          <path d="M-4 -143h8v10h-8z" fill="#C98F68"></path>
+          <circle cx="1" cy="-154" r="14" fill="#D9A47E"></circle>
+          <path d="M-13 -153a14 14 0 0 1 27-6q-9-4-17 0q-5 3-10 6z" fill="#2F3033"></path>
+          <g class="persoon__arm persoon__arm--voor">
+            <path d="M-4 -128h11v46a5.5 5.5 0 0 1 -11 0z" fill="#7FA083"></path>
+            <circle cx="1.5" cy="-80" r="5" fill="#D9A47E"></circle>
+            <rect x="2" y="-98" width="26" height="32" rx="3" fill="#D37A5A"></rect>
+            <path d="M8 -88h14M8 -82h10" stroke="#F7F4EF" stroke-width="2" stroke-linecap="round"></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+  <figcaption>
+    <ol class="route__stops">
+      {
+        stops.map((s, i) => (
+          <li>
+            <button
+              type="button"
+              class="route__knop"
+              data-stop={s.week}
+              data-tekst={s.tekst}
+              aria-pressed={i === stops.length - 1 ? "true" : "false"}
+            >
+              <span class="route__week">Week {s.week}</span>
+              <span class="route__titel">{s.titel}</span>
+            </button>
+            <p class="route__stoptekst">{s.tekst}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="route__uitleg" data-route-tekst aria-live="polite">{eind.tekst}</p>
+  </figcaption>
+</figure>
+
+<style>
+  .route {
+    margin: 0;
+    width: 100%;
+  }
+  .route__scene {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .persoon {
+    will-change: transform;
+  }
+  .persoon__richting {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transition: transform 200ms var(--curve);
+  }
+  .persoon__richting.is-terug {
+    transform: scaleX(-1);
+  }
+  .persoon__been,
+  .persoon__arm {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+  }
+  .persoon__arm--voor {
+    transform-origin: 20% 0;
+  }
+  .route__punt {
+    transition: fill var(--duur-m) var(--curve);
+  }
+  .route__punt.is-actief {
+    fill: #0e3a2f;
+  }
+
+  /* Loopbeweging: alleen transform, alleen tijdens het lopen. */
+  .persoon.loopt .persoon__been--achter {
+    animation: zwaai 0.62s ease-in-out infinite alternate;
+  }
+  .persoon.loopt .persoon__been--voor {
+    animation: zwaai 0.62s ease-in-out infinite alternate-reverse;
+  }
+  .persoon.loopt .persoon__arm--achter {
+    animation: zwaai-arm 0.62s ease-in-out infinite alternate-reverse;
+  }
+  .persoon.loopt .persoon__arm--voor {
+    animation: zwaai-klein 0.62s ease-in-out infinite alternate;
+  }
+  .persoon.loopt .persoon__lijf {
+    animation: dein 0.31s ease-in-out infinite alternate;
+  }
+  @keyframes zwaai {
+    from {
+      transform: rotate(20deg);
+    }
+    to {
+      transform: rotate(-20deg);
+    }
+  }
+  @keyframes zwaai-arm {
+    from {
+      transform: rotate(16deg);
+    }
+    to {
+      transform: rotate(-16deg);
+    }
+  }
+  @keyframes zwaai-klein {
+    from {
+      transform: rotate(5deg);
+    }
+    to {
+      transform: rotate(-5deg);
+    }
+  }
+  @keyframes dein {
+    to {
+      transform: translateY(-3px);
+    }
+  }
+
+  /* Knoppen en uitleg */
+  .route__stops {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ruimte-2);
+    margin: var(--ruimte-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .route__knop {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    width: 100%;
+    min-height: 3.75rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--kleur-wit);
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--hoek-m);
+    color: var(--kleur-antraciet);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--duur-kort) var(--curve),
+      border-color var(--duur-kort) var(--curve);
+  }
+  .route__knop:hover {
+    border-color: var(--kleur-dennengroen);
+  }
+  .route__knop[aria-pressed="true"] {
+    background: var(--kleur-dennengroen);
+    border-color: var(--kleur-dennengroen);
+    color: var(--kleur-beige);
+  }
+  .route__week {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .route__titel {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  @media (max-width: 30rem) {
+    .route__knop {
+      padding: 0.55rem 0.6rem;
+    }
+    .route__week {
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+    }
+    .route__titel {
+      font-size: 0.8125rem;
+    }
+  }
+  .route__uitleg {
+    min-height: 3.3em;
+    margin: var(--ruimte-4) 0 0;
+    font-size: var(--tekst-s);
+  }
+
+  /* Zonder JavaScript: geen knoppen, wel de tekst per stap. */
+  :global(html:not(.js)) .route__knop {
+    pointer-events: none;
+  }
+  :global(html:not(.js)) .route__uitleg,
+  :global(html.js) .route__stoptekst {
+    display: none;
+  }
+  .route__stoptekst {
+    margin: var(--ruimte-2) 0 0;
+    font-size: 0.875rem;
+  }
+  :global(html:not(.js)) .route__stops {
+    grid-template-columns: 1fr;
+  }
+</style>
