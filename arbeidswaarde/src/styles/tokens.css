@@ -21,6 +21,9 @@
   --kleur-terracotta-zacht: #f3e1d8;
   --kleur-beige-donker: #ece6dc;
   --kleur-lijn: #d9d2c5;
+  /* Formulieren: rand 4,2:1 op wit (eis 3:1), fout 7,6:1 op wit. Geen merkkleur, alleen voor foutmeldingen. */
+  --kleur-rand-veld: #7a7c78;
+  --kleur-fout: #9b2c1f;
 
   /* Rollen */
   --achtergrond: var(--kleur-beige);
