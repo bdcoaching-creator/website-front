@@ -1,8 +1,0 @@
-# Apache-instellingen (bijvoorbeeld hosting met cPanel). Op andere servers wordt dit bestand genegeerd.
-# [NOG TE CONTROLEREN] Uitbreiden met https-doorverwijzing en beveiligingsheaders zodra de hosting bekend is.
-
-# Eigen foutpagina voor adressen die niet bestaan.
-ErrorDocument 404 /404.html
-
-# Geen mappenoverzicht tonen.
-Options -Indexes

@@ -1,6 +1,0 @@
-# [NOG TE CONTROLEREN] Domein aanpassen als het definitieve domein anders is.
-User-agent: *
-Allow: /
-Disallow: /api/
-
-Sitemap: https://www.arbeidswaarde.nl/sitemap-index.xml
