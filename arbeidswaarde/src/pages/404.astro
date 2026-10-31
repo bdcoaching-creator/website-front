@@ -1,0 +1,45 @@
+---
+import Basis from "../layouts/Basis.astro";
+---
+
+<Basis titel="Pagina niet gevonden" beschrijving="Deze pagina bestaat niet (meer) op de website van Arbeidswaarde." noindex>
+  <section class="niet-gevonden" aria-labelledby="nf-titel">
+    <div class="container">
+      <p class="niet-gevonden__code" aria-hidden="true">404</p>
+      <h1 id="nf-titel">Deze pagina bestaat niet</h1>
+      <p class="inleiding">
+        Misschien is de link verouderd of zit er een typefout in het adres. Via deze pagina's komt u verder.
+      </p>
+      <ul class="niet-gevonden__links">
+        <li><a href="/">Naar de homepage</a></li>
+        <li><a href="/ezwb-uitgelegd/">De Eerstejaars Ziektewetbeoordeling uitgelegd</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  .niet-gevonden {
+    padding-block: clamp(3rem, 1.5rem + 7vw, 7rem) var(--ruimte-sectie);
+  }
+  .niet-gevonden__code {
+    margin: 0;
+    font-family: var(--font-kop);
+    font-variant-numeric: lining-nums;
+    font-size: clamp(5rem, 3rem + 9vw, 10rem);
+    line-height: 0.9;
+    color: var(--kleur-saliegroen);
+  }
+  .niet-gevonden h1 {
+    font-size: clamp(2rem, 1.2rem + 3.6vw, 3.5rem);
+  }
+  .niet-gevonden__links {
+    display: grid;
+    gap: var(--ruimte-3);
+    margin: var(--ruimte-6) 0 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+</style>

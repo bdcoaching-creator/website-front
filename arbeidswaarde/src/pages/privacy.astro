@@ -1,8 +1,109 @@
 ---
+/**
+ * Privacyverklaring: lege opzet (fase 5). Ingevuld staat alleen wat vaststaat over hoe deze website werkt.
+ * Juridische onderdelen zijn nog leeg; laat de tekst door de eigenaar (en bij voorkeur een jurist) aanvullen.
+ * Zolang dit een concept is: noindex en niet in de sitemap (zie astro.config.mjs).
+ */
 import Basis from "../layouts/Basis.astro";
-import Opzet from "../components/Opzet.astro";
+
+const CONCEPT = true;
+const onderdelen = [
+  {
+    titel: "Wie wij zijn",
+    tekst: [],
+    // [NOG IN TE VULLEN] Naam, adres, KvK-nummer en contactgegevens van de verwerkingsverantwoordelijke.
+  },
+  {
+    titel: "Welke gegevens wij verwerken",
+    tekst: [
+      "Als u het contactformulier gebruikt, ontvangen wij uw naam, uw e-mailadres, uw bericht en, als u dat invult, uw telefoonnummer.",
+      "Stuur geen medische gegevens via het formulier.",
+    ],
+  },
+  {
+    titel: "Waarvoor wij uw gegevens gebruiken",
+    tekst: ["Wij gebruiken de gegevens uit het formulier alleen om op uw bericht te reageren."],
+    // [NOG TE CONTROLEREN] Grondslag (bijvoorbeeld gerechtvaardigd belang of uw verzoek) door de eigenaar laten bepalen.
+  },
+  {
+    titel: "Hoe het formulier werkt",
+    tekst: [
+      "Wat u invult, wordt als e-mail naar ons verstuurd. De website zelf slaat uw bericht niet op.",
+      "Om misbruik te voorkomen, bewaart de server maximaal een uur een gecodeerde vorm van uw IP-adres. Daarna wordt die automatisch verwijderd.",
+    ],
+  },
+  {
+    titel: "Hoe lang wij uw gegevens bewaren",
+    tekst: [],
+    // [NOG IN TE VULLEN] Bewaartermijn van e-mails uit het formulier.
+  },
+  {
+    titel: "Met wie wij gegevens delen",
+    tekst: [],
+    // [NOG IN TE VULLEN] Hostingpartij en e-mailprovider, en waar zij de gegevens opslaan (binnen de EU).
+  },
+  {
+    titel: "Cookies en bezoekersstatistieken",
+    tekst: [
+      "Deze website plaatst geen cookies en meet geen bezoekers. Er worden geen lettertypen, scripts of andere bestanden van andere partijen geladen.",
+    ],
+  },
+  {
+    titel: "Uw rechten",
+    tekst: [],
+    // [NOG IN TE VULLEN] Inzage, correctie, verwijdering, bezwaar, en klagen bij de Autoriteit Persoonsgegevens.
+  },
+  {
+    titel: "Wijzigingen",
+    tekst: [],
+    // [NOG IN TE VULLEN] Datum van de laatste wijziging.
+  },
+];
 ---
 
-<Basis titel="Privacyverklaring" beschrijving="Hoe Arbeidswaarde omgaat met uw gegevens.">
-  <Opzet label="Juridisch" kop="Privacyverklaring" fase="fase 5" />
+<Basis titel="Privacyverklaring" beschrijving="Hoe Arbeidswaarde omgaat met uw gegevens." noindex={CONCEPT}>
+  <article class="privacy" aria-labelledby="privacy-titel">
+    <div class="container privacy__binnen">
+      <h1 id="privacy-titel">Privacyverklaring</h1>
+      {
+        CONCEPT && (
+          <p class="privacy__concept">Dit is een concept. Deze verklaring wordt aangevuld voordat de website live gaat.</p>
+        )
+      }
+      {
+        onderdelen.map((o) => (
+          <section>
+            <h2>{o.titel}</h2>
+            {o.tekst.length ? o.tekst.map((t) => <p>{t}</p>) : <p class="privacy__leeg">Wordt aangevuld.</p>}
+          </section>
+        ))
+      }
+    </div>
+  </article>
 </Basis>
+
+<style>
+  .privacy {
+    padding-block: clamp(2.5rem, 1rem + 6vw, 6rem) var(--ruimte-sectie);
+  }
+  .privacy__binnen {
+    max-width: calc(46rem + 2 * var(--gutter));
+  }
+  .privacy h1 {
+    font-size: clamp(2rem, 1.2rem + 3.6vw, 3.5rem);
+  }
+  .privacy h2 {
+    margin-top: var(--ruimte-7);
+    font-size: var(--kop-3);
+  }
+  .privacy__concept {
+    padding: var(--ruimte-3) var(--ruimte-4);
+    border: 1.5px dashed var(--kleur-dennengroen);
+    border-radius: var(--hoek-s);
+    font-weight: 600;
+    color: var(--kleur-dennengroen);
+  }
+  .privacy__leeg {
+    font-style: italic;
+  }
+</style>

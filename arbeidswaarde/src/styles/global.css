@@ -104,17 +104,6 @@ svg {
   padding-block: var(--ruimte-sectie);
 }
 
-.label {
-  display: inline-block;
-  margin-bottom: var(--ruimte-3);
-  font-family: var(--font-tekst);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--kleur-dennengroen);
-}
-
 .inleiding {
   max-width: var(--breedte-tekst);
   font-size: var(--tekst-l);
@@ -176,16 +165,6 @@ svg {
 
 .knop--primair:hover {
   background: #134a3c;
-}
-
-.knop--secundair {
-  background: transparent;
-  color: var(--kleur-dennengroen);
-  border-color: var(--kleur-dennengroen);
-}
-
-.knop--secundair:hover {
-  background: var(--kleur-salie-zacht);
 }
 
 @media (prefers-reduced-motion: reduce) {
