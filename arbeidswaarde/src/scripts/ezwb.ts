@@ -1,5 +1,5 @@
 /**
- * Interacties op "De EZWB uitgelegd". Alleen transform en tekst; geen bibliotheken.
+ * Interacties op "De beoordeling uitgelegd" (/ezwb-uitgelegd/). Alleen transform en tekst; geen bibliotheken.
  * Weekbalk: vult zich bij scrollen op breed scherm; op mobiel en bij prefers-reduced-motion direct vol.
  * Tellers: lopen één keer op als ze in beeld komen (ook op mobiel); bij prefers-reduced-motion direct de eindstand.
  */

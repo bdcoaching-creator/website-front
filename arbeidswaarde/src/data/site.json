@@ -3,7 +3,7 @@
   "belofte": "Deskundig in arbeid, gericht op resultaat.",
   "navigatie": [
     { "label": "Home", "href": "/" },
-    { "label": "De EZWB uitgelegd", "href": "/ezwb-uitgelegd/" },
+    { "label": "De beoordeling uitgelegd", "href": "/ezwb-uitgelegd/" },
     { "label": "Contact", "href": "/contact/" }
   ],
   "contact": {

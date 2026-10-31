@@ -12,7 +12,7 @@ interface Props {
   noindex?: boolean;
 }
 const { titel, beschrijving, noindex = false } = Astro.props;
-const volledigeTitel = titel === site.naam ? `${site.naam} · Screening voor de EZWB` : `${titel} · ${site.naam}`;
+const volledigeTitel = titel === site.naam ? `${site.naam} · Screening voor de Eerstejaars Ziektewetbeoordeling` : `${titel} · ${site.naam}`;
 const canoniek = new URL(Astro.url.pathname, Astro.site);
 ---
 
