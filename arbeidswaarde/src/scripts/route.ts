@@ -4,10 +4,11 @@
  * 5 seconden en stopt zodra de bezoeker zelf een week kiest (WCAG 2.2.2).
  */
 const GROND = 290;
-const SNELHEID = 135; // eenheden per seconde in de tekening
+const SNELHEID = 150; // eenheden per seconde in de tekening
 const x = (week: number) => 60 + ((week - 40) / 14) * 440;
 // De figuur stopt net vóór de markering, zodat de wegwijzer zichtbaar blijft.
-const sta = (week: number) => x(week) - 36;
+// Bij week 54 iets verder, zodat hij tussen de palen van week 52 en 54 vrij staat.
+const sta = (week: number) => x(week) - (week === 54 ? 30 : 36);
 const wacht = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const rustig = matchMedia("(prefers-reduced-motion: reduce)");
@@ -69,7 +70,7 @@ if (route && persoon && richting && uitleg && knoppen.length) {
     });
   });
 
-  // Eenmalige wandeling 40 → 44 → 54 bij het laden (alleen breed scherm en zonder voorkeur voor minder beweging).
+  // Eenmalige wandeling 40 → 44 → 52 → 54 bij het laden (ongeveer 4,4 seconden) (alleen breed scherm en zonder voorkeur voor minder beweging).
   if (!rustig.matches && breed.matches) {
     zet(weken[0]);
     markeer(weken[0]);
@@ -79,7 +80,7 @@ if (route && persoon && richting && uitleg && knoppen.length) {
         if (handmatig) return;
         markeer(week);
         await loop(week);
-        await wacht(700);
+        await wacht(500);
       }
     })();
   } else {

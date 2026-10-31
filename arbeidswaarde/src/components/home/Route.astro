@@ -1,6 +1,6 @@
 ---
 /**
- * Interactieve route: een getekende figuur met dossiermap loopt van week 40 via week 44 naar week 54.
+ * Interactieve route: een getekende figuur met dossiermap loopt van week 40 via 44 en 52 naar week 54.
  * - Breed scherm: loopt eenmalig zelf de route (korter dan 5 seconden), daarna met de knoppen te bedienen.
  * - Mobiel en prefers-reduced-motion: geen loopanimatie, de figuur staat direct bij de gekozen week.
  * - Zonder JavaScript: een gewone lijst met de drie stappen.
@@ -24,16 +24,20 @@ const eind = stops[stops.length - 1];
     <line x1={x(44)} y1={GROND} x2={x(54)} y2={GROND} stroke="#D37A5A" stroke-width="8" stroke-linecap="round"></line>
     {weken.map((w) => <line x1={x(w)} y1={GROND + 8} x2={x(w)} y2={GROND + (w % 2 === 0 ? 16 : 12)} stroke="#6A8F6F" stroke-width="1.5" />)}
 
-    <!-- Wegwijzers bij week 44 (aanmelden) en week 54 (beoordeling) -->
+    <!-- Wegwijzers: week 44 aanmelden, week 52 beoordeling, week 54 einde venster -->
     <g class="route__bord" data-bord="44">
       <line x1={x(44)} y1={GROND} x2={x(44)} y2="196" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
       <rect x={x(44) + 2} y="190" width="46" height="26" rx="6" fill="#0E3A2F"></rect>
       <path d={`M${x(44) + 12} 203h26M${x(44) + 30} 197l8 6l-8 6`} fill="none" stroke="#F7F4EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
     </g>
+    <g class="route__bord" data-bord="52">
+      <line x1={x(52)} y1={GROND} x2={x(52)} y2="112" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
+      <rect x={x(52) + 2} y="86" width="46" height="32" rx="8" fill="#F7F4EF" stroke="#0E3A2F" stroke-width="2.5"></rect>
+      <path d={`M${x(52) + 15} 102l6 6l12 -12`} fill="none" stroke="#0E3A2F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </g>
     <g class="route__bord" data-bord="54">
-      <line x1={x(54)} y1={GROND} x2={x(54)} y2="186" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
-      <rect x={x(54) + 2} y="160" width="46" height="32" rx="8" fill="#F7F4EF" stroke="#0E3A2F" stroke-width="2.5"></rect>
-      <path d={`M${x(54) + 15} 176l6 6l12 -12`} fill="none" stroke="#0E3A2F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      <line x1={x(54)} y1={GROND} x2={x(54)} y2="222" stroke="#0E3A2F" stroke-width="3" stroke-linecap="round"></line>
+      <path d={`M${x(54) + 1.5} 222h24l-7 10l7 10h-24z`} fill="#D37A5A"></path>
     </g>
 
     {
@@ -43,7 +47,7 @@ const eind = stops[stops.length - 1];
     }
 
     <!-- De figuur; voeten op (0,0). Zonder JavaScript staat hij bij de laatste stop. -->
-    <g class="persoon" data-persoon style={`transform: translate(${x(eind.week) - 36}px, ${GROND}px)`}>
+    <g class="persoon" data-persoon style={`transform: translate(${x(eind.week) - 30}px, ${GROND}px)`}>
       <ellipse cx="0" cy="0" rx="26" ry="4" fill="rgb(14 58 47 / 0.14)"></ellipse>
       <g class="persoon__richting" data-richting>
         <g class="persoon__lijf">
@@ -181,7 +185,7 @@ const eind = stops[stops.length - 1];
   /* Knoppen en uitleg */
   .route__stops {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--ruimte-2);
     margin: var(--ruimte-4) 0 0;
     padding: 0;
@@ -194,7 +198,7 @@ const eind = stops[stops.length - 1];
     gap: 0.15rem;
     width: 100%;
     min-height: 3.75rem;
-    padding: 0.6rem 0.9rem;
+    padding: 0.6rem 0.7rem;
     background: var(--kleur-wit);
     border: 1px solid var(--kleur-lijn);
     border-radius: var(--hoek-m);
@@ -221,11 +225,14 @@ const eind = stops[stops.length - 1];
     text-transform: uppercase;
   }
   .route__titel {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.25;
   }
   @media (max-width: 30rem) {
+    .route__stops {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .route__knop {
       padding: 0.55rem 0.6rem;
     }
