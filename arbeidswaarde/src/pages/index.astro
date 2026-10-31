@@ -1,7 +1,9 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Hero from "../components/home/Hero.astro";
-import Kaarten from "../components/home/Kaarten.astro";
+import Wie from "../components/home/Wie.astro";
+import Waarom from "../components/home/Waarom.astro";
+import Advies from "../components/home/Advies.astro";
 import Kernzin from "../components/home/Kernzin.astro";
 import Stappen from "../components/home/Stappen.astro";
 import Faq from "../components/home/Faq.astro";
@@ -11,11 +13,12 @@ import home from "../data/home.json";
 
 <Basis
   titel="Arbeidswaarde"
-  beschrijving="Arbeidswaarde screent dossiers van ex-werknemers voor de Eerstejaars Ziektewetbeoordeling, zodat u als eigenrisicodrager onderbouwd beslist of een aanvraag bij UWV zinvol is."
+  beschrijving="Arbeidswaarde screent dossiers van ex-werknemers voor de Eerstejaars Ziektewetbeoordeling, zodat u als eigenrisicodrager onderbouwd beslist of een aanmelding bij UWV zinvol is."
 >
   <Hero />
-  <Kaarten id="waarom" {...home.waarom} vlak />
-  <Kaarten id="krijgt" {...home.krijgt} />
+  <Wie />
+  <Waarom />
+  <Advies />
   <Kernzin tekst={home.kernzin} />
   <Stappen id="werkwijze" {...home.werkwijze} />
   <Faq id="vragen" {...home.vragen} />

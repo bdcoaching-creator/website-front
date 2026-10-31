@@ -5,11 +5,10 @@
  */
 interface Props {
   id: string;
-  label: string;
   titel: string;
   items: { vraag: string; antwoord: string }[];
 }
-const { id, label, titel, items } = Astro.props;
+const { id, titel, items } = Astro.props;
 const schema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -23,10 +22,7 @@ const schema = {
 
 <section class="sectie sectie--vlak" aria-labelledby={id}>
   <div class="container faq">
-    <div>
-      <span class="label">{label}</span>
-      <h2 id={id}>{titel}</h2>
-    </div>
+    <h2 id={id}>{titel}</h2>
     <div class="faq__lijst" data-accordeon>
       {
         items.map((item, i) => (

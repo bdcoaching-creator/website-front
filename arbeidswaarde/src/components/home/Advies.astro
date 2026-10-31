@@ -1,0 +1,155 @@
+---
+/**
+ * Wat u krijgt: het schriftelijke advies zelf, als vel papier met de onderdelen.
+ * Bewust zonder voorbeeldgegevens: alleen de opbouw, niets dat op een echt dossier lijkt.
+ */
+import home from "../../data/home.json";
+
+const { titel, tekst, document: doc } = home.krijgt;
+---
+
+<section class="advies sectie" aria-labelledby="advies-titel">
+  <div class="container advies__raster">
+    <div class="advies__intro">
+      <h2 id="advies-titel">{titel}</h2>
+      <p class="inleiding">{tekst}</p>
+    </div>
+
+    <figure class="advies__figuur">
+      <div class="vel">
+        <div class="vel__kop">
+          <svg viewBox="0 0 100 80" width="30" height="24" aria-hidden="true" focusable="false">
+            <path fill="#0E3A2F" d="M4 78 L41 3 H59 L28 78 Z"></path>
+            <path fill="#6A8F6F" d="M59 3 L83 52 C76 45 66 41 55 41 C51 41 47 42 44 43 Z"></path>
+            <path fill="#D37A5A" d="M36 78 C38 58 50 47 66 47 C76 47 83 51 87 56 L98 78 H81 C77 66 71 60 63 60 C55 60 50 67 49 78 Z"></path>
+          </svg>
+          <h3 class="vel__titel">{doc.kop}</h3>
+        </div>
+        <dl class="vel__onderdelen">
+          {
+            doc.onderdelen.map((o) => (
+              <div class="vel__onderdeel">
+                <dt>{o.titel}</dt>
+                <dd>{o.tekst}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="vel__advies">
+          <p class="vel__advies-kop">{doc.advies}</p>
+          <ul>
+            {doc.keuzes.map((k) => <li>{k}</li>)}
+          </ul>
+        </div>
+      </div>
+      <figcaption>{doc.onderschrift}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .advies__raster {
+    display: grid;
+    gap: var(--ruimte-7);
+    align-items: center;
+  }
+  .advies__intro h2 {
+    max-width: 14ch;
+  }
+  .advies__figuur {
+    margin: 0;
+    justify-self: center;
+    width: min(100%, 30rem);
+  }
+  .advies__figuur figcaption {
+    margin-top: var(--ruimte-4);
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  .vel {
+    position: relative;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    background: var(--kleur-wit);
+    border-radius: var(--hoek-s);
+    box-shadow:
+      0 1px 2px rgb(14 58 47 / 0.08),
+      0 18px 40px -12px rgb(14 58 47 / 0.22);
+  }
+  /* Terracotta tab bovenaan: accent, geen tekst. */
+  .vel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    width: 3rem;
+    height: 6px;
+    border-radius: 0 0 3px 3px;
+    background: var(--kleur-terracotta);
+  }
+  .vel__kop {
+    display: flex;
+    align-items: center;
+    gap: var(--ruimte-3);
+    padding-bottom: var(--ruimte-4);
+    border-bottom: var(--lijn-dun) solid var(--kleur-dennengroen);
+  }
+  .vel__titel {
+    margin: 0;
+    font-size: var(--kop-3);
+  }
+  .vel__onderdelen {
+    margin: 0;
+  }
+  .vel__onderdeel {
+    padding-block: var(--ruimte-4);
+    border-bottom: 1px solid var(--kleur-lijn);
+  }
+  .vel__onderdeel dt {
+    font-weight: 600;
+    color: var(--kleur-dennengroen);
+  }
+  .vel__onderdeel dd {
+    margin: var(--ruimte-1) 0 0;
+    font-size: var(--tekst-s);
+  }
+  .vel__advies {
+    margin-top: var(--ruimte-5);
+    padding: var(--ruimte-4) var(--ruimte-5);
+    background: var(--kleur-salie-zacht);
+    border-radius: var(--hoek-s);
+  }
+  .vel__advies-kop {
+    margin: 0 0 var(--ruimte-2);
+    font-weight: 600;
+    color: var(--kleur-dennengroen);
+  }
+  .vel__advies ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ruimte-2) var(--ruimte-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--tekst-s);
+  }
+  /* Leeg aankruisvak: het advies kiest per dossier één van beide. */
+  .vel__advies li::before {
+    content: "";
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    margin-right: 0.5em;
+    vertical-align: -0.1em;
+    border: var(--lijn-dun) solid var(--kleur-dennengroen);
+    border-radius: 3px;
+  }
+  @media (min-width: 60rem) {
+    .advies__raster {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--ruimte-8);
+    }
+    .vel {
+      transform: rotate(-1deg);
+    }
+  }
+</style>

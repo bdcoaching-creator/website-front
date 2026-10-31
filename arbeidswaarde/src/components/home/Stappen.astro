@@ -1,16 +1,14 @@
 ---
 interface Props {
   id: string;
-  label: string;
   titel: string;
   stappen: { titel: string; tekst: string }[];
 }
-const { id, label, titel, stappen } = Astro.props;
+const { id, titel, stappen } = Astro.props;
 ---
 
 <section class="sectie" aria-labelledby={id}>
   <div class="container">
-    <span class="label">{label}</span>
     <h2 id={id}>{titel}</h2>
     <ol class="stappen">
       {

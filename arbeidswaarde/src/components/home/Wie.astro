@@ -1,0 +1,92 @@
+---
+/**
+ * Wie screent uw dossier. Naam, foto, registratie en jaren ervaring staan in home.json
+ * en verschijnen pas als ze daar zijn ingevuld; zo staat er nooit een lege plek op de site.
+ */
+import home from "../../data/home.json";
+
+const { titel, tekst, naam, foto, registratie, ervaringJaren, feiten } = home.wie;
+const extra = [
+  registratie && { term: "Geregistreerd", uitleg: `Arbeidsdeskundige, registratienummer ${registratie}.` },
+  ervaringJaren && { term: "Ervaren", uitleg: `${ervaringJaren} jaar ervaring met Ziektewet- en UWV-dossiers.` },
+].filter(Boolean) as { term: string; uitleg: string }[];
+---
+
+<section class="wie sectie" aria-labelledby="wie-titel">
+  <div class="container wie__raster">
+    <div class="wie__intro">
+      {foto && <img class="wie__foto" src={foto} alt={naam ? `Portret van ${naam}` : "Portret van de arbeidsdeskundige"} width="160" height="160" loading="lazy" />}
+      <h2 id="wie-titel">{titel}</h2>
+      <p class="inleiding">{tekst}</p>
+      {naam && <p class="wie__naam">{naam}, arbeidsdeskundige</p>}
+    </div>
+    <dl class="wie__feiten">
+      {
+        [...extra, ...feiten].map((f) => (
+          <div class="wie__feit">
+            <dt>{f.term}</dt>
+            <dd>{f.uitleg}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .wie {
+    background: var(--kleur-wit);
+  }
+  .wie__raster {
+    display: grid;
+    gap: var(--ruimte-7);
+    align-items: start;
+  }
+  .wie__intro h2 {
+    max-width: 16ch;
+  }
+  .wie__foto {
+    width: 7.5rem;
+    height: 7.5rem;
+    margin-bottom: var(--ruimte-5);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .wie__naam {
+    margin-top: var(--ruimte-4);
+    font-weight: 600;
+    color: var(--kleur-dennengroen);
+  }
+  .wie__feiten {
+    margin: 0;
+    border-top: var(--lijn-dun) solid var(--kleur-dennengroen);
+  }
+  .wie__feit {
+    display: grid;
+    gap: var(--ruimte-1) var(--ruimte-5);
+    padding-block: var(--ruimte-5);
+    border-bottom: 1px solid var(--kleur-lijn);
+  }
+  .wie__feit dt {
+    font-family: var(--font-kop);
+    font-size: var(--kop-3);
+    line-height: 1.2;
+    color: var(--kleur-dennengroen);
+  }
+  .wie__feit dd {
+    margin: 0;
+    max-width: 34rem;
+  }
+  @media (min-width: 48rem) {
+    .wie__feit {
+      grid-template-columns: 11rem 1fr;
+      align-items: baseline;
+    }
+  }
+  @media (min-width: 60rem) {
+    .wie__raster {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--ruimte-8);
+    }
+  }
+</style>

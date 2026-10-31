@@ -54,9 +54,14 @@ h3 {
   font-size: var(--kop-3);
 }
 
+p,
+dd,
+li {
+  text-wrap: pretty;
+}
+
 p {
   margin: 0 0 var(--ruimte-4);
-  text-wrap: pretty;
 }
 
 a {

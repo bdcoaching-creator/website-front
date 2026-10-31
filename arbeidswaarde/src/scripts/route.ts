@@ -64,6 +64,7 @@ if (route && persoon && richting && uitleg && knoppen.length) {
   knoppen.forEach((knop) => {
     knop.addEventListener("click", () => {
       handmatig = true;
+      uitleg.setAttribute("aria-live", "polite");
       const week = Number(knop.dataset.stop);
       markeer(week);
       loop(week);
@@ -72,6 +73,8 @@ if (route && persoon && richting && uitleg && knoppen.length) {
 
   // Eenmalige wandeling 40 → 44 → 52 → 54 bij het laden (ongeveer 4,4 seconden) (alleen breed scherm en zonder voorkeur voor minder beweging).
   if (!rustig.matches && breed.matches) {
+    // Tijdens de automatische wandeling niets voorlezen; pas na een eigen keuze van de bezoeker.
+    uitleg.setAttribute("aria-live", "off");
     zet(weken[0]);
     markeer(weken[0]);
     (async () => {

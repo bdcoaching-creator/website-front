@@ -1,9 +1,8 @@
 {
   "_toelichting": "CONCEPTTEKSTEN (fase 2). Geschreven zonder het plan van de eigenaar. Alles nog laten goedkeuren. Feiten komen uit zoekresultaten die naar UWV en SRA verwijzen; de pagina's zelf waren niet bereikbaar. [NOG TE CONTROLEREN] tegen uwv.nl.",
   "hero": {
-    "label": "Screening voor eigenrisicodragers Ziektewet",
-    "titel": "Goed voorbereid naar de Eerstejaars Ziektewetbeoordeling",
-    "tekst": "Is een ex-werknemer bijna een jaar ziek? Wij screenen het dossier, zodat u onderbouwd beslist of een beoordeling door UWV kans van slagen heeft.",
+    "titel": "Goed voorbereid op de Eerstejaars Ziektewetbeoordeling",
+    "tekst": "Is een ex-werknemer bijna een jaar ziek en bent u eigenrisicodrager voor de Ziektewet? Wij screenen het dossier, zodat u onderbouwd beslist of een beoordeling door UWV kans van slagen heeft.",
     "knop": "Neem contact op",
     "link": "Zo werkt de Eerstejaars Ziektewetbeoordeling"
   },
@@ -33,63 +32,96 @@
       }
     ]
   },
-  "waarom": {
-    "label": "Waarom nu",
-    "titel": "UWV vraagt eigenrisicodragers om eerst zelf te screenen",
-    "punten": [
+  "wie": {
+    "_toelichting": "Naam, foto, registratienummer en jaren ervaring verschijnen pas op de site als ze hier zijn ingevuld. Leeg laten = niet tonen.",
+    "titel": "Uw dossier ligt bij een arbeidsdeskundige",
+    "tekst": "Een arbeidsdeskundige van Arbeidswaarde beoordeelt elk dossier zelf, van de eerste vraag tot het advies. U heeft één vast aanspreekpunt en korte lijnen.",
+    "naam": "",
+    "foto": "",
+    "registratie": "",
+    "ervaringJaren": "",
+    "feiten": [
       {
-        "icoon": "kalender",
-        "titel": "Een nieuwe werkwijze",
-        "tekst": "Vanaf 1 november 2026 kunnen alle eigenrisicodragers voor de Ziektewet een beoordeling aanvragen volgens de nieuwe werkwijze van UWV."
+        "term": "Onafhankelijk",
+        "uitleg": "Niet verbonden aan een arbodienst, verzekeraar of administratiekantoor."
       },
       {
-        "icoon": "venster",
-        "titel": "Een kort venster",
-        "tekst": "De screening gaat over ex-werknemers die tussen 44 en 54 weken ziek zijn. U heeft dus ongeveer tien weken."
+        "term": "Arbeidskundig",
+        "uitleg": "Wij toetsen arbeidsmogelijkheden en de criteria van UWV."
       },
       {
-        "icoon": "filter",
-        "titel": "Alleen kansrijke dossiers",
-        "tekst": "UWV heeft beperkte capaciteit. Een aanvraag moet volledig zijn en vooraf voldoen aan de criteria van UWV."
+        "term": "Niet medisch",
+        "uitleg": "Wij geven geen medisch oordeel. Dat blijft bij uw bedrijfsarts."
       }
+    ]
+  },
+  "waarom": {
+    "datum": "1 november 2026",
+    "titel": "UWV vraagt eigenrisicodragers om eerst zelf te screenen",
+    "tekst": [
+      "Vanaf deze datum kunnen alle eigenrisicodragers voor de Ziektewet een beoordeling aanvragen volgens de nieuwe werkwijze van UWV.",
+      "UWV heeft beperkte capaciteit en neemt alleen aanvragen in behandeling die volledig zijn en vooraf aan de criteria voldoen. Die toets ligt bij u. Wij doen hem voor u."
     ]
   },
   "krijgt": {
-    "label": "Wat u krijgt",
-    "titel": "Een onderbouwd advies per dossier",
-    "punten": [
-      {
-        "icoon": "onderzoek",
-        "titel": "Een toets aan de criteria",
-        "tekst": "Wij kijken of het dossier in het venster valt en of het voldoet aan de criteria die UWV stelt."
-      },
-      {
-        "icoon": "document",
-        "titel": "Een schriftelijk advies",
-        "tekst": "U leest of een aanvraag zinvol is en waarom. Helder geformuleerd, zodat u het intern kunt delen."
-      },
-      {
-        "icoon": "lijst",
-        "titel": "Een overzicht van wat ontbreekt",
-        "tekst": "Is het dossier nog niet volledig? Dan ziet u welke informatie nodig is voordat u de aanvraag indient."
-      }
-    ]
+    "titel": "Per dossier een schriftelijk advies",
+    "tekst": "U leest of een aanmelding zinvol is en waarom, helder genoeg om intern te delen. Zo is het advies opgebouwd.",
+    "document": {
+      "kop": "Screeningsadvies",
+      "onderdelen": [
+        {
+          "titel": "Venster",
+          "tekst": "Valt het dossier tussen week 44 en 54?"
+        },
+        {
+          "titel": "Criteria van UWV",
+          "tekst": "Per criterium getoetst, met onderbouwing."
+        },
+        {
+          "titel": "Wat ontbreekt",
+          "tekst": "Welke informatie nog nodig is voor een volledige aanvraag."
+        },
+        {
+          "titel": "Medische informatie",
+          "tekst": "Komt van uw bedrijfsarts. Wij geven geen medisch oordeel."
+        }
+      ],
+      "advies": "Advies",
+      "keuzes": [
+        "Aanmelden bij UWV",
+        "Niet aanmelden"
+      ],
+      "onderschrift": "Voorbeeld van de opbouw, zonder gegevens van een echt dossier."
+    }
   },
   "kernzin": "Wij beoordelen het dossier. U houdt de regie over de aanvraag.",
   "werkwijze": {
-    "label": "Hoe wij werken",
     "titel": "In vijf stappen van dossier naar advies",
     "stappen": [
-      { "titel": "Kennismaking", "tekst": "U vertelt ons om welke dossiers het gaat en welke termijnen spelen." },
-      { "titel": "Aanleveren", "tekst": "U levert de gegevens aan via een beveiligde route die wij samen afspreken." },
-      { "titel": "Screening", "tekst": "Wij toetsen elk dossier aan het venster en aan de criteria van UWV." },
-      { "titel": "Advies", "tekst": "U ontvangt per dossier een schriftelijk advies met onderbouwing." },
-      { "titel": "Uw besluit", "tekst": "U beslist zelf of u de beoordeling aanvraagt en dient de aanvraag in bij UWV." }
+      {
+        "titel": "Kennismaking",
+        "tekst": "U vertelt ons om welke dossiers het gaat en welke termijnen spelen."
+      },
+      {
+        "titel": "Aanleveren",
+        "tekst": "U levert de gegevens aan via een beveiligde route die wij samen afspreken."
+      },
+      {
+        "titel": "Screening",
+        "tekst": "Wij toetsen elk dossier aan het venster en aan de criteria van UWV."
+      },
+      {
+        "titel": "Advies",
+        "tekst": "U ontvangt per dossier een schriftelijk advies met onderbouwing."
+      },
+      {
+        "titel": "Uw besluit",
+        "tekst": "U beslist zelf of u de beoordeling aanvraagt en dient de aanvraag in bij UWV."
+      }
     ]
   },
   "vragen": {
-    "label": "Veelgestelde vragen",
-    "titel": "Wat u wilt weten",
+    "titel": "Veelgestelde vragen",
     "items": [
       {
         "vraag": "Wat is de Eerstejaars Ziektewetbeoordeling?",
@@ -98,6 +130,10 @@
       {
         "vraag": "Doen jullie de aanvraag bij UWV?",
         "antwoord": "Nee. Wij screenen het dossier en geven advies. Als eigenrisicodrager dient u de aanvraag zelf in bij UWV."
+      },
+      {
+        "vraag": "Geven jullie een medisch oordeel?",
+        "antwoord": "Nee. Een arbeidsdeskundige van Arbeidswaarde toetst arbeidsmogelijkheden en de criteria van UWV. Het medische oordeel komt van uw eigen bedrijfsarts."
       },
       {
         "vraag": "Voor wie is de screening bedoeld?",
