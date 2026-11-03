@@ -26,6 +26,8 @@ const canonical = new URL(schoonPad(Astro.url.pathname), Astro.site);
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#0c6d45" />
+    <!-- Eigendomsbevestiging Google Search Console. Laten staan, anders vervalt de verificatie. -->
+    <meta name="google-site-verification" content="KO03S0bkE2WsmNtfGNMXFAMtnEe9MAW-IZDi58w4y_o" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:site_name" content={site.bedrijfsnaam} />
