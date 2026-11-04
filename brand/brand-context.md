@@ -18,7 +18,7 @@ en spreken de lezer aan met je. Posts op LinkedIn en Instagram schrijft Brigitte
 1. Nooit: mediation, mediator, bemiddeling, lifestyle, wellness, hormonen.
 2. Website en bedrijfscommunicatie: wij-vorm. Posts: ik-vorm (Brigitte), alleen met eigen ervaring en kennis.
    Nooit het aantal teamleden noemen.
-3. De zes jaar UWV-ervaring hoort alleen bij de re-integratiebegeleider. Nooit "UWV-expert/-specialist".
+3. De zes jaar UWV-ervaring hoort alleen bij de re-integratiebegeleider: dat is Brigitte. Nooit "UWV-expert/-specialist".
 4. Niets verzinnen: geen cijfers, klantverhalen, testimonials of resultaten die niet zijn aangeleverd.
 5. Privacy: klantverhalen alleen anoniem en met toestemming; nooit medische details.
 6. Elke post nieuw ontworpen in de huisstijl; niets kopiëren, ook niet van onszelf.
@@ -26,6 +26,7 @@ en spreken de lezer aan met je. Posts op LinkedIn en Instagram schrijft Brigitte
 ## Checklist vóór publiceren
 - [ ] Spreekt de eerste zin de lezer en diens situatie aan?
 - [ ] Eén boodschap, één concrete vervolgstap?
+- [ ] Post: LinkedIn max. 1300 tekens, max. 3 hashtags, kop max. tien woorden?
 - [ ] Geen verboden woorden, geen jargon zonder uitleg?
 - [ ] Alles wat erin staat is waar en aangeleverd?
 - [ ] Beeld in huisstijl, logo klein, alt-tekst aanwezig?
