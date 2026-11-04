@@ -11,12 +11,13 @@ bij de taak hoort:
 ## In één alinea
 AdaptXS helpt MKB-werkgevers (2–50 medewerkers) en hun medewerkers bij verzuim, re-integratie en werk dat past,
 met re-integratie, jobcoaching, arbeidsdeskundig onderzoek en coaching voor ondernemers. Eén team met
-arbeidsdeskundige expertise, erkende jobcoaching en UWV-ervaring. Wij klinken nuchter en direct, in de wij-vorm,
-en spreken de lezer aan met je.
+arbeidsdeskundige expertise, erkende jobcoaching en UWV-ervaring. Wij klinken nuchter en direct, op de website in de wij-vorm,
+en spreken de lezer aan met je. Posts op LinkedIn en Instagram schrijft Brigitte in de ik-vorm.
 
 ## Harde regels
 1. Nooit: mediation, mediator, bemiddeling, lifestyle, wellness, hormonen.
-2. Altijd wij-vorm; nooit het aantal teamleden noemen.
+2. Website en bedrijfscommunicatie: wij-vorm. Posts: ik-vorm (Brigitte), alleen met eigen ervaring en kennis.
+   Nooit het aantal teamleden noemen.
 3. De zes jaar UWV-ervaring hoort alleen bij de re-integratiebegeleider. Nooit "UWV-expert/-specialist".
 4. Niets verzinnen: geen cijfers, klantverhalen, testimonials of resultaten die niet zijn aangeleverd.
 5. Privacy: klantverhalen alleen anoniem en met toestemming; nooit medische details.

@@ -3,8 +3,8 @@
 **Lees `brand/brand-context.md` vóór elk merkwerk** (teksten, posts, beelden, presentaties, nieuwe pagina's).
 
 ## Wie ik ben
-Ik ben Brigitte Dijksteel, eigenaar van AdaptXS: re-integratiecoach en lifestylecoach. Naar buiten gebruikt
-AdaptXS het woord "lifestyle" nooit; de dienst heet "coaching voor ondernemers" (zie `brand/stem.md`).
+Ik ben Brigitte Dijksteel, eigenaar van AdaptXS: re-integratiecoach en coach voor ondernemers.
+Naar buiten gebruiken AdaptXS en ik het woord "lifestyle" nooit (zie `brand/stem.md`).
 Ik start mijn onderneming binnen vier maanden, heb geen startkapitaal en ben geen ontwikkelaar.
 
 ## Hoe ik werk gedaan wil hebben
@@ -32,7 +32,8 @@ Pas tests aan als teksten bewust veranderen (bijv. SEO-titels en H1's in `tests/
 
 ## Inhoudsregels (niet onderhandelbaar)
 - Nooit: mediation, mediator, bemiddeling, lifestyle, wellness, hormonen (`scripts/check-content.mjs` bewaakt dit).
-- AdaptXS is een team: schrijf in de wij-vorm. Noem nooit het aantal teamleden.
+- AdaptXS is een team: website en bedrijfsteksten in de wij-vorm. Posts op LinkedIn/Instagram in de ik-vorm (Brigitte),
+  alleen met haar eigen ervaring. Noem nooit het aantal teamleden.
 - De UWV-ervaring (zes jaar) hoort alleen bij de re-integratiebegeleider. Niet "UWV-expert" of "UWV-specialist".
 - Verzin niets: geen testimonials, cijfers, klantlogo's, registratienummers of ervaring die niet is aangeleverd.
   Ontbreekt informatie, vraag erom. Gebruik geen "[INVULLEN]" op de live site.

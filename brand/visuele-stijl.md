@@ -22,7 +22,7 @@ Tekst altijd antraciet of groen op crème, of crème op groen. Nooit groen op sa
   lijnen die samenkomen, een onderbroken lijn die weer aansluit ("weer op het spoor"). Telkens een nieuwe compositie.
 - **Veel ruimte.** Crème achtergrond, één kop, weinig tekst. Rust, geen drukte.
 - **Eén boodschap per beeld.** Een kop van maximaal tien woorden, eventueel één ondersteunende zin.
-- **Echt beeld.** Eigen foto's van mensen aan het werk of de werkplek. Geen stockfoto's met handdrukken,
+- **Echt beeld.** Bij ik-posts liefst Brigitte zelf in beeld. Verder eigen foto's van mensen aan het werk of de werkplek. Geen stockfoto's met handdrukken,
   puzzelstukjes of mensen in pak die naar een scherm wijzen.
 - **Logo klein**, rechtsonder of linksonder. Nooit vervormen of in een andere kleur dan groen, crème of antraciet.
 
