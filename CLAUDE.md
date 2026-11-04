@@ -1,6 +1,20 @@
-# Website AdaptXS – werkafspraken voor Claude
+# AdaptXS – onboarding en werkafspraken voor Claude
 
-De eigenaar is geen ontwikkelaar. Antwoord in het Nederlands, eerlijk en kritisch, en leg uit waarom.
+**Lees `brand/brand-context.md` vóór elk merkwerk** (teksten, posts, beelden, presentaties, nieuwe pagina's).
+
+## Wie ik ben
+Ik ben Brigitte Dijksteel, eigenaar van AdaptXS: re-integratiecoach en coach voor ondernemers.
+Naar buiten gebruiken AdaptXS en ik het woord "lifestyle" nooit (zie `brand/stem.md`).
+Ik start mijn onderneming binnen vier maanden, heb geen startkapitaal en ben geen ontwikkelaar.
+
+## Hoe ik werk gedaan wil hebben
+- Antwoord in het Nederlands, eerlijk en kritisch. Ben het niet automatisch met me eens.
+- Zeg je nee of ben je kritisch, leg dan uit waarom. Is iets goed, zeg kort waarom.
+- Daag me uit en kom met originele, out-of-the-boxideeën.
+- Reken met een klein budget: gratis of goedkoop eerst, en zeg wat iets kost.
+- Leg stappen voor mij uit zoals voor een niet-ontwikkelaar: waar ik moet klikken, in welke volgorde.
+- Verzin niets. Ontbreekt informatie, vraag het me. Bij een echte keuze: geef je aanbeveling en vraag.
+- Voer alleen uit wat ik vraag; betere ideeën noteer je apart als aanbeveling.
 
 ## Hoe wijzigingen live komen
 - `main` = de live site. Na elke push naar `main` bouwt `.github/workflows/upload-godaddy.yml` de site en zet hem via
@@ -18,7 +32,8 @@ Pas tests aan als teksten bewust veranderen (bijv. SEO-titels en H1's in `tests/
 
 ## Inhoudsregels (niet onderhandelbaar)
 - Nooit: mediation, mediator, bemiddeling, lifestyle, wellness, hormonen (`scripts/check-content.mjs` bewaakt dit).
-- AdaptXS is een team: schrijf in de wij-vorm. Noem nooit het aantal teamleden.
+- AdaptXS is een team: website en bedrijfsteksten in de wij-vorm. Posts op LinkedIn/Instagram in de ik-vorm (Brigitte),
+  alleen met haar eigen ervaring. Noem nooit het aantal teamleden.
 - De UWV-ervaring (zes jaar) hoort alleen bij de re-integratiebegeleider. Niet "UWV-expert" of "UWV-specialist".
 - Verzin niets: geen testimonials, cijfers, klantlogo's, registratienummers of ervaring die niet is aangeleverd.
   Ontbreekt informatie, vraag erom. Gebruik geen "[INVULLEN]" op de live site.
@@ -35,6 +50,7 @@ Pas tests aan als teksten bewust veranderen (bijv. SEO-titels en H1's in `tests/
 - Zet nooit wachtwoorden of sleutels in de repository. SSH-gegevens staan als GitHub-secrets.
 
 ## Waar staat wat
+- Merk: `brand/` (start bij `brand/brand-context.md`; daarnaast business, klanten, stem, visuele stijl)
 - Diensten: `src/content/diensten/*.md` · Over ons: `src/content/paginas/over.md` · Homepage: `src/data/home.json`
 - Tarieven: `src/data/tarieven.json` · Juridisch: `src/content/juridisch/*.md`
 - Opmaak: `src/styles/global.css` en de componenten in `src/components/`
