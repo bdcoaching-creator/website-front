@@ -12,6 +12,13 @@ Deskundig, maar nooit belerend. Warm waar het over de medewerker gaat.
 - Vakterm? Leg hem de eerste keer uit ("het tweede spoor: werk zoeken buiten je eigen bedrijf").
 - Eindig met één concrete stap: wat kan de lezer nu doen?
 
+## Posts (LinkedIn en Instagram)
+- LinkedIn: maximaal 1300 tekens. Maximaal 3 hashtags per post.
+- Per post: een kop voor het beeld van maximaal tien woorden en een alt-tekst (zie visuele-stijl.md).
+- Link naar de site in de eerste reactie, niet in de post zelf.
+- Brigitte is de re-integratiebegeleider met zes jaar UWV-ervaring. In ik-posts mag dus:
+  "Ik heb zes jaar bij het UWV gewerkt." Nooit "UWV-expert" of "UWV-specialist".
+
 ## Woorden
 | Wel | Nooit (harde regel) | Liever vermijden |
 |---|---|---|

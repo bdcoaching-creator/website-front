@@ -13,7 +13,7 @@ Werkgebied: Zuid-Holland en omgeving op locatie; online (Zoom) in heel Nederland
 ## Waarin wij verschillen
 - **Eén team, drie vakgebieden.** Arbeidsdeskundige expertise (SRA-geregistreerd, lid NVvA), erkende jobcoaching en
   re-integratiebegeleiding werken samen. Wij kijken tegelijk naar de medewerker, het werk en de regels.
-- **Weten hoe het UWV kijkt.** De re-integratiebegeleider heeft zes jaar bij het UWV gewerkt.
+- **Weten hoe het UWV kijkt.** De re-integratiebegeleider, Brigitte, heeft zes jaar bij het UWV gewerkt.
   (Alleen bij die rol noemen; nooit "UWV-expert" of "UWV-specialist".)
 - **Gemaakt voor het MKB zonder HR-afdeling.** Eén vast aanspreekpunt, helder plan, geen jargon.
 - **Onafhankelijk en vertrouwelijk.** Geen arbeidsdeskundig onderzoek bij iemand die wij zelf begeleiden.
